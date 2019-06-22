@@ -45,10 +45,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="ServiceLocation, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceLocation.1.3.1\lib\net45\ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=4.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StructureMap.4.7.1\lib\net45\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.web.4.0.0.315\lib\net40\StructureMap.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Globalization" />
+    <Reference Include="System.Runtime" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -101,6 +115,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -171,19 +188,83 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\MappingProfile.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\StructureMapMvc.cs" />
+    <Compile Include="Constants\MaxConstants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoicesController.cs" />
+    <Compile Include="Controllers\JobCardsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StockItemsController.cs" />
+    <Compile Include="Controllers\SuppliersController.cs" />
+    <Compile Include="Controllers\SystemController.cs" />
+    <Compile Include="Controllers\TechniciansController.cs" />
+    <Compile Include="Core\Domain\ApplicationUser.cs" />
+    <Compile Include="Core\Domain\Area.cs" />
+    <Compile Include="Core\Domain\Customer.cs" />
+    <Compile Include="Core\Domain\ExpertiseField.cs" />
+    <Compile Include="Core\Domain\Installation.cs" />
+    <Compile Include="Core\Domain\Invoice.cs" />
+    <Compile Include="Core\Domain\JobCard.cs" />
+    <Compile Include="Core\Domain\JobStatus.cs" />
+    <Compile Include="Core\Domain\JobType.cs" />
+    <Compile Include="Core\Domain\PaymentRecord.cs" />
+    <Compile Include="Core\Domain\PaymentType.cs" />
+    <Compile Include="Core\Domain\PurchaseOrder.cs" />
+    <Compile Include="Core\Domain\Quotation.cs" />
+    <Compile Include="Core\Domain\Signature.cs" />
+    <Compile Include="Core\Domain\StockItem.cs" />
+    <Compile Include="Core\Domain\Supplier.cs" />
+    <Compile Include="Core\IRepositories\IInvoiceRepository.cs" />
+    <Compile Include="Core\IRepositories\IJobCardRepository.cs" />
+    <Compile Include="Core\IRepositories\IJobStatusRepository.cs" />
+    <Compile Include="Core\IRepositories\IRepository.cs" />
+    <Compile Include="Core\IRepositories\IStockRepository.cs" />
+    <Compile Include="Core\IRepositories\ISupplierRepository.cs" />
+    <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="DependencyResolution\ControllerConvention.cs" />
+    <Compile Include="DependencyResolution\DefaultRegistry.cs" />
+    <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
+    <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906131555025_InitialMigration.cs" />
+    <Compile Include="Migrations\201906131555025_InitialMigration.Designer.cs">
+      <DependentUpon>201906131555025_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Persistence\ApplicationDbContext.cs" />
+    <Compile Include="Persistence\EntityConfigurations\Identity\ApplicationUserConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\CustomerConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\Identity\IdentityRoleConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\Identity\IdentityUserLoginConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\Identity\IdentityUserRoleConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\PaymentRecordConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\InvoiceConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\JobCardConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\PurchaseOrderConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\QuotationConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\SignatureConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\StockConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\SupplierConfiguration.cs" />
+    <Compile Include="Persistence\Repositories\InvoiceRespository.cs" />
+    <Compile Include="Persistence\Repositories\JobCardRepository.cs" />
+    <Compile Include="Persistence\Repositories\JobStatusRepository.cs" />
+    <Compile Include="Persistence\Repositories\Repository.cs" />
+    <Compile Include="Persistence\Repositories\StockRepository.cs" />
+    <Compile Include="Persistence\Repositories\SupplierRepository.cs" />
+    <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Core\ViewModels\JobCardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -241,9 +322,25 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Invoices\Create.cshtml" />
+    <Content Include="Views\Invoices\Delete.cshtml" />
+    <Content Include="Views\Invoices\Details.cshtml" />
+    <Content Include="Views\Invoices\Edit.cshtml" />
+    <Content Include="Views\Invoices\Index.cshtml" />
+    <Content Include="Views\JobCards\Create.cshtml" />
+    <Content Include="Views\JobCards\Delete.cshtml" />
+    <Content Include="Views\JobCards\Details.cshtml" />
+    <Content Include="Views\JobCards\Edit.cshtml" />
+    <Content Include="Views\JobCards\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="BusinessLogic\" />
+    <Folder Include="Filters\" />
+    <Folder Include="Views\StockItems\" />
+    <Folder Include="Views\Suppliers\" />
+    <Folder Include="Views\System\" />
+    <Folder Include="Views\Technicians\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -257,6 +354,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201906131555025_InitialMigration.resx">
+      <DependentUpon>201906131555025_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

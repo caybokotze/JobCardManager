@@ -1,0 +1,91 @@
+﻿@model JobCardSystem.Core.Domain.JobCard
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>JobCard</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.JobStatus.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobStatus.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JobType.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobType.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScheduledFor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScheduledFor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JobTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SiteLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SiteLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ArrivalTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArrivalTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartureTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Distance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Distance)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

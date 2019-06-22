@@ -1,0 +1,63 @@
+﻿
+using System.Data.Entity;
+using JobCardSystem.Core.Domain;
+using JobCardSystem.Models;
+using JobCardSystem.Persistence.EntityConfigurations;
+using JobCardSystem.Persistence.EntityConfigurations.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
+namespace JobCardSystem.Persistence
+{
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
+        public ApplicationDbContext()
+            : base("DefaultConnection", throwIfV1Schema: false)
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+
+        }
+
+        //public override IDbSet<ApplicationUser> Users { get; set; }
+        //public override IDbSet<IdentityRole> Roles { get; set; }
+
+        public DbSet<Area> Areas { get; set; }
+        public DbSet<ExpertiseField> ExpertiseFields { get; set; }
+        public DbSet<Installation> Installations { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<JobCard> JobCards { get; set; }
+        public DbSet<JobStatus> JobStatuses { get; set; }
+        public DbSet<JobType> JobTypes { get; set; }
+        public DbSet<PaymentRecord> PaymentRecords { get; set; }
+        public DbSet<PaymentType> PaymentTypes { get; set; }
+        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public DbSet<Quotation> Quotations { get; set; }
+        public DbSet<Signature> Signatures { get; set; }
+        public DbSet<StockItem> StockItems { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new CustomerConfiguration());
+            modelBuilder.Configurations.Add(new InvoiceConfiguration());
+            modelBuilder.Configurations.Add(new JobCardConfiguration());
+            modelBuilder.Configurations.Add(new PaymentRecordConfiguration());
+            modelBuilder.Configurations.Add(new PurchaseOrderConfiguration());
+            modelBuilder.Configurations.Add(new QuotationConfiguration());
+            modelBuilder.Configurations.Add(new SignatureConfiguration());
+            modelBuilder.Configurations.Add(new StockConfiguration());
+            modelBuilder.Configurations.Add(new SupplierConfiguration());
+            // Fluent API Configurations for Identity.
+            modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
+            modelBuilder.Configurations.Add(new IdentityUserLoginConfiguration());
+            modelBuilder.Configurations.Add(new IdentityRoleConfiguration());
+            modelBuilder.Configurations.Add(new IdentityUserRoleConfiguration());
+        }
+
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
+
+    }
+}

@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using AutoMapper;
+using JobCardSystem;
 
 namespace JobCardSystem
 {
@@ -12,6 +14,7 @@ namespace JobCardSystem
     {
         protected void Application_Start()
         {
+            Mapper.Initialize(m => m.AddProfile<MappingProfile>());
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
