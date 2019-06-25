@@ -6,7 +6,7 @@ using AutoMapper;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Core.ViewModels;
 
-namespace JobCardSystem.App_Start
+namespace JobCardSystem
 {
     public class MappingProfile : Profile
     {
@@ -14,6 +14,11 @@ namespace JobCardSystem.App_Start
         {
             CreateMap<JobCard, JobCardViewModel>();
             CreateMap<JobCardViewModel, JobCard>();
+            //
+            CreateMap<Customer, CustomerViewModel>();
+            CreateMap<CustomerViewModel, Customer>();
+            //
+
         }
     }
 }

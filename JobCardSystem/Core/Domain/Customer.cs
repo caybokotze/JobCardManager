@@ -11,7 +11,7 @@ namespace JobCardSystem.Core.Domain
         [Key]
         public int Id { get; set; }
 
-        public bool ActiveState { get; set; } = true;
+        public DateTime CreatedAt { get; set; }
 
         [Display(Name = "Customer Name")]
         public string Name { get; set; }
@@ -20,29 +20,29 @@ namespace JobCardSystem.Core.Domain
         [Required(ErrorMessage = "Please enter customer email.")]
         [Display(Name = "Email Address:")]
         [EmailAddress]
-        public string Customer_email { get; set; }
-        public string Industry { get; set; }
-        public string Client { get; set; }
-        [Display(Name = "Contact Name")]
-        public string Contact_Name { get; set; }
-        [Required(ErrorMessage = "Contact number is a required field")]
-        [MaxLength(10, ErrorMessage = "Maximum length is 10"), MinLength(10, ErrorMessage = "Minimum length is 10")]
-        [Display(Name = "Contact Number")]
-        public string Contact_Number { get; set; }
-        [Required(ErrorMessage = "*Please enter contact email.")]
-        [Display(Name = "Email Address:")]
-        [EmailAddress]
-        public string Contact_Email { get; set; }
+        public string Email { get; set; }
 
-        [Required(ErrorMessage = "*Please select if there is a Contract in place .")]
-        [Display(Name = " Maintenance Contract")]
-        public string MaintenanceContract { get; set; }
+        [Display(Name = "Industry")]
+        public string Industry { get; set; }
+
+        [Display(Name = "Cellphone Number")]
+        [StringLength(11)]
+        public string CellNumber { get; set; }
+
+        [Required(ErrorMessage = "Please select a contract from the drop down list.")]
+        [Display(Name = "Maintenance Contract")]
+        public int MaintenanceContractId { get; set; }
+        public virtual MaintenanceContract MaintenanceContract { get; set; }
 
         [Display(Name = "Contract Duration")]
-        public int ContractDuration { get; set; }
+        [Required(ErrorMessage = "Please select a value from the drop down list.")]
+        public int ContractDurationId { get; set; }
+        public virtual ContractDuration ContractDuration { get; set; }
 
-        [Display(Name = "Services Per a Month")]
-        public string ServicesPerMonth { get; set; }
+        [Display(Name = "Services Per Month")]
+        [Required(ErrorMessage = "Please select a value from the drop down list.")]
+        public int ServicesId { get; set; }
+        public virtual ServiceContract ServiceContract { get; set; }
 
         #region Navigational Properties
         public virtual ICollection<JobCard> JobCards { get; set; }
@@ -50,8 +50,6 @@ namespace JobCardSystem.Core.Domain
         public virtual ICollection<Quotation> Quotations { get; set; }
         public virtual ICollection<PaymentRecord> PaymentRecords { get; set; }
         public virtual ICollection<Signature> Signatures { get; set; }
-        
-
         #endregion
     }
 }

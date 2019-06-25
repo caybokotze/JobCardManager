@@ -194,6 +194,7 @@
     <Compile Include="App_Start\StructureMapMvc.cs" />
     <Compile Include="Constants\MaxConstants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\JobCardsController.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Controllers\TechniciansController.cs" />
     <Compile Include="Core\Domain\ApplicationUser.cs" />
     <Compile Include="Core\Domain\Area.cs" />
+    <Compile Include="Core\Domain\ContractDuration.cs" />
     <Compile Include="Core\Domain\Customer.cs" />
     <Compile Include="Core\Domain\ExpertiseField.cs" />
     <Compile Include="Core\Domain\Installation.cs" />
@@ -211,20 +213,28 @@
     <Compile Include="Core\Domain\JobCard.cs" />
     <Compile Include="Core\Domain\JobStatus.cs" />
     <Compile Include="Core\Domain\JobType.cs" />
+    <Compile Include="Core\Domain\MaintenanceContract.cs" />
     <Compile Include="Core\Domain\PaymentRecord.cs" />
     <Compile Include="Core\Domain\PaymentType.cs" />
     <Compile Include="Core\Domain\PurchaseOrder.cs" />
     <Compile Include="Core\Domain\Quotation.cs" />
+    <Compile Include="Core\Domain\ServiceContract.cs" />
     <Compile Include="Core\Domain\Signature.cs" />
     <Compile Include="Core\Domain\StockItem.cs" />
     <Compile Include="Core\Domain\Supplier.cs" />
+    <Compile Include="Core\IRepositories\IContractDuration.cs" />
+    <Compile Include="Core\IRepositories\ICustomerRepository.cs" />
     <Compile Include="Core\IRepositories\IInvoiceRepository.cs" />
     <Compile Include="Core\IRepositories\IJobCardRepository.cs" />
     <Compile Include="Core\IRepositories\IJobStatusRepository.cs" />
+    <Compile Include="Core\IRepositories\IJobTypeRepository.cs" />
+    <Compile Include="Core\IRepositories\IMaintenanceContract.cs" />
     <Compile Include="Core\IRepositories\IRepository.cs" />
+    <Compile Include="Core\IRepositories\IServiceContract.cs" />
     <Compile Include="Core\IRepositories\IStockRepository.cs" />
     <Compile Include="Core\IRepositories\ISupplierRepository.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Core\ViewModels\CustomerViewModel.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -233,9 +243,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906131555025_InitialMigration.cs" />
-    <Compile Include="Migrations\201906131555025_InitialMigration.Designer.cs">
-      <DependentUpon>201906131555025_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201906241649496_AddAllModelsAndEntityConfigurations.cs" />
+    <Compile Include="Migrations\201906241649496_AddAllModelsAndEntityConfigurations.Designer.cs">
+      <DependentUpon>201906241649496_AddAllModelsAndEntityConfigurations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906250755111_RemovePropertiesFromCustomer.cs" />
+    <Compile Include="Migrations\201906250755111_RemovePropertiesFromCustomer.Designer.cs">
+      <DependentUpon>201906250755111_RemovePropertiesFromCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906250921284_ChangeCustomerModel.cs" />
+    <Compile Include="Migrations\201906250921284_ChangeCustomerModel.Designer.cs">
+      <DependentUpon>201906250921284_ChangeCustomerModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -255,10 +273,15 @@
     <Compile Include="Persistence\EntityConfigurations\SignatureConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\StockConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\SupplierConfiguration.cs" />
-    <Compile Include="Persistence\Repositories\InvoiceRespository.cs" />
+    <Compile Include="Persistence\Repositories\ContractDurationRepository.cs" />
+    <Compile Include="Persistence\Repositories\CustomerRepository.cs" />
+    <Compile Include="Persistence\Repositories\InvoiceRepository.cs" />
     <Compile Include="Persistence\Repositories\JobCardRepository.cs" />
     <Compile Include="Persistence\Repositories\JobStatusRepository.cs" />
+    <Compile Include="Persistence\Repositories\JobTypeRepository.cs" />
+    <Compile Include="Persistence\Repositories\MaintenanceContractRepository.cs" />
     <Compile Include="Persistence\Repositories\Repository.cs" />
+    <Compile Include="Persistence\Repositories\ServiceContractRepository.cs" />
     <Compile Include="Persistence\Repositories\StockRepository.cs" />
     <Compile Include="Persistence\Repositories\SupplierRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
@@ -332,13 +355,24 @@
     <Content Include="Views\JobCards\Details.cshtml" />
     <Content Include="Views\JobCards\Edit.cshtml" />
     <Content Include="Views\JobCards\Index.cshtml" />
+    <Content Include="Views\Shared\_FormLayout.cshtml" />
+    <Content Include="Views\Shared\_TableLayout.cshtml" />
+    <Content Include="Views\Shared\_mainNav.cshtml" />
+    <Content Include="Views\Shared\_mainSideBar.cshtml" />
+    <Content Include="Views\Shared\_pageHeader.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
+    <Content Include="Views\Customers\Delete.cshtml" />
+    <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Customers\Edit.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Suppliers\Index.cshtml" />
+    <Content Include="Views\Suppliers\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="BusinessLogic\" />
     <Folder Include="Filters\" />
     <Folder Include="Views\StockItems\" />
-    <Folder Include="Views\Suppliers\" />
     <Folder Include="Views\System\" />
     <Folder Include="Views\Technicians\" />
   </ItemGroup>
@@ -356,8 +390,14 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906131555025_InitialMigration.resx">
-      <DependentUpon>201906131555025_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906241649496_AddAllModelsAndEntityConfigurations.resx">
+      <DependentUpon>201906241649496_AddAllModelsAndEntityConfigurations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906250755111_RemovePropertiesFromCustomer.resx">
+      <DependentUpon>201906250755111_RemovePropertiesFromCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906250921284_ChangeCustomerModel.resx">
+      <DependentUpon>201906250921284_ChangeCustomerModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

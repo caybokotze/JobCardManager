@@ -13,7 +13,6 @@ namespace JobCardSystem.Persistence.Repositories
         {
         }
 
-
         public IEnumerable<JobCard> GetJobCardsWithJobStatus(int pageIndex, int pageSize)
         {
             return ApplicationDbContext.JobCards

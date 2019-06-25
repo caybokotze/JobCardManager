@@ -1,0 +1,115 @@
+﻿@model JobCardSystem.Core.Domain.Customer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ActiveState)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActiveState)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Industry)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Industry)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Client)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact_Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact_Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaintenanceContract)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaintenanceContract)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContractDuration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContractDuration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServicesPerMonth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServicesPerMonth)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

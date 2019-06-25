@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using JobCardSystem.Core;
+using JobCardSystem.Core.Domain;
 using JobCardSystem.Core.IRepositories;
 using JobCardSystem.Persistence.Repositories;
 
@@ -16,11 +17,15 @@ namespace JobCardSystem.Persistence
         {
             _context = cntx;
             StockItems = new StockRepository(_context);
-            Invoices = new InvoiceRespository(_context);
+            Invoices = new InvoiceRepository(_context);
             JobCards = new JobCardRepository(_context);
             JobStatuses = new JobStatusRepository(_context);
             Suppliers = new SupplierRepository(_context);
             JobTypes = new JobTypeRepository(_context);
+            Customers = new CustomerRepository(_context);
+            ContractDurations = new ContractDurationRepository(_context);
+            ServiceContracts = new ServiceContractRepository(_context);
+            MaintenanceContracts = new MaintenanceContractRepository(_context);
 
         }
         public void Dispose()
@@ -34,6 +39,10 @@ namespace JobCardSystem.Persistence
         public IJobStatusRepository JobStatuses { get; }
         public ISupplierRepository Suppliers { get; }
         public IJobTypeRepository JobTypes { get; }
+        public ICustomerRepository Customers { get; }
+        public IContractDuration ContractDurations { get; }
+        public IServiceContract ServiceContracts { get; }
+        public IMaintenanceContract MaintenanceContracts { get; }
 
         public int Complete()
         {

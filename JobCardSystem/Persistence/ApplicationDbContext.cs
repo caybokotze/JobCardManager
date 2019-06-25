@@ -59,5 +59,6 @@ namespace JobCardSystem.Persistence
             return new ApplicationDbContext();
         }
 
+        public System.Data.Entity.DbSet<JobCardSystem.Core.Domain.Customer> Customers { get; set; }
     }
 }

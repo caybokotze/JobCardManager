@@ -59,13 +59,15 @@ namespace JobCardSystem.Controllers
 
                 var stockItem = new StockItem();
                 stockItem = _unitOfWork.StockItems.Get(1);
+
                 var stockItemList = new List<StockItem>();
                 stockItemList.Add(stockItem);
+
                 invoice.StockItems = stockItemList;
+
                 _unitOfWork.Invoices.Add(invoice);
+
                 int entityId = _unitOfWork.Complete();
-
-
                 return Content(entityId.ToString());
             }
 

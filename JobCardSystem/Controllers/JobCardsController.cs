@@ -51,6 +51,7 @@ namespace JobCardSystem.Controllers
         {
             JobCardViewModel jvm = new JobCardViewModel();
             jvm.JobStatuses = _unitOfWork.JobStatuses.GetAll().ToList();
+            jvm.JobTypes = _unitOfWork.JobTypes.GetAll().ToList();
 
             return View(jvm);
         }
@@ -64,6 +65,8 @@ namespace JobCardSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                jobCard.CreatedAt = DateTime.Now;
+                //Add the total for the job here.
                 _unitOfWork.JobCards.Add(jobCard);
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");

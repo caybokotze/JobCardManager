@@ -9,15 +9,30 @@ namespace JobCardSystem.Core.ViewModels
 {
     public class JobCardViewModel
     {
+        public JobCardViewModel()
+        {
+            Id = 0;
+        }
+
+        public JobCardViewModel(JobCard jobCard)
+        {
+            Id = jobCard.Id;
+            SiteLocation = jobCard.SiteLocation;
+            Distance = jobCard.Distance;
+            ArrivalTime = jobCard.ArrivalTime;
+            DepartureTime = jobCard.DepartureTime;
+            JobStatusId = jobCard.JobStatusId;
+            JobTypeId = jobCard.JobTypeId;
+        }
+
         public int Id { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime CreatedAt { get; set; }
+
         [DataType(DataType.Date)]
         [Display(Name = "Scheduled For")]
         [Required]
         public DateTime ScheduledFor { get; set; }
 
-        public double JobTotal { get; set; }
+
         [Display(Name = "Site Location")]
         [Required]
         public string SiteLocation { get; set; }
@@ -28,7 +43,12 @@ namespace JobCardSystem.Core.ViewModels
         [Display(Name = "Distance Traveled")]
         public int Distance { get; set; }
 
+        [Required]
+        [Display(Name = "Job Status")]
         public int JobStatusId { get; set; }
+
+        [Required]
+        [Display(Name = "Job Type")]
         public int JobTypeId { get; set; }
 
         public ICollection<JobStatus> JobStatuses { get; set; }

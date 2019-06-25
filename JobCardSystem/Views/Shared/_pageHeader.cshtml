@@ -1,0 +1,22 @@
+﻿
+<div class="page-header page-header-light">
+    <div class="page-header-content header-elements-md-inline">
+        <div class="page-title d-flex">
+            <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold"> @ViewContext.RouteData.Values["Controller"].ToString().ToUpper()</span> - @ViewBag.Title</h4>
+            <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+        </div>
+        @*  *@
+    </div>
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+
+                <a href="../../@ViewContext.RouteData.Values["controller"].ToString()/Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> @ViewContext.RouteData.Values["controller"].ToString().ToUpper()</a>
+                <a href="#" class="breadcrumb-item"> @ViewContext.RouteData.Values["action"].ToString().ToUpper()</a>
+                @*@Html.ActionLink(@ViewContext.RouteData.Values["controller"].ToString().ToUpper(), "Index", @ViewContext.RouteData.Values["controller"].ToString(), null, new { @class = "breadcrumb-item" })*@
+            </div>
+            <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+        </div>
+        @*  *@
+    </div>
+</div>
