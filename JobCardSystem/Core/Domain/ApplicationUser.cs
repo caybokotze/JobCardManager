@@ -11,6 +11,30 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace JobCardSystem.Core.Domain
 {
+    public class CustomRole : IdentityRole
+    {
+        public CustomRole()
+        {
+            
+        }
+    }
+
+    public class RandomUserRole : IdentityUserRole
+    {
+        public RandomUserRole()
+        {
+            
+        }
+    }
+
+    public class ApplicationUserClaims : IdentityUserClaim
+    {
+        public ApplicationUserClaims()
+        {
+            
+        }
+    }
+
     public class ApplicationUser : IdentityUser
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -23,6 +47,7 @@ namespace JobCardSystem.Core.Domain
 
         public ApplicationUser()
         {
+            
         }
 
         [Required(ErrorMessage = "Please enter a name for the user.")]
@@ -46,13 +71,14 @@ namespace JobCardSystem.Core.Domain
         [StringLength(MaxConstants.IdNumber, ErrorMessage = "Id Number can not be longer than digits.")]
         public string IdNumber { get; set; }
 
+        [Required]
+        [Display(Name = "Select Area")]
         public int AreaId { get; set; }
 
         #region Navigational Properties
         public virtual Area Area { get; set; }
         public virtual ICollection<JobCard> JobCards { get; set; }
         public virtual ICollection<Signature> Signatures { get; set; }
-        public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
 
         #endregion

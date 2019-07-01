@@ -14,40 +14,8 @@
         @Scripts.Render("~/content/themejs")
         @Scripts.Render("~/content/appjs")*@
 
-    <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-    <link href="~/Content/Global/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-    <link href="~/Content/Assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="~/Content/Assets/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
-    <link href="~/Content/Assets/css/layout.min.css" rel="stylesheet" type="text/css">
-    <link href="~/Content/Assets/css/components.min.css" rel="stylesheet" type="text/css">
-    <link href="~/Content/Assets/css/colors.min.css" rel="stylesheet" type="text/css">
-    <!-- /global stylesheets -->
-    <!-- Core JS files -->
-    <script src="~/Content/Global/js/main/jquery.min.js"></script>
-    <script src="~/Content/Global/js/main/bootstrap.bundle.min.js"></script>
-    <script src="~/Content/Global/js/plugins/loaders/blockui.min.js"></script>
-    <script src="~/Content/Global/js/plugins/ui/ripple.min.js"></script>
-    <!-- /core JS files -->
-    <!-- Theme JS files -->
-    <script src="~/Content/Global/js/plugins/visualization/d3/d3.min.js"></script>
-    <script src="~/Content/Global/js/plugins/visualization/d3/d3_tooltip.js"></script>
-    <script src="~/Content/Global/js/plugins/forms/styling/switchery.min.js"></script>
-    <script src="~/Content/Global/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
-    <script src="~/Content/Global/js/plugins/ui/moment/moment.min.js"></script>
-    <script src="~/Content/Global/js/plugins/pickers/daterangepicker.js"></script>
-
-    <script src="~/Content/Assets/js/app.js"></script>
-    <script src="~/Content/Global/js/demo_pages/dashboard.js"></script>
-
-    <!-- Theme JS files -->
-    <script src="~/Content/Global/js/plugins/extensions/jquery_ui/interactions.min.js"></script>
-    <script src="~/Content/Global/js/plugins/forms/selects/select2.min.js"></script>
-
-    <script src="~/Content/Assets/js/app.js"></script>
-    <script src="~/Content/Global/js/demo_pages/form_select2.js"></script>
-    <!-- /theme JS files -->
-    <!-- /theme JS files -->
+    @Html.Partial("_mainCss")
+    @Html.Partial("_mainJs")
 
 </head>
 
@@ -65,7 +33,24 @@
                 <div class="card">
                     <div class="card-header header-elements-inline">
                         <h5 class="card-title">
-                            @Html.ActionLink("Create New", "Create")
+                            
+                            @if (ViewData["Controller"] == null
+                                 || ViewData["Action"] == null)
+                            {
+                                <a href="#" id="linkRedirect">Create New</a>
+
+                                <script>
+                                    var doc = document.getElementById("linkRedirect");
+                                    doc.onclick = function() {
+                                        window.alert("It appears the developers of this application have been stupid enough to leave out the link to wherever that link is meant to take you. My utmost humble apologies.");
+                                    }
+                                </script>
+                            }
+                            else
+                            {
+                                <a href="~/@ViewData["Controller"]/@ViewData["Action"]">Create New</a>
+                            }
+                            
                         </h5>
                         <div class="header-elements">
                             <div class="list-icons">

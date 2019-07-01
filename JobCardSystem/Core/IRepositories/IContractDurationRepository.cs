@@ -7,7 +7,7 @@ using JobCardSystem.Core.Domain;
 
 namespace JobCardSystem.Core.IRepositories
 {
-    public interface IContractDuration : IRepository<ContractDuration>
+    public interface IContractDurationRepository : IRepository<ContractDuration>
     {
     }
 }

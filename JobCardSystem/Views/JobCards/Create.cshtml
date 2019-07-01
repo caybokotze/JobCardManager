@@ -1,4 +1,5 @@
-﻿@model JobCardSystem.Core.ViewModels.JobCardViewModel
+﻿@using System.Web.UI.WebControls
+@model JobCardSystem.Core.ViewModels.JobCardViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -19,48 +20,15 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.ScheduledFor, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-2">
             @Html.EditorFor(model => model.ScheduledFor, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.ScheduledFor, "", new { @class = "text-danger" })
         </div>
     </div>
 
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.SiteLocation, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.SiteLocation, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.SiteLocation, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ArrivalTime, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ArrivalTime, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ArrivalTime, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DepartureTime, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DepartureTime, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DepartureTime, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Distance, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Distance, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Distance, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
     <div class="form-group">
         @Html.LabelFor(m => m.JobTypeId, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.DropDownListFor(m => m.JobTypeId,
                 new SelectList(Model.JobTypes, "Id", "Name"), "Select Job Type",
                 new { @class = "form-control" })
@@ -70,13 +38,42 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.JobStatusId, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.DropDownListFor(m => m.JobStatusId,
                 new SelectList(Model.JobStatuses, "Id", "Name"), "Select Job Status",
                 new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.JobStatusId, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CustomerId, new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.DropDownListFor(m => m.CustomerId,
+                new SelectList(Model.Customers, "Id", "Name"), "Select Customer",
+                new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CustomerId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.ApplicationUserIdArray, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(m => m.ApplicationUserIdArray, new MultiSelectList(Model.GetStaffDisplayNames(), "Id", "DisplayName"),
+                new {id = "staffMultiSelector", multiple = "multiple"})
+            @Html.ValidationMessageFor(m => m.ApplicationUserIdArray, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    @*<div class="form-group">
+        @Html.LabelFor(m => m.SelectedCustomerIdArray, new { @class = "control-label col-md-2" })
+
+        <div class="col-md-10">
+            @Html.ListBoxFor(m => m.SelectedCustomerIdArray, new MultiSelectList(Model.GetDisplayNames(), "Id", "DisplayName"),
+               new {id = "multiSelectDropdown", multiple = "multiple"})
+        </div>
+    </div>*@
 
 
     <div class="form-group">
@@ -92,5 +89,18 @@
 </div>
 
 @section Scripts {
+    <script>
+        $(function() {
+            $("#staffMultiSelector").chosen({
+                width: "100%",
+                disable_search_threshold: 5
+            });
+        });
+
+        $('#staffMultiSelector')
+            .attr('data-placeholder', 'Select and add staff to the list.');
+
+    </script>
+
     @Scripts.Render("~/bundles/jqueryval")
 }

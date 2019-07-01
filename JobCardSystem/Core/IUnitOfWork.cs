@@ -16,9 +16,10 @@ namespace JobCardSystem.Core
         ISupplierRepository Suppliers { get; }
         IJobTypeRepository JobTypes { get; }
         ICustomerRepository Customers { get; }
-        IContractDuration ContractDurations { get; }
+        IContractDurationRepository ContractDurations { get; }
         IServiceContract ServiceContracts { get; }
         IMaintenanceContract MaintenanceContracts { get; }
+        IAreaRepository Areas { get; }
 
         int Complete();
     }

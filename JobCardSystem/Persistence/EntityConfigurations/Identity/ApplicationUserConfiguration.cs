@@ -28,16 +28,9 @@ namespace JobCardSystem.Persistence.EntityConfigurations.Identity
                     m.ToTable("UserJobCards");
                     m.MapLeftKey("ApplicationUserId");
                     m.MapRightKey("JobCardId");
+
                 });
 
-            HasMany(h => h.Customers)
-                .WithMany(w => w.ApplicationUsers)
-                .Map(m =>
-                {
-                    m.ToTable("AppUserCustomers");
-                    m.MapLeftKey("ApplicationUserId");
-                    m.MapRightKey("CustomerId");
-                });
         }
     }
 }

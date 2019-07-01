@@ -23,6 +23,20 @@ namespace JobCardSystem.Persistence.Repositories
                 .ToList();
         }
 
+
+        public IEnumerable<JobCard> GetJobCardWithAllTypes(int pageIndex, int pageSize)
+        {
+            return ApplicationDbContext.JobCards
+                .Include(c => c.JobStatus)
+                .Include(c => c.JobType)
+                .Include(c => c.Customer)
+                .Include(c => c.ApplicationUsers)
+                .OrderBy(c => c.CreatedAt)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
         public ApplicationDbContext ApplicationDbContext => Context;
     }
 }

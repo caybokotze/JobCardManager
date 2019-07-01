@@ -9,6 +9,8 @@ namespace JobCardSystem.Persistence.EntityConfigurations.Identity
         public IdentityRoleConfiguration()
         {
             HasKey<string>(k => k.Id);
+
+            
         }
     }
 }

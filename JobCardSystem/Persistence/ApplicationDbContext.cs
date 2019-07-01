@@ -14,7 +14,7 @@ namespace JobCardSystem.Persistence
             : base("DefaultConnection", throwIfV1Schema: false)
         {
             this.Configuration.LazyLoadingEnabled = false;
-
+            
         }
 
         //public override IDbSet<ApplicationUser> Users { get; set; }
@@ -33,6 +33,7 @@ namespace JobCardSystem.Persistence
         public DbSet<Quotation> Quotations { get; set; }
         public DbSet<Signature> Signatures { get; set; }
         public DbSet<StockItem> StockItems { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
 
 
@@ -52,6 +53,7 @@ namespace JobCardSystem.Persistence
             modelBuilder.Configurations.Add(new IdentityUserLoginConfiguration());
             modelBuilder.Configurations.Add(new IdentityRoleConfiguration());
             modelBuilder.Configurations.Add(new IdentityUserRoleConfiguration());
+
         }
 
         public static ApplicationDbContext Create()
@@ -59,6 +61,5 @@ namespace JobCardSystem.Persistence
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<JobCardSystem.Core.Domain.Customer> Customers { get; set; }
     }
 }

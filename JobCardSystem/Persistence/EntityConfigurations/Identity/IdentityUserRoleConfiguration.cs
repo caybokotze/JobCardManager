@@ -13,6 +13,7 @@ namespace JobCardSystem.Persistence.EntityConfigurations.Identity
                 k.UserId,
                 k.RoleId
             });
+
         }
     }
 }

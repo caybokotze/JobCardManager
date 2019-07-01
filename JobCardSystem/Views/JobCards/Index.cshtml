@@ -2,14 +2,10 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_TableLayout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -25,16 +21,7 @@
             @Html.DisplayNameFor(model => model.ScheduledFor)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.JobTotal)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.SiteLocation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ArrivalTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DepartureTime)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Distance)
@@ -56,18 +43,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.ScheduledFor)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.JobTotal)
-        </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.SiteLocation)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ArrivalTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DepartureTime)
-        </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.Distance)
         </td>

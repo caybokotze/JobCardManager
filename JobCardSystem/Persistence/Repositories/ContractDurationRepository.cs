@@ -7,7 +7,7 @@ using JobCardSystem.Core.IRepositories;
 
 namespace JobCardSystem.Persistence.Repositories
 {
-    public class ContractDurationRepository : Repository<ContractDuration>, IContractDuration
+    public class ContractDurationRepository : Repository<ContractDuration>, IContractDurationRepository
     {
         public ContractDurationRepository(ApplicationDbContext context) : base(context)
         {

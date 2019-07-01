@@ -11,22 +11,25 @@ using JobCardSystem.Core;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Core.ViewModels;
 using JobCardSystem.Persistence;
+using Microsoft.AspNet.Identity;
 
 namespace JobCardSystem.Controllers
 {
-    public class JobCardsController : Controller
+    public class JobCardsController : ApplicationBaseController
     {
         private readonly IUnitOfWork _unitOfWork;
+        private ApplicationDbContext _context;
 
         public JobCardsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            _context = new ApplicationDbContext();
         }
 
         // GET: JobCards
         public ActionResult Index()
         {
-            var list = _unitOfWork.JobCards.GetAll();
+            var list = _unitOfWork.JobCards.GetJobCardWithAllTypes(1, 10);
             return View(list);
         }
 
@@ -52,6 +55,8 @@ namespace JobCardSystem.Controllers
             JobCardViewModel jvm = new JobCardViewModel();
             jvm.JobStatuses = _unitOfWork.JobStatuses.GetAll().ToList();
             jvm.JobTypes = _unitOfWork.JobTypes.GetAll().ToList();
+            jvm.Customers = _unitOfWork.Customers.GetAll().ToList();
+            jvm.Staff = _context.Users.ToList();
 
             return View(jvm);
         }
@@ -61,23 +66,35 @@ namespace JobCardSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CreatedAt,ScheduledFor,JobTotal,SiteLocation,ArrivalTime,DepartureTime,Distance,JobStatusId,JobTypeId")] JobCard jobCard)
+        public ActionResult Create(JobCardViewModel jobCard)
         {
             if (ModelState.IsValid)
             {
-                jobCard.CreatedAt = DateTime.Now;
-                //Add the total for the job here.
-                _unitOfWork.JobCards.Add(jobCard);
+                var job = Mapper.Map<JobCardViewModel, JobCard>(jobCard);
+                job.CreatedAt = DateTime.Now;
+
+                foreach (var stock in jobCard.StockItems)
+                {
+                    job.JobTotal += stock.SellingPrice;
+                }
+
+                var customer = _unitOfWork.Customers.SingleOrDefault(f => f.Id == jobCard.CustomerId);
+                job.Customers.Add(customer);
+
+                var stockItem = _unitOfWork.StockItems.SingleOrDefault(s => s.Id == jobCard.StockItemId);
+                job.StockItems.Add(stockItem);
+
+                var userId = User.Identity.GetUserId();
+                var userFromDb = _context.Users.SingleOrDefault(u => u.Id == userId);
+                job.ApplicationUsers.Add(userFromDb);
+
+                _unitOfWork.JobCards.Add(job);
                 _unitOfWork.Complete();
+
                 return RedirectToAction("Index");
             }
 
-            var jobCardVm = Mapper.Map<JobCard, JobCardViewModel>(jobCard);
-
-            jobCardVm.JobStatuses = _unitOfWork.JobStatuses.GetAll().ToList();
-            jobCardVm.JobTypes = _unitOfWork.JobTypes.GetAll().ToList();
-
-            return View(jobCardVm);
+            return View(jobCard);
         }
 
         public ActionResult Edit(int? id)
@@ -94,6 +111,9 @@ namespace JobCardSystem.Controllers
             }
             //
             JobCardViewModel jvm = Mapper.Map<JobCard, JobCardViewModel>(jobCard);
+
+            JobCard jc = new JobCard();
+
             jvm.JobStatuses = _unitOfWork.JobStatuses.GetAll().ToList();
             jvm.JobTypes = _unitOfWork.JobTypes.GetAll().ToList();
             //

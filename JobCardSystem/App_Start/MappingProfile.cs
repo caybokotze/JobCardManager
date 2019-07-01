@@ -5,6 +5,7 @@ using System.Web;
 using AutoMapper;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Core.ViewModels;
+using JobCardSystem.Models;
 
 namespace JobCardSystem
 {
@@ -17,6 +18,15 @@ namespace JobCardSystem
             //
             CreateMap<Customer, CustomerViewModel>();
             CreateMap<CustomerViewModel, Customer>();
+            //
+            CreateMap<ApplicationUser, AccountViewModel>();
+            CreateMap<AccountViewModel, ApplicationUser>();
+            //
+            CreateMap<ApplicationUser, EditUserViewModel>();
+            CreateMap<EditUserViewModel, ApplicationUser>();
+            //
+            CreateMap<StockItem, StockItemViewModel>();
+            CreateMap<StockItemViewModel, StockItem>();
             //
 
         }

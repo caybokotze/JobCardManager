@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using JobCardSystem.BusinessLogic;
 using JobCardSystem.Core;
 using JobCardSystem.Core.Domain;
+using Microsoft.Owin;
 
 namespace JobCardSystem.Controllers
 {
@@ -49,7 +54,7 @@ namespace JobCardSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(StockItem stockItem, HttpPostedFileBase file)
+        public ActionResult Create(StockItem stockItem, IFormFile file)
         {
             if (ModelState.IsValid)
             {
@@ -123,4 +128,5 @@ namespace JobCardSystem.Controllers
             base.Dispose(disposing);
         }
     }
+
 }

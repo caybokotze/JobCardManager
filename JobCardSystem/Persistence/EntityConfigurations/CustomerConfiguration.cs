@@ -22,15 +22,6 @@ namespace JobCardSystem.Persistence.EntityConfigurations
                     m.MapRightKey("SignatureId");
                 });
 
-            HasMany(c => c.JobCards)
-                .WithMany(s => s.Customers)
-                .Map(m =>
-                {
-                    m.ToTable("CustomerJobCards");
-                    m.MapLeftKey("CustomerId");
-                    m.MapRightKey("JobCardId");
-                });
-
             HasMany(h => h.PaymentRecords)
                 .WithMany(m => m.Customers)
                 .Map(m =>
@@ -48,6 +39,7 @@ namespace JobCardSystem.Persistence.EntityConfigurations
                     m.MapLeftKey("CustomerId");
                     m.MapRightKey("QuotationId");
                 });
+
         }
     }
 }

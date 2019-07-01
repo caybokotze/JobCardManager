@@ -1,32 +1,42 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using JobCardSystem.Core;
 using JobCardSystem.Core.Domain;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using JobCardSystem.Models;
+using JobCardSystem.Persistence;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace JobCardSystem.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : ApplicationBaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext context;
+        
 
         public AccountController()
         {
+            context = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            context = new ApplicationDbContext();
         }
 
         public ApplicationSignInManager SignInManager
@@ -104,7 +114,6 @@ namespace JobCardSystem.Controllers
             }
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
-
         //
         // POST: /Account/VerifyCode
         [HttpPost]
@@ -135,12 +144,42 @@ namespace JobCardSystem.Controllers
             }
         }
 
+        
+
+        [AllowAnonymous]
+        public ActionResult Index()
+        {
+            List<AccountViewModel> accountUsersList = new List<AccountViewModel>();
+            List<ApplicationUser> users = context.Users.Include(i => i.Roles).ToList();
+
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+
+            foreach (var item in users)
+            {
+                var amv = Mapper.Map<ApplicationUser, AccountViewModel>(item);
+                var s = UserManager.GetRoles(item.Id);
+                if (UserManager.GetRolesAsync(item.Id).Result.Any())
+                {
+                    amv.RoleName = s[0];
+                }
+                else
+                {
+                    amv.RoleName = "Role Undefined";
+                }
+                accountUsersList.Add(amv);
+            }
+            return View(accountUsersList);
+        }
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel accountRegisterViewModel = new RegisterViewModel();
+            //
+            return View(accountRegisterViewModel);
         }
 
         //
@@ -152,7 +191,24 @@ namespace JobCardSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    //
+                    Email = model.Email,
+                    Name = model.Name,
+                    Surname = model.Surname,
+                    IdNumber = model.IdNumber,
+                    PhoneNumber = model.PhoneNumber
+                };
+
+                var role = context.Roles.SingleOrDefault(i => i.Id == model.Id);
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                if (context.Roles.Any(s => s.Name == role.Name))
+                {
+                    UserManager.AddToRole(model.Id, role.Name);
+                }
+                //
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -166,12 +222,65 @@ namespace JobCardSystem.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        [AllowAnonymous]
+        public ActionResult Edit()
+        {
+            ApplicationUser user = new ApplicationUser();
+            var editUserVm = Mapper.Map<ApplicationUser, EditUserViewModel>(user);
+            //
+            editUserVm.Areas = context.Areas.ToList();
+            editUserVm.Roles = context.Roles.ToList();
+            //
+            return View(editUserVm);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var appUser = Mapper.Map<EditUserViewModel, ApplicationUser>(model);
+                appUser.UserName = model.Email;
+
+                context.Entry(appUser).State = EntityState.Modified;
+                context.SaveChanges();
+                //Quick summary: Gets the ID of the role passed back by the model, finds the associated role.
+                //If it is the same as the one in the model, then nothing changes. 
+                //If not, we delete all the roles for the current user in the model.
+                //This is because, this app will not support users having multiple roles for now.
+                var role = context.Roles.SingleOrDefault(i => i.Id == model.RoleId);
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var roles = UserManager.GetRoles(appUser.Id);
+
+                if (UserManager.GetRolesAsync(appUser.Id).Result.Any())
+                {
+                    if (!(roles[0] == role.Name))
+                    {
+                        foreach (var rol in roles)
+                        {
+                            UserManager.RemoveFromRole(appUser.Id, role.Name);
+                        }
+                        UserManager.AddToRoles(appUser.Id, role.Name);
+                    }
+                }
+                //
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+
 
         //
         // GET: /Account/ConfirmEmail
@@ -388,8 +497,8 @@ namespace JobCardSystem.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
+        //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);

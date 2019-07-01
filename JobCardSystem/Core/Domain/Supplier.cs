@@ -10,18 +10,24 @@ namespace JobCardSystem.Core.Domain
     {
         [Key]
         public int Id { get; set; }
+
         [Display(Name = "Supplier Name")]
         [Required]
         public string Name { get; set; }
+
         [Display(Name = "Supplier Address")]
-        [Required]
         public string Address { get; set; }
-        [Display(Name = "Supplier Email")]
+
+        [Display(Name = "Email")]
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-        [Display(Name = "Supplier Contact Number")]
+
+        [Display(Name = "Contact Number")]
         [Required]
+        [DataType(DataType.PhoneNumber)]
         public string ContactNumber { get; set; }
+
 
         #region Navigational Properties
 

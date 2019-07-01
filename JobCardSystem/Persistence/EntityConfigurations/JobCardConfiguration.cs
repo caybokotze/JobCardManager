@@ -14,7 +14,25 @@ namespace JobCardSystem.Persistence.EntityConfigurations
         {
             HasKey(k => k.Id);
 
-            
+            HasMany(h => h.Customers)
+                .WithMany(w => w.JobCards)
+                .Map(m =>
+                {
+                    m.ToTable("JobCardCustomers");
+                    m.MapLeftKey("JobCardId");
+                    m.MapRightKey("CustomerId");
+                });
+
+            HasMany(h => h.StockItems)
+                .WithMany(w => w.JobCards)
+                .Map(m =>
+                {
+                    m.ToTable("JobCardStockItems");
+                    m.MapLeftKey("JobCardId");
+                    m.MapRightKey("StockItemId");
+                });
+
+
         }
     }
 }
