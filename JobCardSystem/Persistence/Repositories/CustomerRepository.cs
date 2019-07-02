@@ -18,7 +18,6 @@ namespace JobCardSystem.Persistence.Repositories
         {
             return ApplicationDbContext.Customers
                 .Include(c => c.MaintenanceContract)
-                .Include(c => c.ContractDuration)
                 .Include(c => c.ServiceContract)
                 .OrderBy(c => c.CreatedAt)
                 .Skip((pageIndex - 1) * pageSize)

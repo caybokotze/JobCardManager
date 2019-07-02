@@ -13,5 +13,9 @@ namespace JobCardSystem.Core.Domain
         [Display(Name = "Maintenance Contract")]
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Duration In Months")]
+        public int Duration { get; set; }
     }
 }

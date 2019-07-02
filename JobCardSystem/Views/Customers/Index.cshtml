@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<JobCardSystem.Core.Domain.Customer>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Create New Customer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -26,9 +25,6 @@
             @Html.DisplayNameFor(model => model.MaintenanceContractId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ContractDurationId)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.ServicesId)
         </th>
         <th></th>
@@ -47,9 +43,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MaintenanceContract.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContractDuration.Duration.ToString())
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ServiceContract.Services.ToString())

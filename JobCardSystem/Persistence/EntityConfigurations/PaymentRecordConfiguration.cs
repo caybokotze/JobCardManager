@@ -19,7 +19,6 @@ namespace JobCardSystem.Persistence.EntityConfigurations
             Property(p => p.InvoiceId)
                 .IsRequired();
 
-
         }
     }
 }

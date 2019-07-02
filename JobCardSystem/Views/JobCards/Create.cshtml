@@ -58,7 +58,7 @@
     
     <div class="form-group">
         @Html.LabelFor(m => m.ApplicationUserIdArray, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-6">
             @Html.ListBoxFor(m => m.ApplicationUserIdArray, new MultiSelectList(Model.GetStaffDisplayNames(), "Id", "DisplayName"),
                 new {id = "staffMultiSelector", multiple = "multiple"})
             @Html.ValidationMessageFor(m => m.ApplicationUserIdArray, "", new { @class = "text-danger" })

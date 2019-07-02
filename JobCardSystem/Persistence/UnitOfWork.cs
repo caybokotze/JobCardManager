@@ -23,7 +23,6 @@ namespace JobCardSystem.Persistence
             Suppliers = new SupplierRepository(_context);
             JobTypes = new JobTypeRepository(_context);
             Customers = new CustomerRepository(_context);
-            ContractDurations = new ContractDurationRepository(_context);
             ServiceContracts = new ServiceContractRepository(_context);
             MaintenanceContracts = new MaintenanceContractRepository(_context);
             Areas = new AreaRepository(_context);
@@ -40,7 +39,6 @@ namespace JobCardSystem.Persistence
         public ISupplierRepository Suppliers { get; }
         public IJobTypeRepository JobTypes { get; }
         public ICustomerRepository Customers { get; }
-        public IContractDurationRepository ContractDurations { get; }
         public IServiceContract ServiceContracts { get; }
         public IMaintenanceContract MaintenanceContracts { get; }
         public IAreaRepository Areas { get; }

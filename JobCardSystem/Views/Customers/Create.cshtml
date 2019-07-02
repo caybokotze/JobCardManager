@@ -20,24 +20,48 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CellNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.CellNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CellNumber, "", new { @class = "text-danger" })
         </div>
     </div>
 
 
     <div class="form-group">
         @Html.LabelFor(model => model.Industry, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.EditorFor(model => model.Industry, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Industry, "", new { @class = "text-danger" })
         </div>
@@ -46,7 +70,7 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.MaintenanceContractId, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.DropDownListFor(m => m.MaintenanceContractId,
                 new SelectList(Model.MaintenanceContracts, "Id", "Name"), "Select Job Status",
                 new { @class = "form-control" })
@@ -55,18 +79,8 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.ContractDurationId, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.ContractDurationId,
-                new SelectList(Model.ContractDurations, "Id", "Duration"), "Select Contract Duration",
-                new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.ContractDurationId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    
-    <div class="form-group">
         @Html.LabelFor(m => m.ServicesId, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.DropDownListFor(m => m.ServicesId,
                 new SelectList(Model.ServiceContracts, "Id", "Services"), "Select Service Contract",
                 new { @class = "form-control" })
@@ -75,7 +89,7 @@
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-offset-2 col-md-3">
             <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>

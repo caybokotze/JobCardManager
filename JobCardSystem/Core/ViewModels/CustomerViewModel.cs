@@ -13,9 +13,16 @@ namespace JobCardSystem.Core.ViewModels
         public int Id { get; set; }
 
         [Display(Name = "Customer Name")]
+        [Required]
         public string Name { get; set; }
+
+        [Display(Name = "Customer Surname")]
+        [Required]
+        public string Surname { get; set; }
+
         [Display(Name = "Customer Address")]
         public string Address { get; set; }
+
         [Required(ErrorMessage = "Please enter customer email.")]
         [Display(Name = "Email Address:")]
         [EmailAddress]
@@ -31,22 +38,19 @@ namespace JobCardSystem.Core.ViewModels
         [Required(ErrorMessage = "Please select a contract from the drop down list.")]
         [Display(Name = "Maintenance Contract")]
         public int MaintenanceContractId { get; set; }
-        
-
-        [Display(Name = "Contract Duration")]
-        [Required(ErrorMessage = "Please select a value from the drop down list.")]
-        public int ContractDurationId { get; set; }
-        
 
         [Display(Name = "Services Per Month")]
         [Required(ErrorMessage = "Please select a value from the drop down list.")]
         public int ServicesId { get; set; }
-        
+
+        [Display(Name = "Select Area")]
+        [Required]
+        public int AreaId { get; set; }
+
 
         #region Drop Down Lists
 
         public ICollection<MaintenanceContract> MaintenanceContracts { get; set; }
-        public ICollection<ContractDuration> ContractDurations { get; set; }
         public ICollection<ServiceContract> ServiceContracts { get; set; }
         
         #endregion
