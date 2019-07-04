@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using JobCardSystem.Core.Domain;
@@ -39,10 +40,10 @@ namespace JobCardSystem.Core.ViewModels
         [Display(Name = "Maintenance Contract")]
         public int MaintenanceContractId { get; set; }
 
-        [Display(Name = "Services Per Month")]
+        [Display(Name = "Services Contract")]
         [Required(ErrorMessage = "Please select a value from the drop down list.")]
-        public int ServicesId { get; set; }
-
+        public int ServiceContractId { get; set; }
+        
         [Display(Name = "Select Area")]
         [Required]
         public int AreaId { get; set; }
@@ -52,7 +53,16 @@ namespace JobCardSystem.Core.ViewModels
 
         public ICollection<MaintenanceContract> MaintenanceContracts { get; set; }
         public ICollection<ServiceContract> ServiceContracts { get; set; }
-        
+
+        #endregion
+
+        #region Index Display
+
+        public ServiceContract ServiceContract { get; set; }
+        public MaintenanceContract MaintenanceContract { get; set; }
+        public Area Area { get; set; }
+
+
         #endregion
     }
 }

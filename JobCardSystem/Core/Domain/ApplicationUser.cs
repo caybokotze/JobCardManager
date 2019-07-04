@@ -71,12 +71,11 @@ namespace JobCardSystem.Core.Domain
         [StringLength(MaxConstants.IdNumber, ErrorMessage = "Id Number can not be longer than digits.")]
         public string IdNumber { get; set; }
 
-        [Required]
         [Display(Name = "Select Area")]
         public int AreaId { get; set; }
+        public virtual Area Area { get; set; }
 
         #region Navigational Properties
-        public virtual Area Area { get; set; }
         public virtual ICollection<JobCard> JobCards { get; set; }
         public virtual ICollection<Signature> Signatures { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }

@@ -10,7 +10,11 @@ namespace JobCardSystem.Core.Domain
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Services Per Month")]
-        public int Services { get; set; }
+        [Display(Name = "Services Contract")]
+        public string ServiceName { get; set; }
+
+        [Required]
+        [Display(Name = "Months Per Year")]
+        public int Months { get; set; }
     }
 }

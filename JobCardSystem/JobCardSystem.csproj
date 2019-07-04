@@ -199,6 +199,7 @@
     <Compile Include="BusinessLogic\FormFile.cs" />
     <Compile Include="BusinessLogic\HashCodeCombiner.cs" />
     <Compile Include="BusinessLogic\Interfaces\IFormFile.cs" />
+    <Compile Include="BusinessLogic\ListMapper.cs" />
     <Compile Include="BusinessLogic\ReferenceReadStream.cs" />
     <Compile Include="BusinessLogic\StringValues.cs" />
     <Compile Include="Constants\MaxConstants.cs" />
@@ -252,55 +253,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907011910010_RemoveInstallationEntityAndContractDuration.cs" />
-    <Compile Include="Migrations\201907011910010_RemoveInstallationEntityAndContractDuration.Designer.cs">
-      <DependentUpon>201907011910010_RemoveInstallationEntityAndContractDuration.cs</DependentUpon>
+    <Compile Include="Migrations\201907022041204_FirstMigration.cs" />
+    <Compile Include="Migrations\201907022041204_FirstMigration.Designer.cs">
+      <DependentUpon>201907022041204_FirstMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907011918577_AddSurnameToCustomer.cs" />
-    <Compile Include="Migrations\201907011918577_AddSurnameToCustomer.Designer.cs">
-      <DependentUpon>201907011918577_AddSurnameToCustomer.cs</DependentUpon>
+    <Compile Include="Migrations\201907022051033_RemoveCompulsoryAreaIdInApplicationUser.cs" />
+    <Compile Include="Migrations\201907022051033_RemoveCompulsoryAreaIdInApplicationUser.Designer.cs">
+      <DependentUpon>201907022051033_RemoveCompulsoryAreaIdInApplicationUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907020727308_MakeCustomerCellRequired.cs" />
-    <Compile Include="Migrations\201907020727308_MakeCustomerCellRequired.Designer.cs">
-      <DependentUpon>201907020727308_MakeCustomerCellRequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\AddAllModelsAndEntityConfigurations.cs" />
-    <Compile Include="Migrations\AddAllModelsAndEntityConfigurations.Designer.cs">
-      <DependentUpon>AddAllModelsAndEntityConfigurations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\AddDataAttributesToStockItem.cs" />
-    <Compile Include="Migrations\AddDataAttributesToStockItem.Designer.cs">
-      <DependentUpon>AddDataAttributesToStockItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\AddManyToManyLinkBetweenJobCardsAndStockItems.cs" />
-    <Compile Include="Migrations\AddManyToManyLinkBetweenJobCardsAndStockItems.Designer.cs">
-      <DependentUpon>AddManyToManyLinkBetweenJobCardsAndStockItems.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\AddPropertiesToStockItem.cs" />
-    <Compile Include="Migrations\AddPropertiesToStockItem.Designer.cs">
-      <DependentUpon>AddPropertiesToStockItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\AddRoles.cs" />
-    <Compile Include="Migrations\AddRoles.Designer.cs">
-      <DependentUpon>AddRoles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ChangeCustomerModel.cs" />
-    <Compile Include="Migrations\ChangeCustomerModel.Designer.cs">
-      <DependentUpon>ChangeCustomerModel.cs</DependentUpon>
+    <Compile Include="Migrations\201907022133173_SetAreaNavigationalPropertyToOptional.cs" />
+    <Compile Include="Migrations\201907022133173_SetAreaNavigationalPropertyToOptional.Designer.cs">
+      <DependentUpon>201907022133173_SetAreaNavigationalPropertyToOptional.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\RemoveManyToManyBetweenUserAndCustomer.cs" />
-    <Compile Include="Migrations\RemoveManyToManyBetweenUserAndCustomer.Designer.cs">
-      <DependentUpon>RemoveManyToManyBetweenUserAndCustomer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\RemovePropertiesFromCustomer.cs" />
-    <Compile Include="Migrations\RemovePropertiesFromCustomer.Designer.cs">
-      <DependentUpon>RemovePropertiesFromCustomer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\RemoveSiteLocationFromJobCardEntity.cs" />
-    <Compile Include="Migrations\RemoveSiteLocationFromJobCardEntity.Designer.cs">
-      <DependentUpon>RemoveSiteLocationFromJobCardEntity.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\AddPhoneNumberViewModel.cs" />
     <Compile Include="Models\ChangePasswordViewModel.cs" />
@@ -2841,41 +2806,14 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201907011910010_RemoveInstallationEntityAndContractDuration.resx">
-      <DependentUpon>201907011910010_RemoveInstallationEntityAndContractDuration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907022041204_FirstMigration.resx">
+      <DependentUpon>201907022041204_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907011918577_AddSurnameToCustomer.resx">
-      <DependentUpon>201907011918577_AddSurnameToCustomer.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907022051033_RemoveCompulsoryAreaIdInApplicationUser.resx">
+      <DependentUpon>201907022051033_RemoveCompulsoryAreaIdInApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907020727308_MakeCustomerCellRequired.resx">
-      <DependentUpon>201907020727308_MakeCustomerCellRequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\AddAllModelsAndEntityConfigurations.resx">
-      <DependentUpon>AddAllModelsAndEntityConfigurations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\AddDataAttributesToStockItem.resx">
-      <DependentUpon>AddDataAttributesToStockItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\AddManyToManyLinkBetweenJobCardsAndStockItems.resx">
-      <DependentUpon>AddManyToManyLinkBetweenJobCardsAndStockItems.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\AddPropertiesToStockItem.resx">
-      <DependentUpon>AddPropertiesToStockItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\AddRoles.resx">
-      <DependentUpon>AddRoles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ChangeCustomerModel.resx">
-      <DependentUpon>ChangeCustomerModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\RemoveManyToManyBetweenUserAndCustomer.resx">
-      <DependentUpon>RemoveManyToManyBetweenUserAndCustomer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\RemovePropertiesFromCustomer.resx">
-      <DependentUpon>RemovePropertiesFromCustomer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\RemoveSiteLocationFromJobCardEntity.resx">
-      <DependentUpon>RemoveSiteLocationFromJobCardEntity.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907022133173_SetAreaNavigationalPropertyToOptional.resx">
+      <DependentUpon>201907022133173_SetAreaNavigationalPropertyToOptional.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

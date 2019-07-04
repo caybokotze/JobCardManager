@@ -8,11 +8,20 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using JobCardSystem.Models;
 using JobCardSystem.Persistence;
+using Microsoft.AspNet.Identity.EntityFramework;
+
+[assembly: OwinStartupAttribute(typeof(JobCardSystem.Startup))]
 
 namespace JobCardSystem
 {
     public partial class Startup
     {
+        public void Configuration(IAppBuilder app)
+        {
+            ConfigureAuth(app);
+            //CreateRolesAndUsers();
+        }
+
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -65,6 +74,57 @@ namespace JobCardSystem
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+        }
+
+        public static void CreateRolesAndUsers()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+            if (!roleManager.RoleExists("Admin"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Admin";
+                roleManager.Create(role);
+                //
+                var user = new ApplicationUser();
+                user.UserName = "admin@group.com";
+                user.Email = "admin@group.com";
+                user.IdNumber = "00000000";
+                user.PhoneNumber = "0311008096";
+                user.Name = "Admin";
+                user.Surname = "Istrator";
+                user.LockoutEnabled = false;
+                user.EmailConfirmed = false;
+                user.TwoFactorEnabled = false;
+
+
+                string userPassword = "password1234";
+
+                var chkUser = userManager.Create(user, userPassword);
+
+                if (chkUser.Succeeded)
+                {
+                    var result = userManager.AddToRole(user.Id, "Admin");
+                }
+
+            }
+
+            if (!roleManager.RoleExists("Manager"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Manager";
+                roleManager.Create(role);
+            }
+
+            if (!roleManager.RoleExists("Technician"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Technician";
+                roleManager.Create(role);
+            }
         }
     }
 }

@@ -14,6 +14,9 @@ namespace JobCardSystem.Persistence.EntityConfigurations
         {
             HasKey(k => k.Id);
 
+            HasRequired<JobStatus>(h => h.JobStatus);
+            HasRequired<JobType>(h => h.JobType);
+
             HasMany(h => h.Customers)
                 .WithMany(w => w.JobCards)
                 .Map(m =>

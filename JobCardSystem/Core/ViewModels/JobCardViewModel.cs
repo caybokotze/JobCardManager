@@ -45,13 +45,12 @@ namespace JobCardSystem.Core.ViewModels
         public int Distance { get; set; }
 
         #region Drop Down Lists.
-        [NotMapped]
+        
         [Required]
         [Display(Name = "Job Type")]
         public int JobTypeId { get; set; }
         public ICollection<JobType> JobTypes { get; set; }
 
-        [NotMapped]
         [Required]
         [Display(Name = "Job Status")]
         public int JobStatusId { get; set; }
@@ -62,19 +61,16 @@ namespace JobCardSystem.Core.ViewModels
         //[Required]
         //public int[] SelectedCustomerIdArray { get; set; }
 
-        [NotMapped]
         [Display(Name = "Select Customer")]
         [Required]
         public int CustomerId { get; set; }
         public ICollection<Customer> Customers { get; set; }
 
-        [NotMapped]
         [Display(Name = "Add Staff To Job Card")]
         [Required]
         public string[] ApplicationUserIdArray { get; set; }
         public ICollection<ApplicationUser> Staff { get; set; }
 
-        [NotMapped]
         [Display(Name = "Select Stock")]
         [Required]
         public int StockItemId { get; set; }

@@ -38,9 +38,11 @@ namespace JobCardSystem.Core.Domain
         [Display(Name = "Distance Traveled")]
         public int Distance { get; set; }
 
+        [Required]
         [ForeignKey("JobStatus")]
         public int JobStatusId { get; set; }
 
+        [Required]
         [ForeignKey("JobType")]
         public int JobTypeId { get; set; }
 

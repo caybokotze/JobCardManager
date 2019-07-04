@@ -5,5 +5,9 @@ namespace JobCardSystem.Persistence.EntityConfigurations
 {
     public class ServiceContractConfiguration : EntityTypeConfiguration<ServiceContract>
     {
+        public ServiceContractConfiguration()
+        {
+            HasKey(k => k.Id);
+        }
     }
 }

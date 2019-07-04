@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -43,10 +44,8 @@ namespace JobCardSystem.Core.Domain
         public int MaintenanceContractId { get; set; }
         public virtual MaintenanceContract MaintenanceContract { get; set; }
 
-
         [Display(Name = "Services Per Month")]
-        [Required(ErrorMessage = "Please select a value from the drop down list.")]
-        public int ServicesId { get; set; }
+        public int ServiceContractId { get; set; }
         public virtual ServiceContract ServiceContract { get; set; }
         #endregion
 

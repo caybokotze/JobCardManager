@@ -3,16 +3,14 @@ namespace JobCardSystem.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class RemoveSiteLocationFromJobCardEntity : DbMigration
+    public partial class SetAreaNavigationalPropertyToOptional : DbMigration
     {
         public override void Up()
         {
-            DropColumn("dbo.JobCards", "SiteLocation");
         }
         
         public override void Down()
         {
-            AddColumn("dbo.JobCards", "SiteLocation", c => c.String(nullable: false));
         }
     }
 }

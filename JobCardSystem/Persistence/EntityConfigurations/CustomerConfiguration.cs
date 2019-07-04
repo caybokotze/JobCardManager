@@ -13,6 +13,7 @@ namespace JobCardSystem.Persistence.EntityConfigurations
         {
             HasKey<int>(h => h.Id);
 
+            //HasRequired(h => h.ServiceContract);
             HasMany(h => h.Signatures)
                 .WithMany(w => w.Customers)
                 .Map(m =>
@@ -21,7 +22,7 @@ namespace JobCardSystem.Persistence.EntityConfigurations
                     m.MapLeftKey("CustomerId");
                     m.MapRightKey("SignatureId");
                 });
-
+            //
             HasMany(h => h.PaymentRecords)
                 .WithMany(m => m.Customers)
                 .Map(m =>
@@ -30,7 +31,7 @@ namespace JobCardSystem.Persistence.EntityConfigurations
                     m.MapLeftKey("CustomerId");
                     m.MapRightKey("PaymentId");
                 });
-
+            //
             HasMany(h => h.Quotations)
                 .WithMany(w => w.Customers)
                 .Map(m =>

@@ -34,7 +34,9 @@
                     <div class="card-header header-elements-inline">
                         <h5 class="card-title">
                             
-                            @if (ViewData["Controller"] == null
+                            @Html.ActionLink("Create New", "Create", null, new {id="linkRedirect"})
+
+                            @*@if (ViewData["Controller"] == null
                                  || ViewData["Action"] == null)
                             {
                                 <a href="#" id="linkRedirect">Create New</a>
@@ -42,15 +44,16 @@
                                 <script>
                                     var doc = document.getElementById("linkRedirect");
                                     doc.onclick = function() {
-                                        window.alert("It appears the developers of this application have been stupid enough to leave out the link to wherever that link is meant to take you. My utmost humble apologies.");
+                                        window.alert(
+                                            "This link is currently inactive. Please navigate to the required action manually or contact the IT support team to fix the problem.");
                                     }
                                 </script>
                             }
                             else
                             {
                                 <a href="~/@ViewData["Controller"]/@ViewData["Action"]">Create New</a>
-                            }
-                            
+                            }*@
+
                         </h5>
                         <div class="header-elements">
                             <div class="list-icons">

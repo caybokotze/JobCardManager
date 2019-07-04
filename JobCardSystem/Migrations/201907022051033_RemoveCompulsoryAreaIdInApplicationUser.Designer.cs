@@ -7,13 +7,13 @@ namespace JobCardSystem.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddManyToManyLinkBetweenJobCardsAndStockItems : IMigrationMetadata
+    public sealed partial class RemoveCompulsoryAreaIdInApplicationUser : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddManyToManyLinkBetweenJobCardsAndStockItems));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveCompulsoryAreaIdInApplicationUser));
         
         string IMigrationMetadata.Id
         {
-            get { return "201906290817464_AddManyToManyLinkBetweenJobCardsAndStockItems"; }
+            get { return "201907022051033_RemoveCompulsoryAreaIdInApplicationUser"; }
         }
         
         string IMigrationMetadata.Source

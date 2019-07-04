@@ -7,13 +7,13 @@ namespace JobCardSystem.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class RemoveSiteLocationFromJobCardEntity : IMigrationMetadata
+    public sealed partial class SetAreaNavigationalPropertyToOptional : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveSiteLocationFromJobCardEntity));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(SetAreaNavigationalPropertyToOptional));
         
         string IMigrationMetadata.Id
         {
-            get { return "201907011148341_RemoveSiteLocationFromJobCardEntity"; }
+            get { return "201907022133173_SetAreaNavigationalPropertyToOptional"; }
         }
         
         string IMigrationMetadata.Source

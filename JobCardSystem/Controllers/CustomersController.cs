@@ -4,9 +4,11 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using JobCardSystem.BusinessLogic;
 using JobCardSystem.Core;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Core.ViewModels;
@@ -14,7 +16,7 @@ using JobCardSystem.Persistence;
 
 namespace JobCardSystem.Controllers
 {
-    public class CustomersController : Controller
+    public class CustomersController : ApplicationBaseController
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -28,9 +30,12 @@ namespace JobCardSystem.Controllers
         {
             if (page == null || numberOfItems == null)
             {
-                return View(_unitOfWork.Customers.GetCustomersWithContracts(1, 10));
+                var customerList = _unitOfWork.Customers.GetCustomersWithContracts(1, 10).ToList();
+                return View(ListMapper.CustomerListMapper(customerList));
             }
-            return View(_unitOfWork.Customers.GetCustomersWithContracts((int)page, (int)numberOfItems));
+
+            var pagedCustomerList = _unitOfWork.Customers.GetCustomersWithContracts((int) page, (int) numberOfItems).ToList();
+            return View(ListMapper.CustomerListMapper(pagedCustomerList));
         }
 
         // GET: Customers/Details/5
