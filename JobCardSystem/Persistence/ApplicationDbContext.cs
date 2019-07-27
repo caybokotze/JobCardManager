@@ -15,6 +15,7 @@ namespace JobCardSystem.Persistence
             : base("DefaultConnection", throwIfV1Schema: false)
         {
             this.Configuration.LazyLoadingEnabled = false;
+            Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
         }
 
         //public override IDbSet<ApplicationUser> Users { get; set; }
