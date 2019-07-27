@@ -3,7 +3,7 @@ namespace JobCardSystem.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class FirstMigration : DbMigration
+    public partial class InitialMigration : DbMigration
     {
         public override void Up()
         {
@@ -70,7 +70,6 @@ namespace JobCardSystem.Migrations
                         Email = c.String(nullable: false),
                         PhoneNumber = c.String(nullable: false, maxLength: 11),
                         IdNumber = c.String(nullable: false, maxLength: 15),
-                        AreaId = c.Int(nullable: false),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
                         SecurityStamp = c.String(),
@@ -81,9 +80,7 @@ namespace JobCardSystem.Migrations
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Areas", t => t.AreaId, cascadeDelete: true)
-                .Index(t => t.AreaId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.IdentityUserClaims",
@@ -129,6 +126,19 @@ namespace JobCardSystem.Migrations
                 .Index(t => t.ApplicationUser_Id);
             
             CreateTable(
+                "dbo.PurchaseOrderItems",
+                c => new
+                    {
+                        PurchaseOrderId = c.Int(nullable: false),
+                        StockItemId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.PurchaseOrderId, t.StockItemId })
+                .ForeignKey("dbo.PurchaseOrders", t => t.PurchaseOrderId, cascadeDelete: true)
+                .ForeignKey("dbo.StockItems", t => t.StockItemId, cascadeDelete: true)
+                .Index(t => t.PurchaseOrderId)
+                .Index(t => t.StockItemId);
+            
+            CreateTable(
                 "dbo.StockItems",
                 c => new
                     {
@@ -138,8 +148,12 @@ namespace JobCardSystem.Migrations
                         QuantityAvailable = c.Int(nullable: false),
                         Cost = c.Double(nullable: false),
                         SellingPrice = c.Double(nullable: false),
+                        FileDir = c.String(),
+                        SupplierId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Suppliers", t => t.SupplierId)
+                .Index(t => t.SupplierId);
             
             CreateTable(
                 "dbo.Invoices",
@@ -315,32 +329,6 @@ namespace JobCardSystem.Migrations
                 .Index(t => t.StockId);
             
             CreateTable(
-                "dbo.SupplierItems",
-                c => new
-                    {
-                        SupplierId = c.Int(nullable: false),
-                        StockItemId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.SupplierId, t.StockItemId })
-                .ForeignKey("dbo.Suppliers", t => t.SupplierId, cascadeDelete: true)
-                .ForeignKey("dbo.StockItems", t => t.StockItemId, cascadeDelete: true)
-                .Index(t => t.SupplierId)
-                .Index(t => t.StockItemId);
-            
-            CreateTable(
-                "dbo.PurchaseOrderItems",
-                c => new
-                    {
-                        PurchaseOrderId = c.Int(nullable: false),
-                        StockItemId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.PurchaseOrderId, t.StockItemId })
-                .ForeignKey("dbo.PurchaseOrders", t => t.PurchaseOrderId, cascadeDelete: true)
-                .ForeignKey("dbo.StockItems", t => t.StockItemId, cascadeDelete: true)
-                .Index(t => t.PurchaseOrderId)
-                .Index(t => t.StockItemId);
-            
-            CreateTable(
                 "dbo.UserSignatures",
                 c => new
                     {
@@ -445,20 +433,18 @@ namespace JobCardSystem.Migrations
             DropForeignKey("dbo.IdentityUserRoles", "ApplicationUser_Id", "dbo.ApplicationUsers");
             DropForeignKey("dbo.PurchaseOrders", "ApplicationUser_Id", "dbo.ApplicationUsers");
             DropForeignKey("dbo.PurchaseOrderItems", "StockItemId", "dbo.StockItems");
-            DropForeignKey("dbo.PurchaseOrderItems", "PurchaseOrderId", "dbo.PurchaseOrders");
-            DropForeignKey("dbo.SupplierItems", "StockItemId", "dbo.StockItems");
-            DropForeignKey("dbo.SupplierItems", "SupplierId", "dbo.Suppliers");
+            DropForeignKey("dbo.StockItems", "SupplierId", "dbo.Suppliers");
             DropForeignKey("dbo.PurchaseOrders", "SupplierId", "dbo.Suppliers");
             DropForeignKey("dbo.QuoteItems", "StockId", "dbo.StockItems");
             DropForeignKey("dbo.QuoteItems", "QuotationId", "dbo.Quotations");
             DropForeignKey("dbo.InvoiceItems", "StockItemId", "dbo.StockItems");
             DropForeignKey("dbo.InvoiceItems", "InvoiceId", "dbo.Invoices");
             DropForeignKey("dbo.Invoices", "JobCardId", "dbo.JobCards");
+            DropForeignKey("dbo.PurchaseOrderItems", "PurchaseOrderId", "dbo.PurchaseOrders");
             DropForeignKey("dbo.IdentityUserLogins", "ApplicationUser_Id", "dbo.ApplicationUsers");
             DropForeignKey("dbo.UserJobCards", "JobCardId", "dbo.JobCards");
             DropForeignKey("dbo.UserJobCards", "ApplicationUserId", "dbo.ApplicationUsers");
             DropForeignKey("dbo.IdentityUserClaims", "ApplicationUser_Id", "dbo.ApplicationUsers");
-            DropForeignKey("dbo.ApplicationUsers", "AreaId", "dbo.Areas");
             DropIndex("dbo.CustomerSignatures", new[] { "SignatureId" });
             DropIndex("dbo.CustomerSignatures", new[] { "CustomerId" });
             DropIndex("dbo.CustomerQuotes", new[] { "QuotationId" });
@@ -471,10 +457,6 @@ namespace JobCardSystem.Migrations
             DropIndex("dbo.JobCardCustomers", new[] { "JobCardId" });
             DropIndex("dbo.UserSignatures", new[] { "SignatureId" });
             DropIndex("dbo.UserSignatures", new[] { "ApplicationUserId" });
-            DropIndex("dbo.PurchaseOrderItems", new[] { "StockItemId" });
-            DropIndex("dbo.PurchaseOrderItems", new[] { "PurchaseOrderId" });
-            DropIndex("dbo.SupplierItems", new[] { "StockItemId" });
-            DropIndex("dbo.SupplierItems", new[] { "SupplierId" });
             DropIndex("dbo.QuoteItems", new[] { "StockId" });
             DropIndex("dbo.QuoteItems", new[] { "QuotationId" });
             DropIndex("dbo.InvoiceItems", new[] { "StockItemId" });
@@ -486,11 +468,13 @@ namespace JobCardSystem.Migrations
             DropIndex("dbo.IdentityUserRoles", new[] { "IdentityRole_Id" });
             DropIndex("dbo.IdentityUserRoles", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.Invoices", new[] { "JobCardId" });
+            DropIndex("dbo.StockItems", new[] { "SupplierId" });
+            DropIndex("dbo.PurchaseOrderItems", new[] { "StockItemId" });
+            DropIndex("dbo.PurchaseOrderItems", new[] { "PurchaseOrderId" });
             DropIndex("dbo.PurchaseOrders", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.PurchaseOrders", new[] { "SupplierId" });
             DropIndex("dbo.IdentityUserLogins", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.IdentityUserClaims", new[] { "ApplicationUser_Id" });
-            DropIndex("dbo.ApplicationUsers", new[] { "AreaId" });
             DropIndex("dbo.JobCards", new[] { "Customer_Id" });
             DropIndex("dbo.JobCards", new[] { "JobTypeId" });
             DropIndex("dbo.JobCards", new[] { "JobStatusId" });
@@ -502,8 +486,6 @@ namespace JobCardSystem.Migrations
             DropTable("dbo.JobCardStockItems");
             DropTable("dbo.JobCardCustomers");
             DropTable("dbo.UserSignatures");
-            DropTable("dbo.PurchaseOrderItems");
-            DropTable("dbo.SupplierItems");
             DropTable("dbo.QuoteItems");
             DropTable("dbo.InvoiceItems");
             DropTable("dbo.UserJobCards");
@@ -520,6 +502,7 @@ namespace JobCardSystem.Migrations
             DropTable("dbo.Quotations");
             DropTable("dbo.Invoices");
             DropTable("dbo.StockItems");
+            DropTable("dbo.PurchaseOrderItems");
             DropTable("dbo.PurchaseOrders");
             DropTable("dbo.IdentityUserLogins");
             DropTable("dbo.IdentityUserClaims");

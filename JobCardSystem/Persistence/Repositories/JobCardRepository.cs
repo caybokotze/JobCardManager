@@ -12,6 +12,7 @@ namespace JobCardSystem.Persistence.Repositories
         public JobCardRepository(ApplicationDbContext context) : base(context)
         {
         }
+        public ApplicationDbContext ApplicationDbContext => Context;
 
         public IEnumerable<JobCard> GetJobCardsWithJobStatus(int pageIndex, int pageSize)
         {
@@ -37,6 +38,5 @@ namespace JobCardSystem.Persistence.Repositories
                 .ToList();
         }
 
-        public ApplicationDbContext ApplicationDbContext => Context;
     }
 }

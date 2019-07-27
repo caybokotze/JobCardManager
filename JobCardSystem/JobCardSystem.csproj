@@ -200,6 +200,7 @@
     <Compile Include="BusinessLogic\HashCodeCombiner.cs" />
     <Compile Include="BusinessLogic\Interfaces\IFormFile.cs" />
     <Compile Include="BusinessLogic\ListMapper.cs" />
+    <Compile Include="BusinessLogic\Log.cs" />
     <Compile Include="BusinessLogic\ReferenceReadStream.cs" />
     <Compile Include="BusinessLogic\StringValues.cs" />
     <Compile Include="Constants\MaxConstants.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\JobCardsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\StockItemsController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
@@ -217,7 +219,9 @@
     <Compile Include="Controllers\TechniciansController.cs" />
     <Compile Include="Core\Domain\ApplicationUser.cs" />
     <Compile Include="Core\Domain\Area.cs" />
+    <Compile Include="Core\Domain\Configurations\PurchaseOrderItem.cs" />
     <Compile Include="Core\Domain\Customer.cs" />
+    <Compile Include="Core\Domain\Industry.cs" />
     <Compile Include="Core\Domain\Invoice.cs" />
     <Compile Include="Core\Domain\JobCard.cs" />
     <Compile Include="Core\Domain\JobStatus.cs" />
@@ -238,12 +242,16 @@
     <Compile Include="Core\IRepositories\IJobStatusRepository.cs" />
     <Compile Include="Core\IRepositories\IJobTypeRepository.cs" />
     <Compile Include="Core\IRepositories\IMaintenanceContract.cs" />
+    <Compile Include="Core\IRepositories\IPurchaseOrderItemRepository.cs" />
+    <Compile Include="Core\IRepositories\IPurchaseOrderRepository.cs" />
     <Compile Include="Core\IRepositories\IRepository.cs" />
     <Compile Include="Core\IRepositories\IServiceContract.cs" />
     <Compile Include="Core\IRepositories\IStockRepository.cs" />
     <Compile Include="Core\IRepositories\ISupplierRepository.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\ViewModels\CustomerViewModel.cs" />
+    <Compile Include="Core\ViewModels\JobCardAddStockItemsViewModel.cs" />
+    <Compile Include="Core\ViewModels\PurchaseOrderViewModel.cs" />
     <Compile Include="Core\ViewModels\StockItemViewModel.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -253,17 +261,25 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907022041204_FirstMigration.cs" />
-    <Compile Include="Migrations\201907022041204_FirstMigration.Designer.cs">
-      <DependentUpon>201907022041204_FirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201907261412083_InitialMigration.cs" />
+    <Compile Include="Migrations\201907261412083_InitialMigration.Designer.cs">
+      <DependentUpon>201907261412083_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907022051033_RemoveCompulsoryAreaIdInApplicationUser.cs" />
-    <Compile Include="Migrations\201907022051033_RemoveCompulsoryAreaIdInApplicationUser.Designer.cs">
-      <DependentUpon>201907022051033_RemoveCompulsoryAreaIdInApplicationUser.cs</DependentUpon>
+    <Compile Include="Migrations\201907262205091_AddStockLimitToStockItem.cs" />
+    <Compile Include="Migrations\201907262205091_AddStockLimitToStockItem.Designer.cs">
+      <DependentUpon>201907262205091_AddStockLimitToStockItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907022133173_SetAreaNavigationalPropertyToOptional.cs" />
-    <Compile Include="Migrations\201907022133173_SetAreaNavigationalPropertyToOptional.Designer.cs">
-      <DependentUpon>201907022133173_SetAreaNavigationalPropertyToOptional.cs</DependentUpon>
+    <Compile Include="Migrations\201907271117355_RemoveAmountOfItemFromPurchaseOrderEntity.cs" />
+    <Compile Include="Migrations\201907271117355_RemoveAmountOfItemFromPurchaseOrderEntity.Designer.cs">
+      <DependentUpon>201907271117355_RemoveAmountOfItemFromPurchaseOrderEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907271641466_AddCreatedAtDateToPurchaseOrder.cs" />
+    <Compile Include="Migrations\201907271641466_AddCreatedAtDateToPurchaseOrder.Designer.cs">
+      <DependentUpon>201907271641466_AddCreatedAtDateToPurchaseOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907271827410_RemoveLinkBetweenPurchaseOrderAndUser.cs" />
+    <Compile Include="Migrations\201907271827410_RemoveLinkBetweenPurchaseOrderAndUser.Designer.cs">
+      <DependentUpon>201907271827410_RemoveLinkBetweenPurchaseOrderAndUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
@@ -296,6 +312,7 @@
     <Compile Include="Persistence\EntityConfigurations\InvoiceConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\JobCardConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\PurchaseOrderConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\PurchaseOrderItemConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\QuotationConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\SignatureConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\StockConfiguration.cs" />
@@ -311,6 +328,8 @@
     <Compile Include="Persistence\Repositories\JobStatusRepository.cs" />
     <Compile Include="Persistence\Repositories\JobTypeRepository.cs" />
     <Compile Include="Persistence\Repositories\MaintenanceContractRepository.cs" />
+    <Compile Include="Persistence\Repositories\PurchaseOrderItemRepository.cs" />
+    <Compile Include="Persistence\Repositories\PurchaseOrderRepository.cs" />
     <Compile Include="Persistence\Repositories\Repository.cs" />
     <Compile Include="Persistence\Repositories\ServiceContractRepository.cs" />
     <Compile Include="Persistence\Repositories\StockRepository.cs" />
@@ -318,7 +337,6 @@
     <Compile Include="Persistence\EntityConfigurations\ServiceContractConfiguration.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
     <Compile Include="Core\ViewModels\JobCardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -332,9 +350,12 @@
     <Content Include="Content\Assets\css\components.min.css" />
     <Content Include="Content\Assets\css\layout.css" />
     <Content Include="Content\Assets\css\layout.min.css" />
+    <Content Include="Content\Assets\Images\AUDCADDaily.png" />
     <Content Include="Content\Assets\Images\icon.png" />
+    <Content Include="Content\Assets\Images\StockPictures\2019-07-25-12-27-20.png" />
     <Content Include="Content\Assets\js\app.js" />
     <Content Include="Content\Assets\js\custom.js" />
+    <Content Include="Content\Assets\js\purchaseOrderView.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -2783,12 +2804,15 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Shared\_mainCss.cshtml" />
     <Content Include="Views\Shared\_mainJs.cshtml" />
+    <Content Include="Views\StockItems\Create.cshtml" />
+    <Content Include="Views\StockItems\Index.cshtml" />
+    <Content Include="Views\PurchaseOrder\Create.cshtml" />
+    <Content Include="Views\PurchaseOrder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
     <Folder Include="Views\ApplicationBase\" />
-    <Folder Include="Views\StockItems\" />
     <Folder Include="Views\System\" />
     <Folder Include="Views\Technicians\" />
   </ItemGroup>
@@ -2806,14 +2830,20 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201907022041204_FirstMigration.resx">
-      <DependentUpon>201907022041204_FirstMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907261412083_InitialMigration.resx">
+      <DependentUpon>201907261412083_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907022051033_RemoveCompulsoryAreaIdInApplicationUser.resx">
-      <DependentUpon>201907022051033_RemoveCompulsoryAreaIdInApplicationUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907262205091_AddStockLimitToStockItem.resx">
+      <DependentUpon>201907262205091_AddStockLimitToStockItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907022133173_SetAreaNavigationalPropertyToOptional.resx">
-      <DependentUpon>201907022133173_SetAreaNavigationalPropertyToOptional.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907271117355_RemoveAmountOfItemFromPurchaseOrderEntity.resx">
+      <DependentUpon>201907271117355_RemoveAmountOfItemFromPurchaseOrderEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907271641466_AddCreatedAtDateToPurchaseOrder.resx">
+      <DependentUpon>201907271641466_AddCreatedAtDateToPurchaseOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907271827410_RemoveLinkBetweenPurchaseOrderAndUser.resx">
+      <DependentUpon>201907271827410_RemoveLinkBetweenPurchaseOrderAndUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

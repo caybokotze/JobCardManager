@@ -12,5 +12,6 @@ namespace JobCardSystem.Core.IRepositories
         IEnumerable<JobCard> GetJobCardsWithJobStatus(int pageIndex, int pageSize);
 
         IEnumerable<JobCard> GetJobCardWithAllTypes(int pageIndex, int pageSize);
+
     }
 }

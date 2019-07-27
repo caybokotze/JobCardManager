@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JobCardSystem.Core.Domain;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -8,18 +10,20 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using JobCardSystem.Models;
 using JobCardSystem.Persistence;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 [assembly: OwinStartupAttribute(typeof(JobCardSystem.Startup))]
 
 namespace JobCardSystem
 {
-    public partial class Startup
+    public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            //CreateRolesAndUsers();
+            CreateRolesAndUsers();
+            SeedDropDownListContent();
         }
 
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
@@ -124,6 +128,99 @@ namespace JobCardSystem
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
                 role.Name = "Technician";
                 roleManager.Create(role);
+            }
+        }
+
+        public static void SeedDropDownListContent()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            var exist = context.MaintenanceContracts.ToList().Count();
+            if (exist == 0)
+            {
+                var maintenanceContractList = new List<MaintenanceContract>()
+                {
+                    new MaintenanceContract()
+                    {
+                        Name = "Monthly",
+                        Duration = 1
+                    },
+                    new MaintenanceContract()
+                    {
+                        Name = "Semi Annual",
+                        Duration = 6
+                    },
+                    new MaintenanceContract()
+                    {
+                        Name = "Quarterly",
+                        Duration = 3
+                    },
+                    new MaintenanceContract()
+                    {
+                        Name = "Yearly",
+                        Duration = 12
+                    }
+                };
+
+                var serviceContractList = new List<ServiceContract>()
+                {
+                    new ServiceContract()
+                    {
+                        ServiceName = "Monthly",
+                        Months = 1
+                    },
+                    new ServiceContract()
+                    {
+                        ServiceName = "Quarterly",
+                        Months = 3
+                    },
+                    new ServiceContract()
+                    {
+                        ServiceName = "Semi Annually",
+                        Months = 6
+                    },
+                    new ServiceContract()
+                    {
+                        ServiceName = "Yearly",
+                        Months = 12
+                    }
+                };
+
+                var jobTypeList = new List<JobType>()
+                {
+                    new JobType()
+                    {
+                        Name = "Maintenance Check"
+                    },
+                    new JobType()
+                    {
+                        Name = "Installation"
+                    },
+                    new JobType()
+                    {
+                        Name = "Repair"
+                    }
+                };
+
+                var jobStatusList = new List<JobStatus>()
+                {
+                    new JobStatus()
+                    {
+                        Name = "Complete"
+                    },
+                    new JobStatus()
+                    {
+                        Name = "Pending"
+                    },
+                    new JobStatus()
+                    {
+                        Name = "Open"
+                    }
+                };
+                context.JobStatuses.AddRange(jobStatusList);
+                context.JobTypes.AddRange(jobTypeList);
+                context.ServiceContracts.AddRange(serviceContractList);
+                context.MaintenanceContracts.AddRange(maintenanceContractList);
+                context.SaveChanges();
             }
         }
     }

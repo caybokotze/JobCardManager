@@ -71,15 +71,16 @@ namespace JobCardSystem.Core.Domain
         [StringLength(MaxConstants.IdNumber, ErrorMessage = "Id Number can not be longer than digits.")]
         public string IdNumber { get; set; }
 
-        [Display(Name = "Select Area")]
-        public int AreaId { get; set; }
-        public virtual Area Area { get; set; }
+        //[Display(Name = "Select Area")]
+        //public int AreaId { get; set; }
+        //public virtual Area Area { get; set; }
 
         #region Navigational Properties
         public virtual ICollection<JobCard> JobCards { get; set; }
-        public virtual ICollection<Signature> Signatures { get; set; }
-        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
-
+        //public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        /* Application User is also linked to a One to One relationship with the signature table, however, the relationship there
+         Resides on the Signature Entity.
+         */
         #endregion
 
     }

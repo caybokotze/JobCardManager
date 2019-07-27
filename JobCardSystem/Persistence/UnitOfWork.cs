@@ -26,6 +26,8 @@ namespace JobCardSystem.Persistence
             ServiceContracts = new ServiceContractRepository(_context);
             MaintenanceContracts = new MaintenanceContractRepository(_context);
             Areas = new AreaRepository(_context);
+            PurchaseOrders = new PurchaseOrderRepository(_context);
+            PurchaseOrderItems = new PurchaseOrderItemRepository(_context);
         }
         public void Dispose()
         {
@@ -42,6 +44,8 @@ namespace JobCardSystem.Persistence
         public IServiceContract ServiceContracts { get; }
         public IMaintenanceContract MaintenanceContracts { get; }
         public IAreaRepository Areas { get; }
+        public IPurchaseOrderRepository PurchaseOrders { get; }
+        public IPurchaseOrderItemRepository PurchaseOrderItems { get; }
 
         public int Complete()
         {

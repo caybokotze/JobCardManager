@@ -7,13 +7,13 @@ namespace JobCardSystem.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class RemoveCompulsoryAreaIdInApplicationUser : IMigrationMetadata
+    public sealed partial class RemoveAmountOfItemFromPurchaseOrderEntity : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveCompulsoryAreaIdInApplicationUser));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveAmountOfItemFromPurchaseOrderEntity));
         
         string IMigrationMetadata.Id
         {
-            get { return "201907022051033_RemoveCompulsoryAreaIdInApplicationUser"; }
+            get { return "201907271117355_RemoveAmountOfItemFromPurchaseOrderEntity"; }
         }
         
         string IMigrationMetadata.Source

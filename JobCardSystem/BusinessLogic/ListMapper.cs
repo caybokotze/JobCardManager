@@ -56,5 +56,29 @@ namespace JobCardSystem.BusinessLogic
             return objectList;
         }
 
+        public static List<StockItemViewModel> StockItemListMapper(List<StockItem> mappingObjectList)
+        {
+            var objectList = new List<StockItemViewModel>();
+            foreach (var item in mappingObjectList)
+            {
+                var mappedModel = Mapper.Map<StockItem, StockItemViewModel>(item);
+                objectList.Add(mappedModel);
+            }
+            return objectList;
+        }
+
+        public static List<StockItem> StockItemListMapper(List<StockItemViewModel> mappingObjectList)
+        {
+            var objectList = new List<StockItem>();
+            foreach (var item in mappingObjectList)
+            {
+                var mappedModel = Mapper.Map<StockItemViewModel, StockItem>(item);
+                objectList.Add(mappedModel);
+            }
+            return objectList;
+        }
+
+        
+
     }
 }

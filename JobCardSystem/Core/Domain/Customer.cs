@@ -53,7 +53,11 @@ namespace JobCardSystem.Core.Domain
         public virtual ICollection<JobCard> JobCards { get; set; }
         public virtual ICollection<Quotation> Quotations { get; set; }
         public virtual ICollection<PaymentRecord> PaymentRecords { get; set; }
-        public virtual ICollection<Signature> Signatures { get; set; }
+
+        /*
+         * Customer is also linked with a non compulsory signature, which is why it is referenced from the signature entity
+         * and not the customer entity.
+         */
         #endregion
     }
 }

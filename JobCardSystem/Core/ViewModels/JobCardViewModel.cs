@@ -49,11 +49,13 @@ namespace JobCardSystem.Core.ViewModels
         [Required]
         [Display(Name = "Job Type")]
         public int JobTypeId { get; set; }
+        //Drop Down List
         public ICollection<JobType> JobTypes { get; set; }
 
         [Required]
         [Display(Name = "Job Status")]
         public int JobStatusId { get; set; }
+        //Drop Down List
         public ICollection<JobStatus> JobStatuses { get; set; }
 
         //[NotMapped]
@@ -69,11 +71,13 @@ namespace JobCardSystem.Core.ViewModels
         [Display(Name = "Add Staff To Job Card")]
         [Required]
         public string[] ApplicationUserIdArray { get; set; }
+        //s
         public ICollection<ApplicationUser> Staff { get; set; }
 
         [Display(Name = "Select Stock")]
         [Required]
         public int StockItemId { get; set; }
+        //
         public ICollection<StockItem> StockItems { get; set; }
 
         //

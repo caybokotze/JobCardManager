@@ -12,15 +12,6 @@ namespace JobCardSystem.Persistence.EntityConfigurations
         public SupplierConfiguration()
         {
             HasKey(k => k.Id);
-
-            HasMany(h => h.StockItems)
-                .WithMany(w => w.Suppliers)
-                .Map(m =>
-                {
-                    m.ToTable("SupplierItems");
-                    m.MapLeftKey("SupplierId");
-                    m.MapRightKey("StockItemId");
-                });
         }
     }
 }

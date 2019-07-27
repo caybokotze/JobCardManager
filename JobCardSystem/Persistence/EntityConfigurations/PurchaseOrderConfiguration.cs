@@ -11,16 +11,8 @@ namespace JobCardSystem.Persistence.EntityConfigurations
     {
         public PurchaseOrderConfiguration()
         {
-            HasKey(h => h.Id);
+            HasKey(k => k.Id);
 
-            HasMany(h => h.StockItems)
-                .WithMany(w => w.PurchaseOrders)
-                .Map(m =>
-                {
-                    m.ToTable("PurchaseOrderItems");
-                    m.MapLeftKey("PurchaseOrderId");
-                    m.MapRightKey("StockItemId");
-                });
         }
     }
 }

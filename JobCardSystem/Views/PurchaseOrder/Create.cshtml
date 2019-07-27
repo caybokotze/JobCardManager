@@ -1,0 +1,65 @@
+﻿@using JobCardSystem.Core.ViewModels
+@model TempPurchaseOrderViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>PurchaseOrder</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.SupplierId, new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownListFor(m => m.SupplierId,
+                    new SelectList(Model.Suppliers, "Id", "Name"), "Select Service Contract",
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.SupplierId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.PurchaseOrderItemsIdArray, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.ListBoxFor(m => m.PurchaseOrderItemsIdArray, new MultiSelectList(Model.StockItems, "Id", "Name"),
+                    new {id = "stockItemMultiSelector", multiple = "multiple"})
+                @Html.ValidationMessageFor(m => m.PurchaseOrderItemsIdArray, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section Scripts {
+    <script>
+        $(function() {
+            $("#stockItemMultiSelector").chosen({
+                width: "100%",
+                disable_search_threshold: 5
+            });
+        });
+
+        $('#stockItemMultiSelector')
+            .attr('data-placeholder', 'Select and add staff to the list.');
+
+    </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

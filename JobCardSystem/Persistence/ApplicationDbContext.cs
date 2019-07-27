@@ -1,6 +1,7 @@
 ﻿
 using System.Data.Entity;
 using JobCardSystem.Core.Domain;
+using JobCardSystem.Core.Domain.Configurations;
 using JobCardSystem.Models;
 using JobCardSystem.Persistence.EntityConfigurations;
 using JobCardSystem.Persistence.EntityConfigurations.Identity;
@@ -34,6 +35,7 @@ namespace JobCardSystem.Persistence
         public DbSet<StockItem> StockItems { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -53,6 +55,7 @@ namespace JobCardSystem.Persistence
             modelBuilder.Configurations.Add(new StockConfiguration());
             modelBuilder.Configurations.Add(new CustomerConfiguration());
             modelBuilder.Configurations.Add(new SupplierConfiguration());
+            modelBuilder.Configurations.Add(new PurchaseOrderItemConfiguration());
             // Fluent API Configurations for Identity.
             modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
             modelBuilder.Configurations.Add(new IdentityUserLoginConfiguration());

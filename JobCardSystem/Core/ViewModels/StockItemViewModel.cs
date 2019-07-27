@@ -1,8 +1,6 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using JobCardSystem.BusinessLogic;
 using JobCardSystem.Core.Domain;
 
@@ -13,7 +11,7 @@ namespace JobCardSystem.Core.ViewModels
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Supplier Name")]
+        [Display(Name = "Item Name")]
         public string Name { get; set; }
 
         [Display(Name = "Description")]
@@ -25,13 +23,28 @@ namespace JobCardSystem.Core.ViewModels
 
         [Required]
         [Display(Name = "Purchasing Cost")]
+        [DataType(DataType.Currency)]
         public double Cost { get; set; }
 
         [Required]
         [Display(Name = "Selling Cost")]
         public double SellingPrice { get; set; }
+
+        public string FileDir { get; set; }
+
+        [Required]
+        [Display(Name = "Select Supplier")]
+        public int SupplierId { get; set; }
+
         //
+
+        public string DisplayCost => Cost.ToString("C");
+        public string DisplaySellingPrice => SellingPrice.ToString("C");
+
+
         public ICollection<Supplier> Suppliers { get; set; }
+
+        public Supplier Supplier { get; set; }
 
         public ICollection<GetDisplayName> GetDisplayNames()
         {

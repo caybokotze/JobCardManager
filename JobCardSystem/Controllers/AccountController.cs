@@ -202,12 +202,12 @@ namespace JobCardSystem.Controllers
                     PhoneNumber = model.PhoneNumber
                 };
 
-                var role = context.Roles.SingleOrDefault(i => i.Id == model.Id);
-                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                if (context.Roles.Any(s => s.Name == role.Name))
-                {
-                    UserManager.AddToRole(model.Id, role.Name);
-                }
+                //var role = context.Roles.SingleOrDefault(i => i.Id == model.Id);
+                //var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                //if (context.Roles.Any(s => s.Name == role.Name))
+                //{
+                //    UserManager.AddToRole(model.Id, role.Name);
+                //}
                 //
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

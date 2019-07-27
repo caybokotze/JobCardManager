@@ -7,13 +7,13 @@ namespace JobCardSystem.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class SetAreaNavigationalPropertyToOptional : IMigrationMetadata
+    public sealed partial class AddCreatedAtDateToPurchaseOrder : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(SetAreaNavigationalPropertyToOptional));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddCreatedAtDateToPurchaseOrder));
         
         string IMigrationMetadata.Id
         {
-            get { return "201907022133173_SetAreaNavigationalPropertyToOptional"; }
+            get { return "201907271641466_AddCreatedAtDateToPurchaseOrder"; }
         }
         
         string IMigrationMetadata.Source

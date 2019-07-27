@@ -19,6 +19,8 @@ namespace JobCardSystem.Core
         IServiceContract ServiceContracts { get; }
         IMaintenanceContract MaintenanceContracts { get; }
         IAreaRepository Areas { get; }
+        IPurchaseOrderRepository PurchaseOrders { get; }
+        IPurchaseOrderItemRepository PurchaseOrderItems { get; }
 
         int Complete();
     }

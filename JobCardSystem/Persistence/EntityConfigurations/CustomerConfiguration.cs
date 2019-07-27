@@ -14,14 +14,7 @@ namespace JobCardSystem.Persistence.EntityConfigurations
             HasKey<int>(h => h.Id);
 
             //HasRequired(h => h.ServiceContract);
-            HasMany(h => h.Signatures)
-                .WithMany(w => w.Customers)
-                .Map(m =>
-                {
-                    m.ToTable("CustomerSignatures");
-                    m.MapLeftKey("CustomerId");
-                    m.MapRightKey("SignatureId");
-                });
+            
             //
             HasMany(h => h.PaymentRecords)
                 .WithMany(m => m.Customers)

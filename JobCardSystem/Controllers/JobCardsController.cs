@@ -66,35 +66,42 @@ namespace JobCardSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(JobCardViewModel jobCard)
+        public ActionResult Create(JobCardViewModel jobCardViewModel)
         {
             if (ModelState.IsValid)
             {
-                var job = Mapper.Map<JobCardViewModel, JobCard>(jobCard);
+                IUnitOfWork testUnit = new UnitOfWork(_context);
+
+                var job = Mapper.Map<JobCardViewModel, JobCard>(jobCardViewModel);
                 job.CreatedAt = DateTime.Now;
 
-                foreach (var stock in jobCard.StockItems)
-                {
-                    job.JobTotal += stock.SellingPrice;
-                }
-
-                var customer = _unitOfWork.Customers.SingleOrDefault(f => f.Id == jobCard.CustomerId);
+                var customer = testUnit.Customers.SingleOrDefault(f => f.Id == jobCardViewModel.CustomerId);
                 job.Customers.Add(customer);
 
-                var stockItem = _unitOfWork.StockItems.SingleOrDefault(s => s.Id == jobCard.StockItemId);
-                job.StockItems.Add(stockItem);
+                var userList = new List<ApplicationUser>();
+                foreach (var userId in jobCardViewModel.ApplicationUserIdArray)
+                {
+                    var user = _context.Users.SingleOrDefault(s => s.Id == userId);
+                    userList.Add(user);
+                }
 
-                var userId = User.Identity.GetUserId();
-                var userFromDb = _context.Users.SingleOrDefault(u => u.Id == userId);
-                job.ApplicationUsers.Add(userFromDb);
-
-                _unitOfWork.JobCards.Add(job);
-                _unitOfWork.Complete();
+                job.ApplicationUsers = userList;
+                testUnit.JobCards.Add(job);
+                testUnit.Complete();
 
                 return RedirectToAction("Index");
+
+                /*
+                 * Note:
+                 * This Code was used to pull the current user as the person the job is allocated to.
+                 * //var userId = User.Identity.GetUserId();
+                 * //var userFromDb = _context.Users.SingleOrDefault(u => u.Id == userId);
+                 * //job.ApplicationUsers.Add(userFromDb);
+                 */
+
             }
 
-            return View(jobCard);
+            return View(jobCardViewModel);
         }
 
         public ActionResult Edit(int? id)
