@@ -13,6 +13,7 @@ namespace JobCardSystem.Core.Domain.Configurations
          * To view the logical implementation of this file goto: PurchaseOrderItemConfiguration in the Entity Configurations folder.
          */
 
+        public int Id { get; set; }
         public int PurchaseOrderId { get; set; }
         public int StockItemId { get; set; }
         public int AmountOfItems { get; set; }

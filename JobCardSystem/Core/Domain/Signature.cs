@@ -10,11 +10,7 @@ namespace JobCardSystem.Core.Domain
     {
         public int Id { get; set; }
 
-        public string Dir { get; set; }
-
-        [Display(Name = "Please select a file to upload.")]
-        [Required]
-        public string FileName { get; set; }
+        public string FileDir { get; set; }
 
         #region Navigational Properties
 

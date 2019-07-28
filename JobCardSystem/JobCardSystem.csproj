@@ -62,6 +62,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Globalization" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -69,6 +72,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -195,6 +204,7 @@
     <Compile Include="App_Start\SmsService.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\StructureMapMvc.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BusinessLogic\GetDisplayName.cs" />
     <Compile Include="BusinessLogic\FormFile.cs" />
     <Compile Include="BusinessLogic\HashCodeCombiner.cs" />
@@ -213,6 +223,8 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SignatureController.cs" />
+    <Compile Include="Controllers\Api\SignImageController.cs" />
     <Compile Include="Controllers\StockItemsController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
@@ -281,6 +293,14 @@
     <Compile Include="Migrations\201907271827410_RemoveLinkBetweenPurchaseOrderAndUser.Designer.cs">
       <DependentUpon>201907271827410_RemoveLinkBetweenPurchaseOrderAndUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907272126523_RemovePrimaryKeysFromPurchaseItemConfiguration.cs" />
+    <Compile Include="Migrations\201907272126523_RemovePrimaryKeysFromPurchaseItemConfiguration.Designer.cs">
+      <DependentUpon>201907272126523_RemovePrimaryKeysFromPurchaseItemConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907272303163_RemoveFileDirFromSignature.cs" />
+    <Compile Include="Migrations\201907272303163_RemoveFileDirFromSignature.Designer.cs">
+      <DependentUpon>201907272303163_RemoveFileDirFromSignature.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\AddPhoneNumberViewModel.cs" />
@@ -348,14 +368,18 @@
     <Content Include="Content\Assets\css\colors.min.css" />
     <Content Include="Content\Assets\css\components.css" />
     <Content Include="Content\Assets\css\components.min.css" />
+    <Content Include="Content\Assets\css\ie9.css" />
     <Content Include="Content\Assets\css\layout.css" />
     <Content Include="Content\Assets\css\layout.min.css" />
+    <Content Include="Content\Assets\css\signature-pad.css" />
     <Content Include="Content\Assets\Images\AUDCADDaily.png" />
     <Content Include="Content\Assets\Images\icon.png" />
     <Content Include="Content\Assets\Images\StockPictures\2019-07-25-12-27-20.png" />
     <Content Include="Content\Assets\js\app.js" />
     <Content Include="Content\Assets\js\custom.js" />
     <Content Include="Content\Assets\js\purchaseOrderView.js" />
+    <Content Include="Content\Assets\js\sign.js" />
+    <Content Include="Content\Assets\js\Signature_Pad.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -2808,6 +2832,7 @@
     <Content Include="Views\StockItems\Index.cshtml" />
     <Content Include="Views\PurchaseOrder\Create.cshtml" />
     <Content Include="Views\PurchaseOrder\Index.cshtml" />
+    <Content Include="Views\Signature\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2844,6 +2869,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907271827410_RemoveLinkBetweenPurchaseOrderAndUser.resx">
       <DependentUpon>201907271827410_RemoveLinkBetweenPurchaseOrderAndUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907272126523_RemovePrimaryKeysFromPurchaseItemConfiguration.resx">
+      <DependentUpon>201907272126523_RemovePrimaryKeysFromPurchaseItemConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907272303163_RemoveFileDirFromSignature.resx">
+      <DependentUpon>201907272303163_RemoveFileDirFromSignature.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
