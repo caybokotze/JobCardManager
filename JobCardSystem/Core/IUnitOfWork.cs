@@ -21,6 +21,8 @@ namespace JobCardSystem.Core
         IAreaRepository Areas { get; }
         IPurchaseOrderRepository PurchaseOrders { get; }
         IPurchaseOrderItemRepository PurchaseOrderItems { get; }
+        IApplicationUserSignature ApplicationUserSignatures { get; }
+        ICustomerSignatureRepository CustomerSignatures { get; }
 
         int Complete();
     }

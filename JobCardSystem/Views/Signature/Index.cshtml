@@ -1,0 +1,36 @@
+﻿@model IEnumerable<JobCardSystem.Core.Domain.ApplicationUserSignature>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_TableLayout.cshtml";
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FileDir)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationUserId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img style="max-height: 120px;"src="~/@item.FileDir"/>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GetDisplayName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

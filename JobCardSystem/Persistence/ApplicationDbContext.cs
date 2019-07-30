@@ -12,7 +12,7 @@ namespace JobCardSystem.Persistence
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DeploymentConnection", throwIfV1Schema: false)
         {
             this.Configuration.LazyLoadingEnabled = false;
             Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
@@ -32,11 +32,12 @@ namespace JobCardSystem.Persistence
         public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public DbSet<Quotation> Quotations { get; set; }
         public DbSet<ServiceContract> ServiceContracts { get; set; }
-        public DbSet<Signature> Signatures { get; set; }
         public DbSet<StockItem> StockItems { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
+        public DbSet<CustomerSignature> CustomerSignatures { get; set; }
+        public DbSet<ApplicationUserSignature> ApplicationUserSignatures { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -52,11 +53,12 @@ namespace JobCardSystem.Persistence
             modelBuilder.Configurations.Add(new PurchaseOrderConfiguration());
             modelBuilder.Configurations.Add(new QuotationConfiguration());
             modelBuilder.Configurations.Add(new ServiceContractConfiguration());
-            modelBuilder.Configurations.Add(new SignatureConfiguration());
             modelBuilder.Configurations.Add(new StockConfiguration());
             modelBuilder.Configurations.Add(new CustomerConfiguration());
             modelBuilder.Configurations.Add(new SupplierConfiguration());
             modelBuilder.Configurations.Add(new PurchaseOrderItemConfiguration());
+            modelBuilder.Configurations.Add(new ApplicationUserSignatureConfiguration());
+            modelBuilder.Configurations.Add(new CustomerSignatureConfiguration());
             // Fluent API Configurations for Identity.
             modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
             modelBuilder.Configurations.Add(new IdentityUserLoginConfiguration());

@@ -28,6 +28,8 @@ namespace JobCardSystem.Persistence
             Areas = new AreaRepository(_context);
             PurchaseOrders = new PurchaseOrderRepository(_context);
             PurchaseOrderItems = new PurchaseOrderItemRepository(_context);
+            ApplicationUserSignatures = new ApplicationUserSignatureRepository(_context);
+            CustomerSignatures = new CustomerSignatureRepository(_context);
         }
         public void Dispose()
         {
@@ -46,6 +48,8 @@ namespace JobCardSystem.Persistence
         public IAreaRepository Areas { get; }
         public IPurchaseOrderRepository PurchaseOrders { get; }
         public IPurchaseOrderItemRepository PurchaseOrderItems { get; }
+        public IApplicationUserSignature ApplicationUserSignatures { get; }
+        public ICustomerSignatureRepository CustomerSignatures { get; }
 
         public int Complete()
         {

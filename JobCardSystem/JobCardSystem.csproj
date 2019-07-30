@@ -66,6 +66,8 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -230,6 +232,7 @@
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Controllers\TechniciansController.cs" />
     <Compile Include="Core\Domain\ApplicationUser.cs" />
+    <Compile Include="Core\Domain\ApplicationUserSignature.cs" />
     <Compile Include="Core\Domain\Area.cs" />
     <Compile Include="Core\Domain\Configurations\PurchaseOrderItem.cs" />
     <Compile Include="Core\Domain\Customer.cs" />
@@ -244,11 +247,13 @@
     <Compile Include="Core\Domain\PurchaseOrder.cs" />
     <Compile Include="Core\Domain\Quotation.cs" />
     <Compile Include="Core\Domain\ServiceContract.cs" />
-    <Compile Include="Core\Domain\Signature.cs" />
+    <Compile Include="Core\Domain\CustomerSignature.cs" />
     <Compile Include="Core\Domain\StockItem.cs" />
     <Compile Include="Core\Domain\Supplier.cs" />
+    <Compile Include="Core\IRepositories\IApplicationUserSignature.cs" />
     <Compile Include="Core\IRepositories\IAreaRepository.cs" />
     <Compile Include="Core\IRepositories\ICustomerRepository.cs" />
+    <Compile Include="Core\IRepositories\ICustomerSignatureRepository.cs" />
     <Compile Include="Core\IRepositories\IInvoiceRepository.cs" />
     <Compile Include="Core\IRepositories\IJobCardRepository.cs" />
     <Compile Include="Core\IRepositories\IJobStatusRepository.cs" />
@@ -301,6 +306,10 @@
     <Compile Include="Migrations\201907272303163_RemoveFileDirFromSignature.Designer.cs">
       <DependentUpon>201907272303163_RemoveFileDirFromSignature.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907281632324_SeperateSignaturesIntoTwoTables.cs" />
+    <Compile Include="Migrations\201907281632324_SeperateSignaturesIntoTwoTables.Designer.cs">
+      <DependentUpon>201907281632324_SeperateSignaturesIntoTwoTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\AddPhoneNumberViewModel.cs" />
@@ -322,6 +331,9 @@
     <Compile Include="Models\VerifyCodeViewModel.cs" />
     <Compile Include="Models\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
+    <Compile Include="Persistence\EntityConfigurations\ApplicationUserSignatureConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\CustomerSignatureConfiguration.cs" />
+    <Compile Include="Persistence\Repositories\ApplicationUserSignatureRepository.cs" />
     <Compile Include="Persistence\EntityConfigurations\AreaConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\Identity\ApplicationUserConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\CustomerConfiguration.cs" />
@@ -334,7 +346,6 @@
     <Compile Include="Persistence\EntityConfigurations\PurchaseOrderConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\PurchaseOrderItemConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\QuotationConfiguration.cs" />
-    <Compile Include="Persistence\EntityConfigurations\SignatureConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\StockConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\SupplierConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\JobStatusConfiguration.cs" />
@@ -343,6 +354,7 @@
     <Compile Include="Persistence\EntityConfigurations\PaymentTypeConfiguration.cs" />
     <Compile Include="Persistence\Repositories\AreaRepository.cs" />
     <Compile Include="Persistence\Repositories\CustomerRepository.cs" />
+    <Compile Include="Persistence\Repositories\CustomerSignatureRepository.cs" />
     <Compile Include="Persistence\Repositories\InvoiceRepository.cs" />
     <Compile Include="Persistence\Repositories\JobCardRepository.cs" />
     <Compile Include="Persistence\Repositories\JobStatusRepository.cs" />
@@ -372,9 +384,14 @@
     <Content Include="Content\Assets\css\layout.css" />
     <Content Include="Content\Assets\css\layout.min.css" />
     <Content Include="Content\Assets\css\signature-pad.css" />
+    <Content Include="Content\Assets\Images\2019Jul28-24-07.png" />
     <Content Include="Content\Assets\Images\AUDCADDaily.png" />
     <Content Include="Content\Assets\Images\icon.png" />
     <Content Include="Content\Assets\Images\StockPictures\2019-07-25-12-27-20.png" />
+    <Content Include="Content\Assets\Images\StockPictures\2019-07-26-07-53-02.jpg" />
+    <Content Include="Content\Assets\Images\StockPictures\2019-07-26-07-58-33.png" />
+    <Content Include="Content\Assets\Images\StockPictures\2019-07-27-05-49-25.jpg" />
+    <Content Include="Content\Assets\Images\StockPictures\2019-07-27-11-19-37.jpg" />
     <Content Include="Content\Assets\js\app.js" />
     <Content Include="Content\Assets\js\custom.js" />
     <Content Include="Content\Assets\js\purchaseOrderView.js" />
@@ -2753,6 +2770,7 @@
     <Content Include="Content\Global\scss\_bootstrap\_utilities.scss" />
     <Content Include="Content\Global\scss\_bootstrap\_variables.scss" />
     <Content Include="Content\Global\scss\_config.scss" />
+    <None Include="Properties\PublishProfiles\JobCardPro - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1-vsdoc.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -2765,7 +2783,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2833,9 +2853,11 @@
     <Content Include="Views\PurchaseOrder\Create.cshtml" />
     <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\Signature\View.cshtml" />
+    <Content Include="Views\Signature\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Assets\Images\Signatures\" />
     <Folder Include="Filters\" />
     <Folder Include="Views\ApplicationBase\" />
     <Folder Include="Views\System\" />
@@ -2876,6 +2898,12 @@
     <EmbeddedResource Include="Migrations\201907272303163_RemoveFileDirFromSignature.resx">
       <DependentUpon>201907272303163_RemoveFileDirFromSignature.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907281632324_SeperateSignaturesIntoTwoTables.resx">
+      <DependentUpon>201907281632324_SeperateSignaturesIntoTwoTables.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

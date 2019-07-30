@@ -6,11 +6,28 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Hosting;
 using System.Web.Http;
+using JobCardSystem.Core;
+using JobCardSystem.Core.Domain;
+using JobCardSystem.Persistence;
+using Microsoft.AspNet.Identity;
 
 namespace JobCardSystem.Controllers.Api
 {
     public class SignImageController : ApiController
     {
+        //private readonly IUnitOfWork _unitOfWork;
+
+        //public SignImageController(IUnitOfWork unitOfWork)
+        //{
+        //    _unitOfWork = unitOfWork;
+        //}
+        private readonly ApplicationDbContext _context;
+
+        public SignImageController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
         // GET: api/Signaturepost
         public IEnumerable<string> Get()
         {
@@ -30,10 +47,18 @@ namespace JobCardSystem.Controllers.Api
             {
                 string isolate = obj.Image.Remove(0, 22);
                 byte[] imgBytes = Convert.FromBase64String(isolate);
-
-                var imageFile = new FileStream(@"C:\samples\"+ DateTime.Now.ToString("yyyyMMMdd-mm-ss") + ".png", FileMode.Create);
+                var dir = HostingEnvironment.ApplicationHost.GetPhysicalPath() + @"Content\Assets\Images\Signatures\";
+                var fileName = DateTime.Now.ToString("yyyyMMMdd-mm-ss") + ".png";
+                var imageFile = new FileStream(dir + fileName, FileMode.Create);
                 imageFile.Write(imgBytes, 0, imgBytes.Length);
                 imageFile.Flush();
+
+                ApplicationUserSignature aus = new ApplicationUserSignature();
+                aus.FileDir = @"Content\Assets\Images\Signatures\" + fileName;
+                aus.ApplicationUserId = User.Identity.GetUserId();
+                //
+                _context.ApplicationUserSignatures.Add(aus);
+                _context.SaveChanges();
             }
         }
 

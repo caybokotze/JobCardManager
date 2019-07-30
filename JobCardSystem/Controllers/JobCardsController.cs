@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity;
 
 namespace JobCardSystem.Controllers
 {
+    [Authorize]
     public class JobCardsController : ApplicationBaseController
     {
         private readonly IUnitOfWork _unitOfWork;

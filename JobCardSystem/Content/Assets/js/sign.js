@@ -2,9 +2,9 @@
 var clearButton = wrapper.querySelector("[data-action=clear]");
 var changeColorButton = wrapper.querySelector("[data-action=change-color]");
 var undoButton = wrapper.querySelector("[data-action=undo]");
+
 var savePNGButton = wrapper.querySelector("[data-action=save-png]");
-var saveJPGButton = wrapper.querySelector("[data-action=save-jpg]");
-var saveSVGButton = wrapper.querySelector("[data-action=save-svg]");
+
 var canvas = wrapper.querySelector("canvas");
 var signaturePad = new SignaturePad(canvas, {
     // It's Necessary to use an opaque color when saving image as JPEG;
@@ -42,14 +42,15 @@ resizeCanvas();
 function download(dataURL, filename) {
     if (navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") === -1) {
         window.open(dataURL);
-    } else {
+    }
+    else
+    {
 
         var object = {
             "DisplayName": "TEMP",
             "Image" : dataURL
         }
 
-        console.log(object);
 
         $.ajax({
             dataType: "Json",
@@ -57,10 +58,16 @@ function download(dataURL, filename) {
             type: "POST",
             url: "/Api/SignImage",
             data: JSON.stringify(object),
-            success: console.log("It works.")
-                //JSON.stringify(object)
+            success: console.log("Success.")
         });
-        location.reload();
+        console.log(object);
+        //var alert = setTimeout(function() { alert("hello"); }, 3000)};
+        setTimeout(function () {
+            window.location.replace("/signature/index");
+        }, 500);
+
+        
+
         //console.log(dataURL);
         //var blob = dataURLToBlob(dataURL);
         //console.log(blob);
@@ -83,6 +90,7 @@ function download(dataURL, filename) {
 
 // One could simply use Canvas#toBlob method instead, but it's just to show
 // that it can be done using result of SignaturePad#toDataURL.
+
 function dataURLToBlob(dataURL) {
     // Code taken from https://github.com/ebidel/filer.js
     var parts = dataURL.split(';base64,');
@@ -98,9 +106,12 @@ function dataURLToBlob(dataURL) {
     return new Blob([uInt8Array], { type: contentType });
 }
 
+
 clearButton.addEventListener("click", function (event) {
     signaturePad.clear();
 });
+
+
 
 undoButton.addEventListener("click", function (event) {
     var data = signaturePad.toData();
@@ -129,20 +140,5 @@ savePNGButton.addEventListener("click", function (event) {
     }
 });
 
-saveJPGButton.addEventListener("click", function (event) {
-    if (signaturePad.isEmpty()) {
-        alert("Please provide a signature first.");
-    } else {
-        var dataURL = signaturePad.toDataURL("image/jpeg");
-        download(dataURL, "signature.jpg");
-    }
-});
 
-saveSVGButton.addEventListener("click", function (event) {
-    if (signaturePad.isEmpty()) {
-        alert("Please provide a signature first.");
-    } else {
-        var dataURL = signaturePad.toDataURL('image/svg+xml');
-        download(dataURL, "signature.svg");
-    }
-});
+
