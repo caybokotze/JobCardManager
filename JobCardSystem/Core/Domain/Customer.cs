@@ -42,10 +42,12 @@ namespace JobCardSystem.Core.Domain
         [Required(ErrorMessage = "Please select a contract from the drop down list.")]
         [Display(Name = "Maintenance Contract")]
         public int MaintenanceContractId { get; set; }
+
         public virtual MaintenanceContract MaintenanceContract { get; set; }
 
         [Display(Name = "Services Per Month")]
         public int ServiceContractId { get; set; }
+
         public virtual ServiceContract ServiceContract { get; set; }
         #endregion
 

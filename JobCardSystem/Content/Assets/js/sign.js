@@ -64,7 +64,7 @@ function download(dataURL, filename) {
         //var alert = setTimeout(function() { alert("hello"); }, 3000)};
         setTimeout(function () {
             window.location.replace("/signature/index");
-        }, 500);
+        }, 500000);
 
         
 

@@ -85,6 +85,7 @@ namespace JobCardSystem.Controllers
             }
 
             return View(Mapper.Map<StockItem, StockItemViewModel>(stockItem));
+            
         }
 
         public ActionResult Edit(int? id)
