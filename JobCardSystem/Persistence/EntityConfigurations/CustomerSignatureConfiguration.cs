@@ -9,5 +9,9 @@ namespace JobCardSystem.Persistence.EntityConfigurations
 {
     public class CustomerSignatureConfiguration : EntityTypeConfiguration<CustomerSignature>
     {
+        public CustomerSignatureConfiguration()
+        {
+            
+        }
     }
 }

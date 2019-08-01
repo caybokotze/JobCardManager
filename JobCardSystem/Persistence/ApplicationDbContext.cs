@@ -38,6 +38,7 @@ namespace JobCardSystem.Persistence
         public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
         public DbSet<CustomerSignature> CustomerSignatures { get; set; }
         public DbSet<ApplicationUserSignature> ApplicationUserSignatures { get; set; }
+        public DbSet<JobStatusHistory> JobStatusHistories { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

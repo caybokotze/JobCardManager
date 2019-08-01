@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using JobCardSystem.Controllers;
 using JobCardSystem.BusinessLogic;
+using JobCardSystem.Controllers;
 using JobCardSystem.Core;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Core.ViewModels;
 using JobCardSystem.Persistence;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace JobCardSystem.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class Testing
     {
         [TestMethod]
         public void TestMethod1()

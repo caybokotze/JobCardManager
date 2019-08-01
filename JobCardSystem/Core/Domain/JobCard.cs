@@ -55,6 +55,7 @@ namespace JobCardSystem.Core.Domain
         public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
         public virtual ICollection<StockItem> StockItems { get; set; }
         public virtual ICollection<Customer> Customers { get; set; }
+        //public virtual ICollection<JobStatusHistory> JobStatusHistories { get; set; }
 
         #endregion
 

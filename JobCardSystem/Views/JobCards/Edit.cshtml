@@ -18,13 +18,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedAt, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        
 
         <div class="form-group">
             @Html.LabelFor(model => model.ScheduledFor, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -34,21 +28,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.JobTotal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.JobTotal, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.JobTotal, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SiteLocation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SiteLocation, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SiteLocation, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.ArrivalTime, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -75,18 +54,31 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.JobStatusId, "JobStatusId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("JobStatusId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.JobStatusId, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.JobStatusId, new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownListFor(m => m.JobStatusId,
+                    new SelectList(Model.JobStatuses, "Id", "Name"), "Select Job Status",
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.JobStatusId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.JobTypeId, "JobTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("JobTypeId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.JobTypeId, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.CustomerId, new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownListFor(m => m.CustomerId,
+                    new SelectList(Model.Customers, "Id", "Name"), "Select Customer",
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CustomerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(m => m.ApplicationUserIdArray, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.ListBoxFor(m => m.ApplicationUserIdArray, new MultiSelectList(Model.GetStaffDisplayNames(), "Id", "DisplayName"),
+                    new {id = "staffMultiSelector", multiple = "multiple"})
+                @Html.ValidationMessageFor(m => m.ApplicationUserIdArray, "", new { @class = "text-danger" })
             </div>
         </div>
 

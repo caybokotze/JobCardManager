@@ -49,6 +49,12 @@
       <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.TestPlatform.14.0.0.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.TestPlatform.14.0.0.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceLocation, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceLocation.1.3.1\lib\net45\ServiceLocation.dll</HintPath>
     </Reference>
@@ -222,6 +228,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\JobCardsController.cs" />
+    <Compile Include="Controllers\JobStatusHistoryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -240,6 +247,7 @@
     <Compile Include="Core\Domain\Invoice.cs" />
     <Compile Include="Core\Domain\JobCard.cs" />
     <Compile Include="Core\Domain\JobStatus.cs" />
+    <Compile Include="Core\Domain\JobStatusHistory.cs" />
     <Compile Include="Core\Domain\JobType.cs" />
     <Compile Include="Core\Domain\MaintenanceContract.cs" />
     <Compile Include="Core\Domain\PaymentRecord.cs" />
@@ -256,6 +264,7 @@
     <Compile Include="Core\IRepositories\ICustomerSignatureRepository.cs" />
     <Compile Include="Core\IRepositories\IInvoiceRepository.cs" />
     <Compile Include="Core\IRepositories\IJobCardRepository.cs" />
+    <Compile Include="Core\IRepositories\IJobStatusHistoryRepository.cs" />
     <Compile Include="Core\IRepositories\IJobStatusRepository.cs" />
     <Compile Include="Core\IRepositories\IJobTypeRepository.cs" />
     <Compile Include="Core\IRepositories\IMaintenanceContract.cs" />
@@ -310,6 +319,10 @@
     <Compile Include="Migrations\201907281632324_SeperateSignaturesIntoTwoTables.Designer.cs">
       <DependentUpon>201907281632324_SeperateSignaturesIntoTwoTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908010842035_AddJobStatusHistoryEntity.cs" />
+    <Compile Include="Migrations\201908010842035_AddJobStatusHistoryEntity.Designer.cs">
+      <DependentUpon>201908010842035_AddJobStatusHistoryEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\AddPhoneNumberViewModel.cs" />
@@ -333,6 +346,7 @@
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Persistence\EntityConfigurations\ApplicationUserSignatureConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\CustomerSignatureConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\JobStatusHistoryConfigurations.cs" />
     <Compile Include="Persistence\Repositories\ApplicationUserSignatureRepository.cs" />
     <Compile Include="Persistence\EntityConfigurations\AreaConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\Identity\ApplicationUserConfiguration.cs" />
@@ -357,6 +371,7 @@
     <Compile Include="Persistence\Repositories\CustomerSignatureRepository.cs" />
     <Compile Include="Persistence\Repositories\InvoiceRepository.cs" />
     <Compile Include="Persistence\Repositories\JobCardRepository.cs" />
+    <Compile Include="Persistence\Repositories\JobStatusHistoryRepository.cs" />
     <Compile Include="Persistence\Repositories\JobStatusRepository.cs" />
     <Compile Include="Persistence\Repositories\JobTypeRepository.cs" />
     <Compile Include="Persistence\Repositories\MaintenanceContractRepository.cs" />
@@ -370,6 +385,7 @@
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\ViewModels\JobCardViewModel.cs" />
+    <Compile Include="Tests\Testing.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Assets\css\bootstrap.css" />
@@ -2854,6 +2870,8 @@
     <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\Signature\View.cshtml" />
     <Content Include="Views\Signature\Index.cshtml" />
+    <Content Include="Views\JobStatusHistory\Index.cshtml" />
+    <Content Include="Views\JobStatusHistory\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2900,6 +2918,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907281632324_SeperateSignaturesIntoTwoTables.resx">
       <DependentUpon>201907281632324_SeperateSignaturesIntoTwoTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908010842035_AddJobStatusHistoryEntity.resx">
+      <DependentUpon>201908010842035_AddJobStatusHistoryEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

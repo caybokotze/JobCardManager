@@ -23,6 +23,7 @@ namespace JobCardSystem.Core
         IPurchaseOrderItemRepository PurchaseOrderItems { get; }
         IApplicationUserSignature ApplicationUserSignatures { get; }
         ICustomerSignatureRepository CustomerSignatures { get; }
+        IJobStatusHistoryRepository JobStatusHistory { get; }
 
         int Complete();
     }

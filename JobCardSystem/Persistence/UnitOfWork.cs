@@ -30,6 +30,7 @@ namespace JobCardSystem.Persistence
             PurchaseOrderItems = new PurchaseOrderItemRepository(_context);
             ApplicationUserSignatures = new ApplicationUserSignatureRepository(_context);
             CustomerSignatures = new CustomerSignatureRepository(_context);
+            JobStatusHistory = new JobStatusHistoryRepository(_context);
         }
         public void Dispose()
         {
@@ -50,6 +51,8 @@ namespace JobCardSystem.Persistence
         public IPurchaseOrderItemRepository PurchaseOrderItems { get; }
         public IApplicationUserSignature ApplicationUserSignatures { get; }
         public ICustomerSignatureRepository CustomerSignatures { get; }
+        public IJobStatusHistoryRepository JobStatusHistory { get; }
+
 
         public int Complete()
         {

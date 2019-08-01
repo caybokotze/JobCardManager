@@ -124,6 +124,8 @@ namespace JobCardSystem.Controllers
 
             jvm.JobStatuses = _unitOfWork.JobStatuses.GetAll().ToList();
             jvm.JobTypes = _unitOfWork.JobTypes.GetAll().ToList();
+            
+            jvm.Staff = _context.Users.ToList();
             //
             return View(jvm);
         }
