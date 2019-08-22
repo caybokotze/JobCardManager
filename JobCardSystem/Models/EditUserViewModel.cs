@@ -35,11 +35,13 @@ namespace JobCardSystem.Models
 
         [Required]
         [Display(Name = "Select Area")]
-        public int AreaId { get; set; }
+        public int AreaId { get; set; } = 0;
+
         public ICollection<Area> Areas { get; set; }
 
         [Display(Name = "Select Role")]
         public string RoleId { get; set; }
+
         public ICollection<IdentityRole> Roles { get; set; }
 
         #endregion

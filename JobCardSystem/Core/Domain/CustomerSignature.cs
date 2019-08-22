@@ -14,9 +14,7 @@ namespace JobCardSystem.Core.Domain
 
         #region Navigational Properties
 
-        public int CustomerId { get; set; }
-
-        public virtual Customer Customer { get; set; }
+        
         
 
         #endregion

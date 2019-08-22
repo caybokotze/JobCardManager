@@ -8,5 +8,6 @@ namespace JobCardSystem.Core.IRepositories
 {
     public interface IPurchaseOrderItemRepository : IRepository<PurchaseOrderItem>
     {
+        IEnumerable<PurchaseOrderItem> GetPurchaseOrderItemsEagerStock(int purchaseOrderId);
     }
 }

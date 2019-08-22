@@ -22,5 +22,11 @@ namespace JobCardSystem.Persistence.Repositories
             return ApplicationDbContext.PurchaseOrders.Include(i => i.Supplier);
         }
 
+        public IEnumerable<PurchaseOrder> GetPurchaseOrderWithStockItems()
+        {
+            return ApplicationDbContext.PurchaseOrders.Include(i => i.PurchaseOrderItems);
+        }
+
+
     }
 }

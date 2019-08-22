@@ -61,5 +61,18 @@ namespace JobCardSystem
             }
             return manager;
         }
+
+    }
+
+    public class ApplicationRoleManager : RoleManager<CustomRole>
+    {
+        public ApplicationRoleManager(IRoleStore<CustomRole, string> roleStore) : base(roleStore) { }
+
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options,
+            IOwinContext context)
+        {
+            var applicationRoleManager = new ApplicationRoleManager(new RoleStore<CustomRole>(context.Get<ApplicationDbContext>()));
+            return applicationRoleManager;
+        }
     }
 }

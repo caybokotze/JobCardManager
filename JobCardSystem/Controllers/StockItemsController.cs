@@ -71,7 +71,7 @@ namespace JobCardSystem.Controllers
                     file.SaveAs(dir + currentDts + dotExt);
                     stockItem.FileDir = currentDts + dotExt;
                 } 
-                catch (Exception exception)
+                catch /*(Exception exception)*/
                 {
                     //Log.Save(exception);
                     Directory.CreateDirectory(dir);

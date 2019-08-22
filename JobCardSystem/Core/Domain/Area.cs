@@ -8,7 +8,6 @@ namespace JobCardSystem.Core.Domain
 {
     public class Area
     {
-        [Key]
         //Note: Entity framework automatically resolves Id to AreaId as a Partial Key.
         public int Id { get; set; }
         //

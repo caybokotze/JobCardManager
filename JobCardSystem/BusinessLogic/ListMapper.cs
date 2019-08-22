@@ -5,6 +5,8 @@ using System.Web;
 using AutoMapper;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Core.ViewModels;
+using JobCardSystem.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace JobCardSystem.BusinessLogic
 {
@@ -78,7 +80,29 @@ namespace JobCardSystem.BusinessLogic
             return objectList;
         }
 
-        
+        public static List<RoleViewModel> RoleMapper(List<IdentityRole> mappingObjectList)
+        {
+            var objectList = new List<RoleViewModel>();
+            foreach (var item in mappingObjectList)
+            {
+                var mappedModel = Mapper.Map<IdentityRole, RoleViewModel>(item);
+                objectList.Add(mappedModel);
+            }
+            return objectList;
+        }
+
+        public static List<IdentityRole> RoleMapper(List<RoleViewModel> mappingObjectList)
+        {
+            var objectList = new List<IdentityRole>();
+            foreach (var item in mappingObjectList)
+            {
+                var mappedModel = Mapper.Map<RoleViewModel, IdentityRole>(item);
+                objectList.Add(mappedModel);
+            }
+            return objectList;
+        }
+
+
 
     }
 }

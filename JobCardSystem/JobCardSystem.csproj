@@ -48,12 +48,21 @@
     <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.TestPlatform.14.0.0.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.TestPlatform.14.0.0.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.6.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.6.10\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="ServiceLocation, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceLocation.1.3.1\lib\net45\ServiceLocation.dll</HintPath>
@@ -213,17 +222,22 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\StructureMapMvc.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Blob\StorageHandler.cs" />
     <Compile Include="BusinessLogic\GetDisplayName.cs" />
     <Compile Include="BusinessLogic\FormFile.cs" />
     <Compile Include="BusinessLogic\HashCodeCombiner.cs" />
     <Compile Include="BusinessLogic\Interfaces\IFormFile.cs" />
     <Compile Include="BusinessLogic\ListMapper.cs" />
     <Compile Include="BusinessLogic\Log.cs" />
+    <Compile Include="BusinessLogic\Mailer.cs" />
     <Compile Include="BusinessLogic\ReferenceReadStream.cs" />
     <Compile Include="BusinessLogic\StringValues.cs" />
     <Compile Include="Constants\MaxConstants.cs" />
+    <Compile Include="Constants\UserRoles.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\StockItemController.cs" />
     <Compile Include="Controllers\ApplicationBaseController.cs" />
+    <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
@@ -237,12 +251,13 @@
     <Compile Include="Controllers\StockItemsController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
-    <Compile Include="Controllers\TechniciansController.cs" />
     <Compile Include="Core\Domain\ApplicationUser.cs" />
     <Compile Include="Core\Domain\ApplicationUserSignature.cs" />
     <Compile Include="Core\Domain\Area.cs" />
+    <Compile Include="Core\Domain\Comment.cs" />
     <Compile Include="Core\Domain\Configurations\PurchaseOrderItem.cs" />
     <Compile Include="Core\Domain\Customer.cs" />
+    <Compile Include="Core\Domain\Image.cs" />
     <Compile Include="Core\Domain\Industry.cs" />
     <Compile Include="Core\Domain\Invoice.cs" />
     <Compile Include="Core\Domain\JobCard.cs" />
@@ -323,6 +338,34 @@
     <Compile Include="Migrations\201908010842035_AddJobStatusHistoryEntity.Designer.cs">
       <DependentUpon>201908010842035_AddJobStatusHistoryEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908031358025_AddApplicationRoleManager.cs" />
+    <Compile Include="Migrations\201908031358025_AddApplicationRoleManager.Designer.cs">
+      <DependentUpon>201908031358025_AddApplicationRoleManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908041657401_AddAreaIdToUser.cs" />
+    <Compile Include="Migrations\201908041657401_AddAreaIdToUser.Designer.cs">
+      <DependentUpon>201908041657401_AddAreaIdToUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908041821359_ChangeAreaIdInUserToImplicitlyRequired.cs" />
+    <Compile Include="Migrations\201908041821359_ChangeAreaIdInUserToImplicitlyRequired.Designer.cs">
+      <DependentUpon>201908041821359_ChangeAreaIdInUserToImplicitlyRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908050143597_AddSignatureIdToJobCard.cs" />
+    <Compile Include="Migrations\201908050143597_AddSignatureIdToJobCard.Designer.cs">
+      <DependentUpon>201908050143597_AddSignatureIdToJobCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908050435413_RemoveCustomerSignatureLinks.cs" />
+    <Compile Include="Migrations\201908050435413_RemoveCustomerSignatureLinks.Designer.cs">
+      <DependentUpon>201908050435413_RemoveCustomerSignatureLinks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908161337459_AddManyCommentsToOneJobCard.cs" />
+    <Compile Include="Migrations\201908161337459_AddManyCommentsToOneJobCard.Designer.cs">
+      <DependentUpon>201908161337459_AddManyCommentsToOneJobCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908161431262_AddImagesManyToManyWithJobcards.cs" />
+    <Compile Include="Migrations\201908161431262_AddImagesManyToManyWithJobcards.Designer.cs">
+      <DependentUpon>201908161431262_AddImagesManyToManyWithJobcards.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\AddPhoneNumberViewModel.cs" />
@@ -339,6 +382,7 @@
     <Compile Include="Models\ManageLoginsViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\ResetPasswordViewModel.cs" />
+    <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\SendCodeViewModel.cs" />
     <Compile Include="Models\SetPasswordViewModel.cs" />
     <Compile Include="Models\VerifyCodeViewModel.cs" />
@@ -400,6 +444,7 @@
     <Content Include="Content\Assets\css\layout.css" />
     <Content Include="Content\Assets\css\layout.min.css" />
     <Content Include="Content\Assets\css\signature-pad.css" />
+    <Content Include="Content\Assets\css\typeahead.css" />
     <Content Include="Content\Assets\Images\2019Jul28-24-07.png" />
     <Content Include="Content\Assets\Images\AUDCADDaily.png" />
     <Content Include="Content\Assets\Images\icon.png" />
@@ -409,7 +454,9 @@
     <Content Include="Content\Assets\Images\StockPictures\2019-07-27-05-49-25.jpg" />
     <Content Include="Content\Assets\Images\StockPictures\2019-07-27-11-19-37.jpg" />
     <Content Include="Content\Assets\js\app.js" />
+    <Content Include="Content\Assets\js\bootstrap.js" />
     <Content Include="Content\Assets\js\custom.js" />
+    <Content Include="Content\Assets\js\invoiceBuilder.js" />
     <Content Include="Content\Assets\js\purchaseOrderView.js" />
     <Content Include="Content\Assets\js\sign.js" />
     <Content Include="Content\Assets\js\Signature_Pad.js" />
@@ -776,6 +823,7 @@
     <Content Include="Content\Global\js\demo_pages\widgets_content.js" />
     <Content Include="Content\Global\js\demo_pages\widgets_stats.js" />
     <Content Include="Content\Global\js\main\bootstrap.bundle.min.js" />
+    <Content Include="Content\Global\js\main\jquery2-1.js" />
     <Content Include="Content\Global\js\main\jquery.min.js" />
     <Content Include="Content\Global\js\plugins\buttons\hover_dropdown.min.js" />
     <Content Include="Content\Global\js\plugins\buttons\ladda.min.js" />
@@ -2224,6 +2272,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Global\css\icons\fontawesome\fonts\fontawesome-webfont.eot" />
@@ -2799,6 +2849,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2843,7 +2897,7 @@
     <Content Include="Views\JobCards\Create.cshtml" />
     <Content Include="Views\JobCards\Delete.cshtml" />
     <Content Include="Views\JobCards\Details.cshtml" />
-    <Content Include="Views\JobCards\Edit.cshtml" />
+    <Content Include="Views\JobCards\Admin.cshtml" />
     <Content Include="Views\JobCards\Index.cshtml" />
     <Content Include="Views\Shared\_FormLayout.cshtml" />
     <Content Include="Views\Shared\_TableLayout.cshtml" />
@@ -2859,9 +2913,7 @@
     <Content Include="Views\Suppliers\Create.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
-    <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\Create.cshtml" />
-    <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Shared\_mainCss.cshtml" />
     <Content Include="Views\Shared\_mainJs.cshtml" />
     <Content Include="Views\StockItems\Create.cshtml" />
@@ -2872,6 +2924,16 @@
     <Content Include="Views\Signature\Index.cshtml" />
     <Content Include="Views\JobStatusHistory\Index.cshtml" />
     <Content Include="Views\JobStatusHistory\Create.cshtml" />
+    <Content Include="Views\Account\AdminEdit.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\StaffList.cshtml" />
+    <Content Include="Views\Role\AssignRole.cshtml" />
+    <Content Include="Views\Area\Index.cshtml" />
+    <Content Include="Views\Area\Create.cshtml" />
+    <Content Include="Views\Account\UserEdit.cshtml" />
+    <Content Include="Views\PurchaseOrder\Details.cshtml" />
+    <Content Include="Views\PurchaseOrder\EditItem.cshtml" />
+    <Content Include="Views\JobCards\Technician.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2922,9 +2984,36 @@
     <EmbeddedResource Include="Migrations\201908010842035_AddJobStatusHistoryEntity.resx">
       <DependentUpon>201908010842035_AddJobStatusHistoryEntity.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908031358025_AddApplicationRoleManager.resx">
+      <DependentUpon>201908031358025_AddApplicationRoleManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908041657401_AddAreaIdToUser.resx">
+      <DependentUpon>201908041657401_AddAreaIdToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908041821359_ChangeAreaIdInUserToImplicitlyRequired.resx">
+      <DependentUpon>201908041821359_ChangeAreaIdInUserToImplicitlyRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908050143597_AddSignatureIdToJobCard.resx">
+      <DependentUpon>201908050143597_AddSignatureIdToJobCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908050435413_RemoveCustomerSignatureLinks.resx">
+      <DependentUpon>201908050435413_RemoveCustomerSignatureLinks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908161337459_AddManyCommentsToOneJobCard.resx">
+      <DependentUpon>201908161337459_AddManyCommentsToOneJobCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908161431262_AddImagesManyToManyWithJobcards.resx">
+      <DependentUpon>201908161431262_AddImagesManyToManyWithJobcards.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InvoiceService\InvoiceService.csproj">
+      <Project>{55c441e1-2664-4ec5-9d56-4fac65e47d4b}</Project>
+      <Name>InvoiceService</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

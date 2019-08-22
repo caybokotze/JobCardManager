@@ -4,12 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Hosting;
 using System.Web.Http;
+using JobCardSystem.Blob;
 using JobCardSystem.Core;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Persistence;
 using Microsoft.AspNet.Identity;
+using System.Web.Mvc;
 
 namespace JobCardSystem.Controllers.Api
 {
@@ -47,18 +50,18 @@ namespace JobCardSystem.Controllers.Api
             {
                 string isolate = obj.Image.Remove(0, 22);
                 byte[] imgBytes = Convert.FromBase64String(isolate);
-                var dir = HostingEnvironment.ApplicationHost.GetPhysicalPath() + @"Content\Assets\Images\Signatures\";
+                var dir = @"~\Content\Assets\Images\Signatures\";
                 var fileName = DateTime.Now.ToString("yyyyMMMdd-mm-ss") + ".png";
-                var imageFile = new FileStream(dir + fileName, FileMode.Create);
+                var imageFile = new FileStream(System.Web.HttpContext.Current.Server.MapPath(dir + fileName), FileMode.Create);
                 imageFile.Write(imgBytes, 0, imgBytes.Length);
                 imageFile.Flush();
-
-                ApplicationUserSignature aus = new ApplicationUserSignature();
-                aus.FileDir = @"Content\Assets\Images\Signatures\" + fileName;
-                aus.ApplicationUserId = User.Identity.GetUserId();
                 //
-                _context.ApplicationUserSignatures.Add(aus);
+                CustomerSignature aus = new CustomerSignature();
+                aus.FileDir = @"Content\Assets\Images\Signatures\" + fileName;
+                //
+                _context.CustomerSignatures.Add(aus);
                 _context.SaveChanges();
+                //StorageHandler.Upload(System.Web.HttpContext.Current.Server.MapPath(dir + fileName), dir + fileName);
             }
         }
 

@@ -6,6 +6,7 @@ using AutoMapper;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Core.ViewModels;
 using JobCardSystem.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace JobCardSystem
 {
@@ -27,6 +28,9 @@ namespace JobCardSystem
             //
             CreateMap<StockItem, StockItemViewModel>();
             CreateMap<StockItemViewModel, StockItem>();
+            //
+            CreateMap<IdentityRole, RoleViewModel>();
+            CreateMap<RoleViewModel, IdentityRole>();
             //
 
         }

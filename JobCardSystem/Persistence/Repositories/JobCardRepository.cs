@@ -14,6 +14,12 @@ namespace JobCardSystem.Persistence.Repositories
         }
         public ApplicationDbContext ApplicationDbContext => Context;
 
+
+        public JobCard GetJobCardWithCustomer(int jobCardId)
+        {
+            return ApplicationDbContext.JobCards.Include(i => i.Customer).SingleOrDefault(s => s.Id == jobCardId);
+        }
+
         public IEnumerable<JobCard> GetJobCardsWithJobStatus(int pageIndex, int pageSize)
         {
             return ApplicationDbContext.JobCards
@@ -36,6 +42,36 @@ namespace JobCardSystem.Persistence.Repositories
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
+        }
+
+        public IEnumerable<JobCard> GetJobCardWithUser(int pageIndex, int pageSize)
+        {
+            return ApplicationDbContext.JobCards.Include(u => u.ApplicationUsers).ToList();
+        }
+
+        public IEnumerable<JobCard> GetJobCardForUser(string id)
+        {
+            var all = ApplicationDbContext.JobCards
+                .Include(c => c.JobStatus)
+                .Include(c => c.JobType)
+                .Include(c => c.Customer)
+                .Include(c => c.ApplicationUsers)
+                .OrderBy(c => c.CreatedAt)
+                .ToList();
+
+            var forUser = new List<JobCard>();
+            foreach (var item in all)
+            {
+                foreach (var user in item.ApplicationUsers)
+                {
+                    if (user.Id == id)
+                    {
+                        forUser.Add(item);
+                    }
+                }
+            }
+
+            return forUser;
         }
 
     }

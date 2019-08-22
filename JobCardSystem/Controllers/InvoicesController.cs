@@ -1,10 +1,15 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web;
+using System.Web.Hosting;
+using System.Web.Http.Controllers;
 using System.Web.Mvc;
+using InvoiceService;
 using JobCardSystem.Core;
 using JobCardSystem.Core.Domain;
+using Invoice = JobCardSystem.Core.Domain.Invoice;
 
 
 namespace JobCardSystem.Controllers
@@ -16,6 +21,79 @@ namespace JobCardSystem.Controllers
         public InvoicesController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        public ActionResult DownloadInvoice()
+        {
+
+            InvoiceService.Business business = new InvoiceService.Business()
+            {
+                LogoRootPath = HttpContext.Server.MapPath("~//Content//Assets//Images//icon.png"),
+                CompanyName = "Abstergo Industries",
+                EmailAddress = "info@abstergo.com",
+                WebsiteAddress = "www.abstergo.com",
+                PhoneNumber = "031 100 9089",
+                PhysicalAddress = "12 Cope Road, Durban",
+                BankAccountNumber = "1234456790",
+                BankBranchCode = "021234",
+                SwiftCode = "SLkjLKJS",
+                BankReferenceNumber = "#3333"
+            };
+
+            InvoiceService.Client client = new Client(
+                "The main company", 
+                "Bob", 
+                "082 2390 2300",
+                "info@company.com",
+                "12 Cope Road");
+
+            List<InvoiceService.InvoiceItem> invoiceItems = new List<InvoiceItem>()
+            {
+                new InvoiceItem()
+                {
+                    Id = 0,
+                    Name = "A bar of soap",
+                    Price = 23,
+                    Quantity = 1
+                },
+                new InvoiceItem()
+                {
+                    Id = 1,
+                    Name = "A toilet plunger",
+                    Price = 300, 
+                    Quantity = 2
+                },
+                new InvoiceItem()
+                {
+                    Id = 2,
+                    Name = "A rubber duck",
+                    Price = 400,
+                    Quantity = 2
+                }
+            };
+
+            InvoiceService.Invoice invoice = new InvoiceService.Invoice()
+            {
+                Client = client,
+                Business = business,
+                InvoiceItems = invoiceItems,
+                //
+                Currency = "R",
+                Title = "Invoice",
+                InvoiceNumber = "2",
+                Discount = 0,
+                Status = "Paid",
+                Date = DateTime.Now,
+            };
+
+            InvoiceService.Generate invoiceGeneration = new Generate();
+
+            byte[] pdfBytes = invoiceGeneration.GetInvoice(invoice);
+            return File(pdfBytes, "application/pdf", 
+                fileDownloadName: DateTime.Now.ToShortDateString() 
+                + "_Invoice_"
+                + invoice.Business.BankReferenceNumber + ".pdf");
+
         }
 
         // GET: Invoices

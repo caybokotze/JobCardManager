@@ -13,10 +13,8 @@ namespace JobCardSystem.Core.Domain
 {
     public class CustomRole : IdentityRole
     {
-        public CustomRole()
-        {
-            
-        }
+        public CustomRole() : base() { }
+        public CustomRole(string roleName) : base(roleName) { }
     }
 
     public class RandomUserRole : IdentityUserRole
@@ -71,9 +69,9 @@ namespace JobCardSystem.Core.Domain
         [StringLength(MaxConstants.IdNumber, ErrorMessage = "Id Number can not be longer than digits.")]
         public string IdNumber { get; set; }
 
-        //[Display(Name = "Select Area")]
-        //public int AreaId { get; set; }
-        //public virtual Area Area { get; set; }
+        [Display(Name = "Select Area")]
+        public int AreaId { get; set; }
+        public virtual Area Area { get; set; }
 
         #region Navigational Properties
         public virtual ICollection<JobCard> JobCards { get; set; }

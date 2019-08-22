@@ -10,9 +10,9 @@ namespace JobCardSystem.Persistence.EntityConfigurations.Identity
         {
             HasKey<string>(h => h.Id);
 
-            //HasOptional(p => p.Area);
+            HasRequired(r => r.Area);
 
-            //Property(p => p.AreaId).IsOptional();
+
 
             HasMany(c => c.JobCards)
                 .WithMany(s => s.ApplicationUsers)

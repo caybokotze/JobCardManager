@@ -1,42 +1,231 @@
-﻿@model JobCardSystem.Core.Domain.Invoice
+﻿@model dynamic
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_FormLayout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Create New Invoice</h2>
+<div class="row">
+    <div class="col-md-12">
 
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Invoice</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.DateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+            <label>Search Customer</label>
+            <div class="tt-container">
+                <input placeholder="place your search value here." type="text" id="stockItem" value="" class="form-control" />
             </div>
         </div>
 
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+
+        <br />
+
+        <table class="table table-hover col-md-12" id="tableDetails">
+            <thead>
+                <tr>
+
+                    <th style="width: 280px">Stock Item Name</th>
+                    <th>Cost Per Unit</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th style="width: 20px"></th>
+
+                </tr>
+            </thead>
+            <tbody id="itemDetails"></tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right"><strong> Total:</strong> </td>
+                    <td><strong id="SubTotal">00.00</strong></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+
+        </table>
+
+        <div class="row">
+            <div class="col-md-5">
+
+                <div class="form-group">
+                    <label for="Date"> Payment Method : </label>
+                    @Html.DropDownList("Payment", new List<SelectListItem>
+                    {
+                        new SelectListItem() {Text = "Cash", Value="Cash"},
+                        new SelectListItem() {Text = "EFT", Value="EFT"},
+                        new SelectListItem() {Text = "Debit Order", Value="Debit Order"},
+                        new SelectListItem() {Text = "Not Relevant", Value="None"},
+                    }, "Select Payment", new { @class = "form-control", onchange = "blankme(this.id)" })
+                    <small id="error_Payment" class="form-text error_msg">Select Payment Method</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="Status"> Status : </label>
+                    @Html.DropDownList("Status", new List<SelectListItem>
+                    {
+                        new SelectListItem() {Text = "Due", Value="Due"},
+                        new SelectListItem() {Text = "Paid", Value="Paid"},
+                    }, "Select Status", new { @class = "form-control", onchange = "blankme(this.id)" })
+                    <small id="error_Status" class="form-text error_msg">Select Sale Status</small>
+                </div>
+
+                <div class="form-group">
+
+                    <label for="Notes"> Notes: </label>
+
+                    @Html.TextArea("Notes", new {@class = "form-control", @rows = "5", @placeholder = "Enter Notes"})
+
+                </div>
             </div>
+
+            <div class="col-md-3 col-md-offset-3">
+
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Discount"> Discount : </label>
+                    <input class="form-control" id="Discount" value="0" type="number" onchange="DiscountAmount()"/>
+                    <small id="error_Discount" class="form-text error_msg">Discount can't be empty</small>
+                </div>
+                <div class="form-group">
+                    <label for="GrandTotal"> Grand Total : </label>
+                    <input type="text" id="GrandTotal" class="form-control" readonly />
+                    <small id="error_GrandTotal" class="form-text error_msg">Total is empty</small>
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div id="invoiceTotal"></div>
+
+    </div>
+</div>
+@*<form class="form-horizontal">
+    
+    <div class="form-group">
+        <label>Search Customer</label>
+        <div class="tt-container">
+            <input placeholder="place your search value here." type="text" id="stockItem" value="" class="form-control" />
         </div>
     </div>
-}
+    
+    <ul id="stockList" class="list-group">
+
+    </ul>
+
+</form>*@
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+        $(document).ready(function () {
+
+            var vm = {
+                stockItemIds: []
+            };
+
+            var stockItems = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/api/stockitem?value=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#stockItem').typeahead({
+                minLength: 2,
+                highlight: true
+            }, {
+                name: 'stockItems',
+                display: 'Name',
+                source: stockItems
+                }).on("typeahead:select", function (e, stockItem) {
+                    var productItem = '<tr>  + <td>' + stockItem.Name
+                    + '</td><td class="price">' + stockItem.SellingPrice
+                    + '</td> <td>'
+                    + '<input style="width:110px;" class="quantity" type= "number" min= "1" step= "1" value= "1" />'
+                    + '</td><td class="amount">'
+                    + stockItem.SellingPrice
+                    + '</td><td><a data-itemId="'
+                    + 0
+                    + '" href="#" class="deleteItem"><i class="icon-trash"></i></a></td></tr>';
+
+                    $("#itemDetails").append(productItem);
+                    calculateSum();
+
+                    //"<li class='list-group-item'>" + stockItem.Name + "</li>"
+
+                $("#stockItem").typeahead("val", "");
+                vm.stockItemIds.push(stockItem.Id);
+                });
+
+
+            $(document).on('change',
+                '.quantity',
+                function (e) {
+                    var quantity = parseInt($(this).val());
+                    var price = parseFloat($(this).closest('tr').children('td:eq(1)').text());
+                    var sum = quantity * price;
+                    $(this).closest('tr').children('td:eq(3)').text(sum.toFixed(2));
+                    calculateSum();
+                });
+
+            $(document).on('click', 'a.deleteItem', function (e) {
+                e.preventDefault();
+                var $self = $(this);
+                $(this).parents('tr').css("background-color", "#1f306f").fadeOut(800, function () {
+                    $(this).remove();
+                    calculateSum();
+                });
+            });
+
+            function discountAmount() {
+                var b = parseFloat($('#Discount').val()).toFixed(2);
+                if (isNaN(b)) return;
+                var a = parseFloat($('#SubTotal').text()).toFixed(2);
+                var c = parseFloat(a - b).toFixed(2);
+                $('#GrandTotal').val(c);
+            }
+
+            function calculateSum() {
+                var sum = 0;
+                // iterate through each td based on class and add the values
+                $(".amount").each(function () {
+
+                    var value = $(this).text();
+                    // add only if the value is number
+                    if (!isNaN(value) && value.length !== 0) {
+                        sum += parseFloat(value);
+                    }
+                });
+
+
+                if (sum == 0.0) {
+                    $('#Discount').val(0);
+                    $('#GrandTotal').text("0");
+                }
+                //console.log(sum);
+                $('#SubTotal').text(sum.toFixed(2));
+                $('#GrandTotal').val(sum.toFixed(2));
+
+                var b = parseFloat($('#Discount').val()).toFixed(2);
+                if (isNaN(b)) return;
+                var a = parseFloat($('#SubTotal').text()).toFixed(2);
+                var c = parseFloat(a - b).toFixed(2);
+                $('#GrandTotal').val(c);
+            };
+
+
+        });
+        
+
+    </script>
+    
 }

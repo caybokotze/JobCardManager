@@ -1,4 +1,6 @@
-﻿@model IEnumerable<JobCardSystem.Core.Domain.JobCard>
+﻿@using System.Runtime.CompilerServices
+@using JobCardSystem.Constants
+@model IEnumerable<JobCardSystem.Core.Domain.JobCard>
 
 @{
     ViewBag.Title = "Index";
@@ -40,16 +42,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.ScheduledFor)
         </td>
-
         <td>
             @Html.DisplayFor(modelItem => item.Distance)
         </td>
         <td>
-            @if (!item.ArrivalTime.HasValue)
+            @if (User.IsInRole(UserRoles.Admin))
             {
-                @Html.ActionLink("Update", "Edit", new { id = item.Id }) 
+             @Html.ActionLink("Delete", "Delete", new { id = item.Id }) 
             }
-            | @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            | @Html.ActionLink("Update", "Edit", new { id = item.Id }) 
         </td>
     </tr>
 }

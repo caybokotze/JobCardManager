@@ -63,8 +63,8 @@ function download(dataURL, filename) {
         console.log(object);
         //var alert = setTimeout(function() { alert("hello"); }, 3000)};
         setTimeout(function () {
-            window.location.replace("/signature/index");
-        }, 500000);
+            window.location.replace("/jobcards/signaturebinder");
+        }, 500);
 
         
 

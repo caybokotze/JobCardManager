@@ -7,6 +7,7 @@ namespace JobCardSystem.Persistence.EntityConfigurations
     {
         public AreaConfiguration()
         {
+            HasKey(k => k.Id);
             
         }
     }

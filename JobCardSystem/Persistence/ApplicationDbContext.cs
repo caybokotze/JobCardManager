@@ -39,6 +39,9 @@ namespace JobCardSystem.Persistence
         public DbSet<CustomerSignature> CustomerSignatures { get; set; }
         public DbSet<ApplicationUserSignature> ApplicationUserSignatures { get; set; }
         public DbSet<JobStatusHistory> JobStatusHistories { get; set; }
+        //
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Image> Images { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

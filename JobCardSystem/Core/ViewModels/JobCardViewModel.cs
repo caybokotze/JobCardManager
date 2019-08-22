@@ -34,21 +34,21 @@ namespace JobCardSystem.Core.ViewModels
         public DateTime ScheduledFor { get; set; }
 
         [Display(Name = "Arrival Time")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Time)]
         public DateTime? ArrivalTime { get; set; }
 
         [Display(Name = "Departure Time")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Time)]
         public DateTime? DepartureTime { get; set; }
 
         [Display(Name = "Distance Traveled")]
         public int Distance { get; set; }
 
         #region Drop Down Lists.
-        
+
         [Required]
         [Display(Name = "Job Type")]
-        public int JobTypeId { get; set; }
+        public int JobTypeId { get; set; } = 1;
         //Drop Down List
         public ICollection<JobType> JobTypes { get; set; }
 
@@ -66,6 +66,9 @@ namespace JobCardSystem.Core.ViewModels
         [Display(Name = "Select Customer")]
         [Required]
         public int CustomerId { get; set; }
+
+        public Customer Customer { get; set; }
+
         public ICollection<Customer> Customers { get; set; }
 
         [Display(Name = "Add Staff To Job Card")]

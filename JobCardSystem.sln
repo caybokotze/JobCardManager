@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobCardSystem", "JobCardSys
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{1ED322CF-EEFE-4079-857D-131E311E436E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceService", "InvoiceService\InvoiceService.csproj", "{55C441E1-2664-4EC5-9D56-4FAC65E47D4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1ED322CF-EEFE-4079-857D-131E311E436E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ED322CF-EEFE-4079-857D-131E311E436E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ED322CF-EEFE-4079-857D-131E311E436E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55C441E1-2664-4EC5-9D56-4FAC65E47D4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55C441E1-2664-4EC5-9D56-4FAC65E47D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55C441E1-2664-4EC5-9D56-4FAC65E47D4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55C441E1-2664-4EC5-9D56-4FAC65E47D4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,6 +23,15 @@ namespace JobCardSystem.Controllers
             return View(list);
         }
 
+        public ActionResult Delete(int? id)
+        {
+            var signature = _unitOfWork.CustomerSignatures.Get((int)id);
+            _unitOfWork.CustomerSignatures.Remove(signature);
+            _unitOfWork.Complete();
+
+            return RedirectToAction("Index");
+        }
+
 
     }
 

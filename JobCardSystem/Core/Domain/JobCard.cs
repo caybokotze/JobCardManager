@@ -20,19 +20,20 @@ namespace JobCardSystem.Core.Domain
         }
         public int Id { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime CreatedAt { get; set; }
+        [DataType(DataType.Date)] public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        [DataType(DataType.Date)] public DateTime LastUpdated { get; set; } = DateTime.Now;
 
         [DataType(DataType.Date)]
         [Display(Name = "Scheduled For")]
         [Required]
-        public DateTime ScheduledFor { get; set; }
+        public DateTime ScheduledFor { get; set; } = DateTime.Now;
 
         public double JobTotal { get; set; }
 
+        public DateTime? ArrivalTime { get; set; } = DateTime.Now;
 
-        public DateTime? ArrivalTime { get; set; }
-        public DateTime? DepartureTime { get; set; }
+        public DateTime? DepartureTime { get; set; } = DateTime.Now;
 
         //
         [Display(Name = "Distance Traveled")]
@@ -46,16 +47,26 @@ namespace JobCardSystem.Core.Domain
         [ForeignKey("JobType")]
         public int JobTypeId { get; set; }
 
+        public int? CustomerId { get; set; }
+
+        public int? SignatureId { get; set; }
+
         #region Navigational Properties
 
         public virtual JobStatus JobStatus { get; set; }
         public virtual JobType JobType { get; set; }
         public virtual Customer Customer { get; set; }
         //
+        public virtual ICollection<Image> Images { get; set; }
+        //
         public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
         public virtual ICollection<StockItem> StockItems { get; set; }
-        public virtual ICollection<Customer> Customers { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+
         //public virtual ICollection<JobStatusHistory> JobStatusHistories { get; set; }
+
+        [NotMapped]
+        public CustomerSignature CustomerSignature { get; set; }
 
         #endregion
 

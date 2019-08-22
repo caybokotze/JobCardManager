@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using JobCardSystem.Constants;
 using JobCardSystem.Core;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Core.ViewModels;
@@ -30,8 +31,24 @@ namespace JobCardSystem.Controllers
         // GET: JobCards
         public ActionResult Index()
         {
-            var list = _unitOfWork.JobCards.GetJobCardWithAllTypes(1, 10);
-            return View(list);
+
+            var list2 = _unitOfWork.JobCards.GetJobCardWithAllTypes(1, 10);
+
+            var list3 = _unitOfWork.JobCards.GetJobCardWithUser(1, 10);
+
+            foreach (var item in list3)
+            {
+                var userArray = item.ApplicationUsers.ToArray();
+                var firstUser = userArray[0];
+            }
+            //foreach (var item in list2)
+            //{
+            //    var signature = _unitOfWork.CustomerSignatures.Get((int)item.SignatureId);
+            //    item.CustomerSignature = signature;
+            //    list.Add(item);
+            //}
+
+            return View(list2);
         }
 
         // GET: JobCards/Details/5
@@ -75,11 +92,13 @@ namespace JobCardSystem.Controllers
 
                 var job = Mapper.Map<JobCardViewModel, JobCard>(jobCardViewModel);
                 job.CreatedAt = DateTime.Now;
+                job.ScheduledFor = jobCardViewModel.ScheduledFor;
 
                 var customer = testUnit.Customers.SingleOrDefault(f => f.Id == jobCardViewModel.CustomerId);
-                job.Customers.Add(customer);
+                job.Customer = customer;
 
                 var userList = new List<ApplicationUser>();
+
                 foreach (var userId in jobCardViewModel.ApplicationUserIdArray)
                 {
                     var user = _context.Users.SingleOrDefault(s => s.Id == userId);
@@ -87,6 +106,7 @@ namespace JobCardSystem.Controllers
                 }
 
                 job.ApplicationUsers = userList;
+
                 testUnit.JobCards.Add(job);
                 testUnit.Complete();
 
@@ -105,37 +125,86 @@ namespace JobCardSystem.Controllers
             return View(jobCardViewModel);
         }
 
+        public ActionResult SignatureBinder()
+        {
+            var signature = _context.CustomerSignatures.OrderByDescending(d => d.Id).FirstOrDefault();
+            var jobcard = _context.JobCards.OrderByDescending(d => d.LastUpdated).FirstOrDefault();
+
+            jobcard.SignatureId = signature.Id;
+            _context.Entry(jobcard).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = UserRoles.AdminOrTech)]
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (User.IsInRole(UserRoles.Technician))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                JobCard jobCard = _unitOfWork.JobCards.GetJobCardWithCustomer((int) id);
+                if (jobCard == null)
+                {
+                    return HttpNotFound();
+                }
+                //
+                JobCardViewModel jvm = Mapper.Map<JobCard, JobCardViewModel>(jobCard);
+
+                JobCard jc = new JobCard();
+
+                jvm.Id = jobCard.Id;
+                jvm.CustomerId = (int)jobCard.CustomerId;
+                jvm.Customer = jobCard.Customer;
+                jvm.JobTypeId = jobCard.JobTypeId;
+                jvm.JobStatusId = jobCard.JobStatusId;
+                //
+                jvm.JobStatuses = _unitOfWork.JobStatuses.GetAll().ToList();
+                jvm.JobTypes = _unitOfWork.JobTypes.GetAll().ToList();
+                jvm.Staff = _context.Users.ToList();
+                //
+                return View("Technician", jvm);
+            }
+            else
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                JobCard jobCard = _unitOfWork.JobCards.Get((int)id);
+                if (jobCard == null)
+                {
+                    return HttpNotFound();
+                }
+                //
+                JobCardViewModel jvm = new JobCardViewModel();
+                jvm.Id = jobCard.Id;
+                jvm.CustomerId = (int)jobCard.CustomerId;
+                jvm.JobTypeId = jobCard.JobTypeId;
+                jvm.JobStatusId = jobCard.JobStatusId;
+                //
+                jvm.JobStatuses = _unitOfWork.JobStatuses.GetAll().ToList();
+                jvm.JobTypes = _unitOfWork.JobTypes.GetAll().ToList();
+                jvm.Staff = _context.Users.ToList();
+                //
+                return View("Admin", jvm);
             }
 
-            JobCard jobCard = _unitOfWork.JobCards.Get((int)id);
-            if (jobCard == null)
-            {
-                return HttpNotFound();
-            }
-            //
-            JobCardViewModel jvm = Mapper.Map<JobCard, JobCardViewModel>(jobCard);
-
-            JobCard jc = new JobCard();
-
-            jvm.JobStatuses = _unitOfWork.JobStatuses.GetAll().ToList();
-            jvm.JobTypes = _unitOfWork.JobTypes.GetAll().ToList();
-            
-            jvm.Staff = _context.Users.ToList();
-            //
-            return View(jvm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRoles.AdminOrTech)]
         public ActionResult Edit(JobCard jobCard)
         {
             if (ModelState.IsValid)
             {
+                jobCard.LastUpdated = DateTime.Now;
                 _unitOfWork.JobCards.Update(jobCard);
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
@@ -144,7 +213,7 @@ namespace JobCardSystem.Controllers
             JobCardViewModel jvm = new JobCardViewModel();
             jvm.JobStatuses = _unitOfWork.JobStatuses.GetAll().ToList();
             //
-            return View(jvm);
+            return RedirectToAction("Create", "Signature");
         }
 
         public ActionResult Delete(int? id)

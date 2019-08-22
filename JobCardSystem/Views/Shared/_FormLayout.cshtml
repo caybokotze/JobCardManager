@@ -11,7 +11,9 @@
     <link href="~/Content/Chosen/chosen.css" rel="stylesheet" />
 
     @Html.Partial("_mainCss")
-    @Html.Partial("_mainJs")
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 
 </head>
 
@@ -24,19 +26,20 @@
 
         <div class="content-wrapper">
             @Html.Partial("_pageheader")
-        <div class="content">
-        <!-- Form inputs -->
-        <div class="card">
-            <div class="card-body">
-
-
-            @RenderBody()
+            <div class="content">
+                <!-- Form inputs -->
+                <div class="card">
+                    <div class="card-body">
+                        @RenderBody()
+                    </div>
+                </div>
             </div>
-        </div>
-        </div>
 
         </div>
     </div>
+
+    @Scripts.Render("~/bundles/coreJs")
+    @Scripts.Render("~/bundles/themeJs")
 
     @RenderSection("scripts", required: false)
 </body>

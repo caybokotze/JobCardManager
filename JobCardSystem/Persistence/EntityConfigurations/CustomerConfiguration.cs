@@ -13,7 +13,6 @@ namespace JobCardSystem.Persistence.EntityConfigurations
         {
             HasKey<int>(h => h.Id);
 
-            //HasRequired(h => h.ServiceContract);
             
             //
             HasMany(h => h.PaymentRecords)

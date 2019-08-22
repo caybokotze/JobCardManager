@@ -1,4 +1,5 @@
-﻿<!-- Main sidebar -->
+﻿@using JobCardSystem.Constants
+<!-- Main sidebar -->
 <div class="sidebar sidebar-dark sidebar-main sidebar-expand-md">
 
     <!-- Sidebar mobile toggler -->
@@ -23,8 +24,15 @@
                     <a href="#">
                         <img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid rounded-circle shadow-1 mb-3" width="80" height="80" alt="">
                     </a>
-                    <h6 class="mb-0 text-white text-shadow-dark">Logged in as Admin</h6>
-                    <span class="font-size-sm text-white text-shadow-dark">Santa Ana, CA</span>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <h6 class="mb-0 text-white text-shadow-dark">Logged in as: <br/> @User.Identity.Name</h6>
+                    }
+                    else
+                    {
+                        <h6 class="mb-0 text-white text-shadow-dark">Logged in as Guest</h6>
+                    }
+                    <span class="font-size-sm text-white text-shadow-dark">Durban, South Africa.</span>
                 </div>
 
                 <div class="sidebar-user-material-footer">
@@ -35,12 +43,12 @@
             <div class="collapse" id="user-nav">
                 <ul class="nav nav-sidebar">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="~/Account/UserEdit" class="nav-link">
                             <i class="icon-user-plus"></i>
                             <span>My profile</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="icon-coins"></i>
                             <span>My balance</span>
@@ -52,15 +60,15 @@
                             <span>Messages</span>
                             <span class="badge bg-success-400 badge-pill align-self-center ml-auto">58</span>
                         </a>
-                    </li>
-                    <li class="nav-item">
+                    </li>*@
+                    @*<li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="icon-cog5"></i>
                             <span>Account settings</span>
                         </a>
-                    </li>
+                    </li>*@
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="~/account/logoff" class="nav-link">
                             <i class="icon-switch2"></i>
                             <span>Logout</span>
                         </a>
@@ -75,86 +83,128 @@
 
                 <!-- Main -->
                 <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
-                <li class="nav-item">
-                    <a href="~/customers/index" class="nav-link">
-                        <i class="icon-person"></i>
-                        <span>
-                            Customers
-                        </span>
-                    </a>
-                </li>
+                <!---->
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/customers/index" class="nav-link">
+                            <i class="icon-person"></i>
+                            <span>
+                                Customers
+                            </span>
+                        </a>
+                    </li>
+                }
 
-                <li class="nav-item">
-                    <a href="~/account/index" class="nav-link">
-                        <i class="icon-user-tie"></i>
-                        <span>
-                            Staff
-                        </span>
-                    </a>
-                </li>
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/account/index" class="nav-link">
+                            <i class="icon-user-tie"></i>
+                            <span>
+                                Staff
+                            </span>
+                        </a>
+                    </li>
+                }
 
-                <li class="nav-item">
-                    <a href="~/suppliers/index" class="nav-link">
-                        <i class="icon-truck"></i>
-                        <span>
-                            Suppliers
-                        </span>
-                    </a>
-                </li>
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/role/index" class="nav-link">
+                            <i class="icon-lock"></i>
+                            <span>
+                                Roles
+                            </span>
+                        </a>
+                    </li>
+                }
 
-                @*<li class="nav-item">
-                    <a href="~/areas/index" class="nav-link">
-                        <i class="icon-map"></i>
-                        <span>
-                            Areas
-                        </span>
-                    </a>
-                </li>*@
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/role/StaffList" class="nav-link">
+                            <i class="icon-lock2"></i>
+                            <span>
+                                Assign Roles
+                            </span>
+                        </a>
+                    </li>
+                }
 
-                <li class="nav-item">
-                    <a href="~/jobcards/index" class="nav-link">
-                        <i class="icon-hammer-wrench"></i>
-                        <span>
-                            Job Reports
-                        </span>
-                    </a>
-                </li>
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/suppliers/index" class="nav-link">
+                            <i class="icon-truck"></i>
+                            <span>
+                                Suppliers
+                            </span>
+                        </a>
+                    </li>
+                }
 
-                <li class="nav-item">
-                    <a href="~/stockitems/index" class="nav-link">
-                        <i class="icon-box"></i>
-                        <span>
-                            Stock Items
-                        </span>
-                    </a>
-                </li>
 
-                @*<li class="nav-item">
-                    <a href="~/tasks/index" class="nav-link">
-                        <i class="icon-ticket"></i>
-                        <span>
-                            My Tasks
-                        </span>
-                    </a>
-                </li>*@
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/jobcards/index" class="nav-link">
+                            <i class="icon-hammer-wrench"></i>
+                            <span>
+                                Job Reports
+                            </span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a href="~/jobcards/index" class="nav-link">
+                            <i class="icon-hammer-wrench"></i>
+                            <span>
+                                Job Cards
+                            </span>
+                        </a>
+                    </li>
+                }
 
-                <li class="nav-item">
-                    <a href="~/purchaseOrder/create" class="nav-link">
-                        <i class="icon-ticket"></i>
-                        <span>
-                            Purchase Orders
-                        </span>
-                    </a>
-                </li>
-                
-                <li class="nav-item">
-                    <a href="~/signature/index" class="nav-link">
-                        <i class="icon-pen"></i>
-                        <span>
-                            Signatures
-                        </span>
-                    </a>
-                </li>
+
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/stockitems/index" class="nav-link">
+                            <i class="icon-box"></i>
+                            <span>
+                                Stock Items
+                            </span>
+                        </a>
+                    </li>
+                }
+
+
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/purchaseOrder/index" class="nav-link">
+                            <i class="icon-ticket"></i>
+                            <span>
+                                Purchase Orders
+                            </span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a href="~/purchaseOrder/create" class="nav-link">
+                            <i class="icon-ticket"></i>
+                            <span>
+                                New Purchase Order
+                            </span>
+                        </a>
+                    </li>
+                }
+
 
                 <!-- /layout -->
             </ul>

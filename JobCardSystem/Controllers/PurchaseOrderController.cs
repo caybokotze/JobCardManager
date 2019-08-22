@@ -13,7 +13,7 @@ using Microsoft.AspNet.Identity;
 
 namespace JobCardSystem.Controllers
 {
-    public class PurchaseOrderController : Controller
+    public class PurchaseOrderController : ApplicationBaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ApplicationDbContext _context;
@@ -81,6 +81,52 @@ namespace JobCardSystem.Controllers
             //Note: Use this space to populate the dropdown list for the product list.
             var returnList = _unitOfWork.StockItems.GetStockItemsWithSupplierId(id);
             return Json(returnList);
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            var list = _unitOfWork.PurchaseOrderItems.GetPurchaseOrderItemsEagerStock((int)id);
+            return View(list);
+        }
+
+        public ActionResult DeleteStockItem(int? id)
+        {
+            if (id != null)
+            {
+                var purhcaseOrderItem = _unitOfWork.PurchaseOrderItems.Get((int) id);
+                _unitOfWork.PurchaseOrderItems.Remove(purhcaseOrderItem);
+                _unitOfWork.Complete();
+                return RedirectToAction("Details", new {id=purhcaseOrderItem.PurchaseOrderId});
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id != null)
+            {
+                var purhcaseOrderItem = _unitOfWork.PurchaseOrderItems.Get((int) id);
+                return View("EditItem", purhcaseOrderItem);
+            }
+            else return HttpNotFound();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(PurchaseOrderItem item)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.PurchaseOrderItems.Update(item);
+                _unitOfWork.Complete();
+            }
+            return RedirectToAction("Details", new {id = item.PurchaseOrderId});
         }
     }
 }

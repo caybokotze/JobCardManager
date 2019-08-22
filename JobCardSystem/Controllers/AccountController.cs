@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using JobCardSystem.BusinessLogic;
 using JobCardSystem.Core;
 using JobCardSystem.Core.Domain;
 using Microsoft.AspNet.Identity;
@@ -90,6 +91,7 @@ namespace JobCardSystem.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    Mailer.SendSimpleMessage();
                     return RedirectToAction("Index", "JobCards");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -199,7 +201,8 @@ namespace JobCardSystem.Controllers
                     Name = model.Name,
                     Surname = model.Surname,
                     IdNumber = model.IdNumber,
-                    PhoneNumber = model.PhoneNumber
+                    PhoneNumber = model.PhoneNumber,
+                    AreaId = 1
                 };
 
                 //var role = context.Roles.SingleOrDefault(i => i.Id == model.Id);
@@ -230,8 +233,10 @@ namespace JobCardSystem.Controllers
             return View(model);
         }
 
+
+        //Admin Edit
         [AllowAnonymous]
-        public ActionResult Edit()
+        public ActionResult AdminEdit()
         {
             ApplicationUser user = new ApplicationUser();
             var editUserVm = Mapper.Map<ApplicationUser, EditUserViewModel>(user);
@@ -239,13 +244,14 @@ namespace JobCardSystem.Controllers
             editUserVm.Areas = context.Areas.ToList();
             editUserVm.Roles = context.Roles.ToList();
             //
-            return View(editUserVm);
+            return View("AdminEdit", editUserVm);
         }
 
+        //Admin Edit
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditUserViewModel model)
+        public ActionResult AdminEdit(EditUserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -253,14 +259,93 @@ namespace JobCardSystem.Controllers
                 appUser.UserName = model.Email;
 
                 context.Entry(appUser).State = EntityState.Modified;
+
                 context.SaveChanges();
                 //Quick summary: Gets the ID of the role passed back by the model, finds the associated role.
                 //If it is the same as the one in the model, then nothing changes. 
                 //If not, we delete all the roles for the current user in the model.
                 //This is because, this app will not support users having multiple roles for now.
+
                 var role = context.Roles.SingleOrDefault(i => i.Id == model.RoleId);
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
                 var roles = UserManager.GetRoles(appUser.Id);
+
+                //Bug: So far we only accept one role per user. However, this can be changed in the future.
+
+                if (UserManager.GetRolesAsync(appUser.Id).Result.Any())
+                {
+                    if (!(roles[0] == role.Name))
+                    {
+                        foreach (var rol in roles)
+                        {
+                            UserManager.RemoveFromRole(appUser.Id, role.Name);
+                        }
+                        UserManager.AddToRoles(appUser.Id, role.Name);
+                    }
+                }
+                //
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View("AdminEdit", model);
+        }
+
+        //Admin Edit
+        
+        public ActionResult UserEdit()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var user = context.Users.SingleOrDefault(s => s.Id == userId);
+                EditUserViewModel editUserVm;
+                if (user == null)
+                {
+                    ApplicationUser sysUser = new ApplicationUser();
+                    editUserVm = Mapper.Map<ApplicationUser, EditUserViewModel>(sysUser);
+                }
+                else
+                {
+                    editUserVm = Mapper.Map<ApplicationUser, EditUserViewModel>(user);
+                }
+                //
+                editUserVm.Areas = context.Areas.ToList();
+                editUserVm.Roles = context.Roles.ToList();
+                //
+                return View(editUserVm);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        //Admin Edit
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult UserEdit(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var appUser = Mapper.Map<EditUserViewModel, ApplicationUser>(model);
+                appUser.UserName = model.Email;
+
+                context.Entry(appUser).State = EntityState.Modified;
+
+                context.SaveChanges();
+                //Quick summary: Gets the ID of the role passed back by the model, finds the associated role.
+                //If it is the same as the one in the model, then nothing changes. 
+                //If not, we delete all the roles for the current user in the model.
+                //This is because, this app will not support users having multiple roles for now.
+
+                var role = context.Roles.SingleOrDefault(i => i.Id == model.RoleId);
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+                var roles = UserManager.GetRoles(appUser.Id);
+
+                //Bug: So far we only accept one role per user. However, this can be changed in the future.
 
                 if (UserManager.GetRolesAsync(appUser.Id).Result.Any())
                 {
@@ -502,7 +587,7 @@ namespace JobCardSystem.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
