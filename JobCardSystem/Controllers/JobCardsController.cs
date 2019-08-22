@@ -32,15 +32,15 @@ namespace JobCardSystem.Controllers
         public ActionResult Index()
         {
 
+            var list3 = _unitOfWork.JobCards.GetAllJobCardsWithApplicationUser();
+
             var list2 = _unitOfWork.JobCards.GetJobCardWithAllTypes(1, 10);
 
-            var list3 = _unitOfWork.JobCards.GetJobCardWithUser(1, 10);
+            var list4 = _unitOfWork.JobCards.GetAllUsersForJobCard(1);
 
-            foreach (var item in list3)
-            {
-                var userArray = item.ApplicationUsers.ToArray();
-                var firstUser = userArray[0];
-            }
+            
+
+
             //foreach (var item in list2)
             //{
             //    var signature = _unitOfWork.CustomerSignatures.Get((int)item.SignatureId);

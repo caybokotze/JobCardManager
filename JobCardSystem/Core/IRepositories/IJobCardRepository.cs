@@ -15,7 +15,9 @@ namespace JobCardSystem.Core.IRepositories
 
         IEnumerable<JobCard> GetJobCardForUser(string id);
 
-        IEnumerable<JobCard> GetJobCardWithUser(int pageIndex, int pageSize);
+        IEnumerable<JobCard> GetAllJobCardsWithApplicationUser();
+
+        IEnumerable<ApplicationUser> GetAllUsersForJobCard(int jobCardId);
 
         JobCard GetJobCardWithCustomer(int jobCardId);
 

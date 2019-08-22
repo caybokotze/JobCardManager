@@ -134,6 +134,7 @@
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 remote: {
+                    //target get endpoint.
                     url: '/api/stockitem?value=%QUERY',
                     wildcard: '%QUERY'
                 }

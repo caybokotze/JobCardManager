@@ -15,6 +15,17 @@ namespace JobCardSystem.Persistence.Repositories
         public ApplicationDbContext ApplicationDbContext => Context;
 
 
+        public IEnumerable<JobCard> GetAllJobCardsWithApplicationUser()
+        {
+            return ApplicationDbContext.JobCards.Include(u => u.ApplicationUsers).ToList();
+        }
+
+        public IEnumerable<ApplicationUser> GetAllUsersForJobCard(int jobCardId)
+        {
+            return ApplicationDbContext.Users.Include(i => i.JobCards)
+                .Where(w => w.JobCards.Select(s => s.Id).SingleOrDefault() == jobCardId);
+        }
+
         public JobCard GetJobCardWithCustomer(int jobCardId)
         {
             return ApplicationDbContext.JobCards.Include(i => i.Customer).SingleOrDefault(s => s.Id == jobCardId);
@@ -44,10 +55,7 @@ namespace JobCardSystem.Persistence.Repositories
                 .ToList();
         }
 
-        public IEnumerable<JobCard> GetJobCardWithUser(int pageIndex, int pageSize)
-        {
-            return ApplicationDbContext.JobCards.Include(u => u.ApplicationUsers).ToList();
-        }
+        
 
         public IEnumerable<JobCard> GetJobCardForUser(string id)
         {
