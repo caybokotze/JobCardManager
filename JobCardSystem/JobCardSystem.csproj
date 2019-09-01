@@ -230,11 +230,16 @@
     <Compile Include="BusinessLogic\ListMapper.cs" />
     <Compile Include="BusinessLogic\Log.cs" />
     <Compile Include="BusinessLogic\Mailer.cs" />
+    <Compile Include="BusinessLogic\PushBullet.cs" />
     <Compile Include="BusinessLogic\ReferenceReadStream.cs" />
     <Compile Include="BusinessLogic\StringValues.cs" />
     <Compile Include="Constants\MaxConstants.cs" />
     <Compile Include="Constants\UserRoles.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\CustomerController.cs" />
+    <Compile Include="Controllers\Api\InvoiceController.cs" />
+    <Compile Include="Controllers\Api\JobCardController.cs" />
+    <Compile Include="Controllers\Api\QuotationController.cs" />
     <Compile Include="Controllers\Api\StockItemController.cs" />
     <Compile Include="Controllers\ApplicationBaseController.cs" />
     <Compile Include="Controllers\AreaController.cs" />
@@ -245,6 +250,7 @@
     <Compile Include="Controllers\JobStatusHistoryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
+    <Compile Include="Controllers\QuotationController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SignatureController.cs" />
     <Compile Include="Controllers\Api\SignImageController.cs" />
@@ -285,6 +291,7 @@
     <Compile Include="Core\IRepositories\IMaintenanceContract.cs" />
     <Compile Include="Core\IRepositories\IPurchaseOrderItemRepository.cs" />
     <Compile Include="Core\IRepositories\IPurchaseOrderRepository.cs" />
+    <Compile Include="Core\IRepositories\IQuotationRepository.cs" />
     <Compile Include="Core\IRepositories\IRepository.cs" />
     <Compile Include="Core\IRepositories\IServiceContract.cs" />
     <Compile Include="Core\IRepositories\IStockRepository.cs" />
@@ -421,6 +428,7 @@
     <Compile Include="Persistence\Repositories\MaintenanceContractRepository.cs" />
     <Compile Include="Persistence\Repositories\PurchaseOrderItemRepository.cs" />
     <Compile Include="Persistence\Repositories\PurchaseOrderRepository.cs" />
+    <Compile Include="Persistence\Repositories\QuotationRepository.cs" />
     <Compile Include="Persistence\Repositories\Repository.cs" />
     <Compile Include="Persistence\Repositories\ServiceContractRepository.cs" />
     <Compile Include="Persistence\Repositories\StockRepository.cs" />
@@ -448,6 +456,7 @@
     <Content Include="Content\Assets\Images\2019Jul28-24-07.png" />
     <Content Include="Content\Assets\Images\AUDCADDaily.png" />
     <Content Include="Content\Assets\Images\icon.png" />
+    <Content Include="Content\Assets\Images\merge.png" />
     <Content Include="Content\Assets\Images\StockPictures\2019-07-25-12-27-20.png" />
     <Content Include="Content\Assets\Images\StockPictures\2019-07-26-07-53-02.jpg" />
     <Content Include="Content\Assets\Images\StockPictures\2019-07-26-07-58-33.png" />
@@ -2934,6 +2943,7 @@
     <Content Include="Views\PurchaseOrder\Details.cshtml" />
     <Content Include="Views\PurchaseOrder\EditItem.cshtml" />
     <Content Include="Views\JobCards\Technician.cshtml" />
+    <Content Include="Views\Quotation\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

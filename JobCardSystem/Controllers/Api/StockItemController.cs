@@ -10,6 +10,7 @@ using JobCardSystem.Core.Domain;
 using JobCardSystem.Persistence;
 using Microsoft.Ajax.Utilities;
 using System.Data.Entity;
+using InvoiceService;
 
 namespace JobCardSystem.Controllers.Api
 {
@@ -32,6 +33,11 @@ namespace JobCardSystem.Controllers.Api
             return Ok(stockItems);
         }
 
+        public IHttpActionResult Post([FromBody] StockItem stockItem)
+        {
+            return null;
+        }
+
         public IEnumerable<StockItem> Search(string value)
         {
             if (!value.IsNullOrWhiteSpace())
@@ -45,4 +51,6 @@ namespace JobCardSystem.Controllers.Api
             }
         }
     }
+
+    
 }

@@ -40,7 +40,7 @@ namespace InvoiceService
     {
         public Client(string companyName, string personName, string phoneNumber, string emailAddress, string physicalAddress)
         {
-            this.CompanyName = CompanyName;
+            this.CompanyName = companyName;
             this.PersonName = personName;
             this.PhoneNumber = phoneNumber;
             this.EmailAddress = emailAddress;

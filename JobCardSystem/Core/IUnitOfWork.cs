@@ -24,6 +24,7 @@ namespace JobCardSystem.Core
         IApplicationUserSignature ApplicationUserSignatures { get; }
         ICustomerSignatureRepository CustomerSignatures { get; }
         IJobStatusHistoryRepository JobStatusHistory { get; }
+        IQuotationRepository Quotes { get; }
 
         int Complete();
     }

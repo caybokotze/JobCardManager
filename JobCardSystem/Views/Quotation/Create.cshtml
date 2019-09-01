@@ -5,19 +5,19 @@
     Layout = "~/Views/Shared/_FormLayout.cshtml";
 }
 
-<h2>Create New Invoice</h2>
+<h2>Create New Quotation</h2>
 <div class="row">
     <div class="col-md-12">
 
         <div class="form-group">
-            <label>Search Customer</label>
+            <label>Search Stock Items</label>
             <div class="tt-container">
                 <input placeholder="place your search value here." type="text" id="stockItem" value="" class="form-control" />
             </div>
         </div>
 
         <div class="form-group">
-            <label>Search Customer</label>
+            <label>Add Customer</label>
             <div class="tt-container">
                 <input placeholder="place your search value here." type="text" id="customer" value="" class="form-control" />
             </div>
@@ -132,6 +132,8 @@
                 stockItemModels: []
             };
 
+            var personId = 0;
+
             var stockItems = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -159,7 +161,9 @@
                     name: 'Customers',
                     display: 'Name',
                     source: customers
-                });
+                }).on("typeahead:select", function(e, customer) {
+                personId = customer.Id;
+            });
             //
             $('#stockItem').typeahead({
                 minLength: 2,
@@ -246,13 +250,12 @@
                 $('#GrandTotal').val(c);
             };
             //
-            $("#button").click(function (e) {
+            $("#postButton").click(function (e) {
                 //
-                e.PreventDefault();
+                e.preventDefault();
 
                 var orderArray = [];
                 orderArray.Length = 0;
-                //
                 //
                 $.each($("#detailsTable tbody tr"), function () {
                     orderArray.push({
@@ -265,38 +268,38 @@
                 });
                 //
                 var data = JSON.stringify({
-                    Customer: $("#Customer").val(),
+                    CustomerId: personId,
+                    CustomerName: $("#Customer").val(),
                     PaymentMethod: $("#Payment").val(),
                     Status: $("#Status").val(),
                     Notes: $("#Notes").val(),
                     Discount: $("#Discount").val(),
-                    GrandTotal: parseFloat($('#GrandTotal').val()).toFixed(2),
                     Items: orderArray
                 });
                 //
                 console.log(data);
-
+                //
                 $.when(saveOrder(data)).then(function (response)
                 {
                     console.log(response);
-                    location.href = "/Sales/index";
+                    location.href = "/hello";
                 }).fail(function (err) {
                     alert("Something went wrong.");
                 });
             });
 
-            function saveOrder(data) {
-                return $.ajax({
-                    dataType: 'json',
-                    type: 'POST',
-                    url: "/",
-                    data: data
-                });
-            }
-
             //
         });
+
+        function saveOrder(data) {
+            return $.ajax({
+                dataType: 'json',
+                type: 'POST',
+                url: "/api/Quotation",
+                data: data
+            });
+        }
         //
     </script>
-    
+
 }

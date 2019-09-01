@@ -88,7 +88,6 @@ $(document).ready(function () {
 
             $.each($("#detailsTable tbody tr"), function () {
                 orderArr.push({
-
                     Name: $(this).find('td:eq(0)').html(),
                     Price: parseFloat($(this).find('td:eq(1)').html()),
                     Quantity: parseInt($(this).find('.qunatity').val()),

@@ -9,7 +9,6 @@ using iTextSharp.text.pdf;
 
 namespace InvoiceService
 {
-
     //Code: Done By Caybo. (The entire class.)
 
     public class Generate
@@ -30,7 +29,6 @@ namespace InvoiceService
             paymentTable = new PdfPTable(2);
             _pdfPTable = new PdfPTable(_totalColumn);
             _memoryStream = new MemoryStream();
-
         }
         #endregion
 
@@ -185,7 +183,7 @@ namespace InvoiceService
             paymentTable.AddCell(_pdfPCell);
 
             _fontStyle = FontFactory.GetFont("Tahoma", 10f, 1);
-            _pdfPCell = new PdfPCell(new Phrase("INVOICE :  ", _fontStyle));
+            _pdfPCell = new PdfPCell(new Phrase(_invoice.Title + " : ", _fontStyle));
             _pdfPCell.Colspan = 1;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.Border = 0;

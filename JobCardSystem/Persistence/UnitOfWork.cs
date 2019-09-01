@@ -13,9 +13,9 @@ namespace JobCardSystem.Persistence
     {
         private readonly ApplicationDbContext _context;
 
-        public UnitOfWork(ApplicationDbContext cntx)
+        public UnitOfWork(ApplicationDbContext context)
         {
-            _context = cntx;
+            _context = context;
             StockItems = new StockRepository(_context);
             Invoices = new InvoiceRepository(_context);
             JobCards = new JobCardRepository(_context);
@@ -31,6 +31,7 @@ namespace JobCardSystem.Persistence
             ApplicationUserSignatures = new ApplicationUserSignatureRepository(_context);
             CustomerSignatures = new CustomerSignatureRepository(_context);
             JobStatusHistory = new JobStatusHistoryRepository(_context);
+            Quotes = new QuotationRepository(_context);
         }
         public void Dispose()
         {
@@ -52,6 +53,7 @@ namespace JobCardSystem.Persistence
         public IApplicationUserSignature ApplicationUserSignatures { get; }
         public ICustomerSignatureRepository CustomerSignatures { get; }
         public IJobStatusHistoryRepository JobStatusHistory { get; }
+        public IQuotationRepository Quotes { get; }
 
 
         public int Complete()
