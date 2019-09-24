@@ -17,14 +17,14 @@ namespace JobCardSystem.Persistence.EntityConfigurations
             HasRequired<JobStatus>(h => h.JobStatus);
             HasRequired<JobType>(h => h.JobType);
 
-            HasMany(h => h.StockItems)
-                .WithMany(w => w.JobCards)
-                .Map(m =>
-                {
-                    m.ToTable("JobCardStockItems");
-                    m.MapLeftKey("JobCardId");
-                    m.MapRightKey("StockItemId");
-                });
+            //HasMany(h => h.StockItems)
+            //    .WithMany(w => w.JobCards)
+            //    .Map(m =>
+            //    {
+            //        m.ToTable("JobCardStockItems");
+            //        m.MapLeftKey("JobCardId");
+            //        m.MapRightKey("StockItemId");
+            //    });
 
 
         }
