@@ -39,12 +39,13 @@ namespace JobCardSystem.Core.Domain
         [ForeignKey("Supplier")]
         public int SupplierId { get; set; }
         //
+
+        public bool FlagCheck { get; set; } = false;
         
         public virtual Supplier Supplier { get; set; }
 
         public virtual ICollection<Invoice> Invoices { get; set; }
-        public virtual ICollection<Quotation> Quotations { get; set; }
         public virtual ICollection<PurchaseOrderItem> PurchaseOrderItems { get; set; }
-        public virtual ICollection<JobCard> JobCards { get; set; }
+        //public virtual ICollection<JobCard> JobCards { get; set; }
     }
 }

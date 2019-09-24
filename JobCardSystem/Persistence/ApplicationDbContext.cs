@@ -1,5 +1,6 @@
 ﻿
 using System.Data.Entity;
+using JobCardSystem.Controllers.Api;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Core.Domain.Configurations;
 using JobCardSystem.Models;
@@ -12,7 +13,7 @@ namespace JobCardSystem.Persistence
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DeploymentConnection", throwIfV1Schema: false)
         {
             this.Configuration.LazyLoadingEnabled = false;
             Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
@@ -42,8 +43,9 @@ namespace JobCardSystem.Persistence
         //
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Image> Images { get; set; }
-
-
+        public DbSet<StockItemQuantity> StockItemQuantities { get; set; }
+        //
+        //
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new AreaConfiguration());

@@ -154,24 +154,6 @@ var EchartsLines = function() {
                                 borderWidth: 2
                             }
                         }
-                    },
-                    {
-                        name: 'Minimum',
-                        type: 'line',
-                        data: [1, -2, 2, 5, 3, 2, 0],
-                        smooth: true,
-                        symbolSize: 7,
-                        markLine: {
-                            data: [{
-                                type: 'average',
-                                name: 'Average'
-                            }]
-                        },
-                        itemStyle: {
-                            normal: {
-                                borderWidth: 2
-                            }
-                        }
                     }
                 ]
             });
@@ -276,64 +258,12 @@ var EchartsLines = function() {
                 // Add series
                 series: [
                     {
-                        name: 'Internet Explorer',
+                        name: 'Stock Items Sold',
                         type: 'line',
                         stack: 'Total',
                         smooth: true,
                         symbolSize: 7,
                         data: [120, 132, 101, 134, 90, 230, 210],
-                        itemStyle: {
-                            normal: {
-                                borderWidth: 2
-                            }
-                        }
-                    },
-                    {
-                        name: 'Opera',
-                        type: 'line',
-                        stack: 'Total',
-                        smooth: true,
-                        symbolSize: 7,
-                        data: [220, 182, 191, 234, 290, 330, 310],
-                        itemStyle: {
-                            normal: {
-                                borderWidth: 2
-                            }
-                        }
-                    },
-                    {
-                        name: 'Safari',
-                        type: 'line',
-                        stack: 'Total',
-                        smooth: true,
-                        symbolSize: 7,
-                        data: [150, 232, 201, 154, 190, 330, 410],
-                        itemStyle: {
-                            normal: {
-                                borderWidth: 2
-                            }
-                        }
-                    },
-                    {
-                        name: 'Firefox',
-                        type: 'line',
-                        stack: 'Total',
-                        smooth: true,
-                        symbolSize: 7,
-                        data: [320, 332, 301, 334, 390, 330, 320],
-                        itemStyle: {
-                            normal: {
-                                borderWidth: 2
-                            }
-                        }
-                    },
-                    {
-                        name: 'Chrome',
-                        type: 'line',
-                        stack: 'Total',
-                        smooth: true,
-                        symbolSize: 7,
-                        data: [820, 932, 901, 934, 1290, 1330, 1320],
                         itemStyle: {
                             normal: {
                                 borderWidth: 2

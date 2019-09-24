@@ -1,0 +1,321 @@
+﻿
+@{
+    ViewBag.Title = "Quote";
+    Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+
+@model JobCardSystem.Core.ViewModels.JobCardViewModel
+
+@{
+    ViewBag.Title = "Technician";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
+<h2>Create Quote</h2>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="form-group">
+            <label>Add Customer</label>
+            <div class="tt-container">
+                <input placeholder="place your search value here." type="text" id="customer" value="" class="form-control" />
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Add Product</label>
+            <div class="tt-container">
+                <input placeholder="place your search value here." type="text" id="stockItem" value="" class="form-control" />
+            </div>
+        </div>
+
+        <br />
+
+        <table class="table table-hover col-md-12" id="tableDetails">
+            <thead>
+                <tr>
+                    <th style="width: 280px">Stock Item Name</th>
+                    <th>Cost Per Unit</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th style="width: 20px"></th>
+                </tr>
+            </thead>
+            <tbody id="itemDetails"></tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right"><strong> Sub Total:</strong></td>
+                    <td><strong id="SubTotal">00.00</strong></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+
+        </table>
+
+        <div class="row">
+            <div class="col-md-5">
+
+                
+            </div>
+
+            <div class="col-md-3 col-md-offset-3">
+
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Discount"> Discount : </label>
+                    <input class="form-control" id="Discount" value="0" type="number" onclick="discountAmount()"/>
+                    <small id="error_Discount" class="form-text error_msg">Discount can't be empty</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="GrandTotal"> Grand Total : </label>
+                    <input type="text" id="GrandTotal" class="form-control" readonly />
+                    <small id="error_GrandTotal" class="form-text error_msg">Total is Empty</small>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div id="invoiceTotal">
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-3">
+                <input id="postButton" type="submit" value="Create Quote" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script>
+        //
+        //$('.timepicker').timepicker({
+        //    timeFormat: 'h:mm p',
+        //    interval: 60,
+        //    minTime: '8',
+        //    maxTime: '6:00pm',
+        //    defaultTime: '11',
+        //    startTime: '8:00',
+        //    dynamic: false,
+        //    dropdown: true,
+        //    scrollbar: true
+        //});
+        //
+        $(document).ready(function () {
+            //
+            //getUrlVars();
+            ////
+            //function getUrlVars() {
+            //    var vars = {};
+            //    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+            //        vars[key] = value;
+            //    });
+            //    console.log(vars);
+            //    //return vars;
+            //};
+            //
+            //var vm = {
+            //    stockItemIds: []
+            //};
+            ////
+            //var vmList = {
+            //    stockItemModels: []
+            //};
+            //
+            var personId = 0;
+            var stockItemIds = [];
+            //
+            var stockItems = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    //target get endpoint.
+                    url: '/api/stockItem?value=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+            //
+            var customers = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/api/Customer?value=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+            //
+            $("#customer").typeahead({
+                minLength: 3,
+                highlight: true
+            },
+                {
+                    name: 'Customers',
+                    display: 'Name',
+                    source: customers
+                }).on("typeahead:select", function (e, customer) {
+                    personId = customer.Id;
+                });
+            //
+            //
+            $('#stockItem').typeahead({
+                minLength: 2,
+                highlight: true
+            },
+                {
+                    name: 'stockItems',
+                    display: 'Name',
+                    source: stockItems
+                }).on("typeahead:select", function (e, stockItem) {
+                    var productItem = '<tr>  + <td data-val="' + stockItem.Id +'">' + stockItem.Name
+                        + '</td><td class="price">' + stockItem.SellingPrice
+                        + '</td><td>'
+                        + '<input style="width:110px;" class="quantity" type= "number" min= "1" step= "1" value= "1" />'
+                        + '</td><td class="amount">'
+                        + stockItem.SellingPrice
+                        + '</td><td><a data-itemId="'
+                        + 0
+                        + '" href="#" class="deleteItem"><i class="icon-trash"></i></a></td></tr>';
+
+                    $("#itemDetails").append(productItem);
+                    //
+                    calculateSum();
+
+                    //"<li class='list-group-item'>" + stockItem.Name + "</li>"
+
+                    $("#stockItem").typeahead("val", "");
+                    stockItemIds.push(stockItem.Id);
+                    //vm.stockItemIds.push(stockItem.Id);
+                    //vmList.stockItemModels.push(stockItem);
+            });
+            //
+            $(document).on('change',
+                '.quantity',
+                function (e) {
+                    var quantity = parseInt($(this).val());
+                    var price = parseFloat($(this).closest('tr').children('td:eq(1)').text());
+                    var sum = quantity * price;
+                    $(this).closest('tr').children('td:eq(3)').text(sum.toFixed(2));
+                    calculateSum();
+                });
+            //
+            $(document).on('click', 'a.deleteItem', function (e) {
+                e.preventDefault();
+                var $self = $(this);
+                $(this).parents('tr').css("background-color", "#1f306f").fadeOut(800, function () {
+                    $(this).remove();
+                    calculateSum();
+                });
+            });
+            //
+            $(document).on('click',
+                '#Discount',
+                function(e) {
+                    var b = parseFloat($('#Discount').val()).toFixed(2);
+                    if (isNaN(b)) return;
+                    var a = parseFloat($('#SubTotal').text()).toFixed(2);
+                    var c = parseFloat(a - b).toFixed(2);
+                    $('#GrandTotal').val(c);
+                });
+
+            //
+            
+            //
+            function calculateSum() {
+                var sum = 0;
+                // iterate through each td based on class and add the values
+                $(".amount").each(function () {
+
+                    var value = $(this).text();
+                    // add only if the value is number
+                    if (!isNaN(value) && value.length !== 0) {
+                        sum += parseFloat(value);
+                    }
+                });
+                //
+                if (sum == 0.0) {
+                    $('#Discount').val(0);
+                    $('#GrandTotal').text("0");
+                }
+                //console.log(sum);
+                $('#SubTotal').text(sum.toFixed(2));
+                $('#GrandTotal').val(sum.toFixed(2));
+                //
+                var b = parseFloat($('#Discount').val()).toFixed(2);
+                if (isNaN(b)) return;
+                var a = parseFloat($('#SubTotal').text()).toFixed(2);
+                var c = parseFloat(a - b).toFixed(2);
+                $('#GrandTotal').val(c);
+            };
+            //
+            $("#postButton").click(function (e) {
+                //
+                e.preventDefault();
+
+                var orderArray = [];
+                orderArray.Length = 0;
+                //
+                $.each($("#tableDetails tbody tr"), function () {
+                    orderArray.push({
+                        Identifier: $(this).find('td:eq(0)').data("val"),
+                        Name: $(this).find('td:eq(0)').html(),
+                        Price: parseFloat($(this).find('td:eq(1)').html()),
+                        Quantity: parseInt($(this).find('.quantity').val()),
+                        Amount: parseFloat($(this).find('td:eq(3)').html())
+                    });
+                });
+                //
+                var data = JSON.stringify({
+                    //ArrivalTime: $("#arrivalTime").val(),
+                    //DepartureTime: $("#departureTime").val(),
+                    CustomerId: personId,
+                    CustomerName: $("#Customer").val(),
+                    //PaymentMethod: $("#Payment").val(),
+                    //Status: $("#Status").val(),
+                    //Notes: $("#Notes").val(),
+                    Discount: $("#Discount").val(),
+                    StockItemArray: stockItemIds,
+                    OrderArray: orderArray
+                });
+                //
+                console.log(data);
+                //
+                //window.location.href = "/invoices/downloadinvoice";
+                //
+                $.when(saveOrder(data)).then(function (response) {
+                    console.log(response);
+                    location.href = "/hello";
+                }).fail(function (err) {
+                    alert("Something went wrong.");
+                });
+            });
+            //
+        });
+        //
+        function saveOrder(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "/api/quotation",
+                data: data
+            });
+        }
+    </script>
+}
+
+

@@ -15,14 +15,6 @@ namespace JobCardSystem.Persistence.EntityConfigurations
 
             Property(p => p.CreatedAt).IsRequired();
 
-            HasMany(h => h.StockItems)
-                .WithMany(w => w.Quotations)
-                .Map(m =>
-                {
-                    m.ToTable("QuoteItems");
-                    m.MapLeftKey("QuotationId");
-                    m.MapRightKey("StockId");
-                });
 
         }
     }

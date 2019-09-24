@@ -109,6 +109,7 @@ namespace JobCardSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                stockItem.FlagCheck = false;
                 _unitOfWork.StockItems.Update(stockItem);
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");

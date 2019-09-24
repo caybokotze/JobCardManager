@@ -26,5 +26,10 @@ namespace JobCardSystem.Controllers
 
             return View();
         }
+
+        public ActionResult Quote()
+        {
+            return View();
+        }
     }
 }

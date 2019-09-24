@@ -32,7 +32,9 @@ namespace JobCardSystem.Persistence
             CustomerSignatures = new CustomerSignatureRepository(_context);
             JobStatusHistory = new JobStatusHistoryRepository(_context);
             Quotes = new QuotationRepository(_context);
+            StockItemQuantities = new StockItemQuantityRepository(_context);
         }
+
         public void Dispose()
         {
             _context.Dispose();
@@ -54,6 +56,7 @@ namespace JobCardSystem.Persistence
         public ICustomerSignatureRepository CustomerSignatures { get; }
         public IJobStatusHistoryRepository JobStatusHistory { get; }
         public IQuotationRepository Quotes { get; }
+        public IStockItemQuantityRepository StockItemQuantities { get; }
 
 
         public int Complete()

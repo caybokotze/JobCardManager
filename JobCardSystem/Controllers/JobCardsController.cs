@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using JobCardSystem.BusinessLogic;
 using JobCardSystem.Constants;
 using JobCardSystem.Core;
 using JobCardSystem.Core.Domain;
@@ -109,6 +110,7 @@ namespace JobCardSystem.Controllers
 
                 testUnit.JobCards.Add(job);
                 testUnit.Complete();
+                PushBullet.Push();
 
                 return RedirectToAction("Index");
 
@@ -135,6 +137,17 @@ namespace JobCardSystem.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Technician(int? id)
+        {
+            return View("Technician");
+        }
+
+        public ActionResult Pending()
+        {
+            //_unitOfWork.JobCards.
+            return View("Pending");
         }
 
         [Authorize(Roles = UserRoles.AdminOrTech)]

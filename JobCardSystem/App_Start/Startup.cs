@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentScheduler;
+using JobCardSystem.BusinessLogic;
 using JobCardSystem.Core.Domain;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -12,6 +14,7 @@ using JobCardSystem.Models;
 using JobCardSystem.Persistence;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 
 [assembly: OwinStartupAttribute(typeof(JobCardSystem.Startup))]
 
@@ -22,9 +25,12 @@ namespace JobCardSystem
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            CreateRolesAndUsers();
-            SeedDropDownListContent();
+            //CreateRolesAndUsers();
+            //SeedDropDownListContent();
+            JobManager.Initialize(new CustomRegistry());
         }
+
+
 
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
@@ -60,6 +66,8 @@ namespace JobCardSystem
             // Once you check this option, your second step of verification during the login process will be remembered on the device where you logged in from.
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
+
+            
 
             // Uncomment the following lines to enable logging in with third party login providers
             //app.UseMicrosoftAccountAuthentication(

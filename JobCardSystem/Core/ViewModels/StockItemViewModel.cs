@@ -38,6 +38,8 @@ namespace JobCardSystem.Core.ViewModels
 
         //
 
+        public int LimitWarning { get; set; } = 5;
+
         public string DisplayCost => Cost.ToString("C");
         public string DisplaySellingPrice => SellingPrice.ToString("C");
 

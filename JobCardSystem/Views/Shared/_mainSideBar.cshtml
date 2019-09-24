@@ -84,6 +84,19 @@
                 <!-- Main -->
                 <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
                 <!---->
+
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/dashboard/index" class="nav-link">
+                            <i class="icon-person"></i>
+                            <span>
+                                Dashboard
+                            </span>
+                        </a>
+                    </li>
+                }
+
                 @if (User.IsInRole(UserRoles.Admin))
                 {
                     <li class="nav-item">
@@ -139,6 +152,18 @@
                             <i class="icon-truck"></i>
                             <span>
                                 Suppliers
+                            </span>
+                        </a>
+                    </li>
+                }
+
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/jobcards/pending" class="nav-link">
+                            <i class="icon-truck"></i>
+                            <span>
+                                Pending
                             </span>
                         </a>
                     </li>
@@ -205,7 +230,17 @@
                     </li>
                 }
 
-
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/quotation/create" class="nav-link">
+                            <i class="icon-box"></i>
+                            <span>
+                                Create Quotation
+                            </span>
+                        </a>
+                    </li>
+                }
                 <!-- /layout -->
             </ul>
 

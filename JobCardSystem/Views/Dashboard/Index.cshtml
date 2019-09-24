@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ChartsLayout.cshtml";
+}
+
+<!-- Pie and donut -->
+<div class="row">
+    <div class="col-xl-6">
+
+        <!-- Basic pie -->
+        <div class="card">
+            <div class="card-header header-elements-inline">
+                <h5 class="card-title">Staff Hour Attendance This Week</h5>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item" data-action="collapse"></a>
+                        <a class="list-icons-item" data-action="reload"></a>
+                        <a class="list-icons-item" data-action="remove"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="chart-container">
+                    <div class="chart has-fixed-height" id="pie_basic"></div>
+                </div>
+            </div>
+        </div>
+        <!-- /basic pie -->
+
+    </div>
+
+    <div class="col-xl-6">
+
+        <!-- Basic donut -->
+        <div class="card">
+            <div class="card-header header-elements-inline">
+                <h5 class="card-title">Popular Sales By Volume This Week</h5>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item" data-action="collapse"></a>
+                        <a class="list-icons-item" data-action="reload"></a>
+                        <a class="list-icons-item" data-action="remove"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="chart-container">
+                    <div class="chart has-fixed-height" id="pie_donut"></div>
+                </div>
+            </div>
+        </div>
+        <!-- /basic donut -->
+
+    </div>
+</div>	
+<!-- /pie and donut -->
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Weekly Sales By Stock Count</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+                <a class="list-icons-item" data-action="reload"></a>
+                <a class="list-icons-item" data-action="remove"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="chart-container">
+            <div class="chart has-fixed-height" id="line_stacked"></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Donut multiples -->
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Stock Take</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+                <a class="list-icons-item" data-action="reload"></a>
+                <a class="list-icons-item" data-action="remove"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="chart-container">
+            <div class="chart has-fixed-height" id="pie_multiples"></div>
+        </div>
+    </div>
+</div>
+<!-- /Donut multiples -->
+

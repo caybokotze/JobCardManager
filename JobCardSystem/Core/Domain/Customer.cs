@@ -53,7 +53,7 @@ namespace JobCardSystem.Core.Domain
 
         #region Navigational Properties
         public virtual ICollection<JobCard> JobCards { get; set; }
-        public virtual ICollection<Quotation> Quotations { get; set; }
+        //public virtual ICollection<Quotation> Quotations { get; set; }
         public virtual ICollection<PaymentRecord> PaymentRecords { get; set; }
 
         /*

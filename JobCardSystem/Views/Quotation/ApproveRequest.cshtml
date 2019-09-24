@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "ApproveRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mt-5">Please Approve Quotation</h2>
+
+<div><a id="anchor" href="">Download Quotation</a></div>
+
+<div class="form-horizontal mt-5">
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-3">
+            <input id="press" type="submit" value="Approve Quotation" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+
+            var loc = location.href;
+            var routeId = loc.substr(loc.lastIndexOf('/') + 1);
+            document.getElementById("anchor").href = "/quotation/download/" + routeId;
+
+            var vm = {
+                Val: true,
+                ValId: routeId
+            };
+
+            var data = JSON.stringify(vm);
+
+            $("#press").click(function (e) {
+                e.preventDefault();
+                //
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: "/api/Approve",
+                    data: data,
+                    success: successPush()
+                    
+                });
+
+                //window.location.href = "/quotation/sorry";
+
+            });
+
+            function successPush()
+            {
+                window.location.href = "/quotation/thanks";
+            };
+        });
+    </script>
+}

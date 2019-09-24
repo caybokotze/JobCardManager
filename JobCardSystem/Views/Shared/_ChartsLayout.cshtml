@@ -1,0 +1,50 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="~/Content/Assets/Images/icon.png" />
+
+    @Html.Partial("_mainCss")
+
+    <title>SSS System - @ViewBag.Title</title>
+    
+    <script src="~/Content/Global/js/main/jquery.min.js"></script>
+    <script src="~/Content/Global/js/main/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/Global/js/plugins/loaders/blockui.min.js"></script>
+    <script src="~/Content/Global/js/plugins/ui/ripple.min.js"></script>
+    
+    <script src="~/Content/Global/js/plugins/visualization/echarts/echarts.min.js"></script>
+    <script src="~/Content/Assets/js/app.js"></script>
+    <script src="~/Content/Global/js/demo_pages/charts/echarts/lines.js"></script>
+    <script src="~/Content/Global/js/demo_pages/charts/echarts/pies_donuts.js"></script>
+
+    @*@Styles.Render("~/Content/css")*@
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+
+<body>
+
+@Html.Partial("_mainnav")
+
+<div class="page-content">
+    @Html.Partial("_mainsidebar")
+
+    <div class="content-wrapper">
+        @Html.Partial("_pageheader")
+        <div class="content">
+            <!-- Form inputs -->
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+
+
+@RenderSection("scripts", required: false)
+</body>
+</html>
+

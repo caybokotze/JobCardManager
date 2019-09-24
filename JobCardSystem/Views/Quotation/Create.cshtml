@@ -6,6 +6,8 @@
 }
 
 <h2>Create New Quotation</h2>
+
+
 <div class="row">
     <div class="col-md-12">
 
@@ -52,37 +54,19 @@
             <div class="col-md-5">
 
                 <div class="form-group">
-
-                    <label for="Date"> Payment Method : </label>
-
-                    @Html.DropDownList("Payment", new List<SelectListItem>
+                    <label for="Date"> Select Distance : </label>
+                    @Html.DropDownList("Distance", new List<SelectListItem>
                     {
-                        new SelectListItem() {Text = "Cash", Value = "Cash"},
-                        new SelectListItem() {Text = "EFT", Value = "EFT"},
-                        new SelectListItem() {Text = "Debit Order", Value = "Debit Order"},
-                        new SelectListItem() {Text = "Not Relevant", Value = "None"},
-                    }, "Select Payment", new {@class = "form-control", onchange = "blankme(this.id)"})
+                        new SelectListItem() {Text = "10 Km", Value = "10"},
+                        new SelectListItem() {Text = "20 Km", Value = "20"},
+                        new SelectListItem() {Text = "30 Km", Value = "30"},
+                        new SelectListItem() {Text = "50 Km", Value = "50"},
+                        new SelectListItem() {Text = "70 Km", Value = "70"},
+                        new SelectListItem() {Text = "100 Km", Value = "70"},
+                        new SelectListItem() {Text = "Not Relevant", Value = "0"},
+                    }, "Select Distance", new {@class = "form-control"})
 
                     <small id="error_Payment" class="form-text error_msg">Select Payment Method</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="Status"> Status : </label>
-                    @Html.DropDownList("Status", new List<SelectListItem>
-                    {
-                        new SelectListItem() {Text = "Due", Value="Due"},
-                        new SelectListItem() {Text = "Paid", Value="Paid"},
-                    }, "Select Status", new { @class = "form-control", onchange = "blankme(this.id)" })
-
-                    <small id="error_Status" class="form-text error_msg">Select Sale Status</small>
-                </div>
-
-                <div class="form-group">
-
-                    <label for="Notes"> Notes: </label>
-
-                    @Html.TextArea("Notes", new { @class = "form-control", @rows = "5", @placeholder = "Enter Notes" })
-
                 </div>
             </div>
 
@@ -109,7 +93,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-3">
-                <input id="postButton" type="submit" value="Create Invoice" class="btn btn-default" />
+                <input id="postButton" type="submit" value="Create Quotation" class="btn btn-default" />
             </div>
         </div>
 
@@ -174,7 +158,7 @@
                 display: 'Name',
                 source: stockItems
                 }).on("typeahead:select", function (e, stockItem) {
-                    var productItem = '<tr itemId="' + stockItem.Id + '">  + <td>' + stockItem.Name
+                    var productItem = '<tr><td data-val="' + stockItem.Id + '">' + stockItem.Name
                     + '</td><td class="price">' + stockItem.SellingPrice
                     + '</td> <td>'
                     + '<input style="width:110px;" class="quantity" type= "number" min= "1" step= "1" value= "1" />'
@@ -253,13 +237,13 @@
             $("#postButton").click(function (e) {
                 //
                 e.preventDefault();
-
+                //
                 var orderArray = [];
                 orderArray.Length = 0;
                 //
-                $.each($("#detailsTable tbody tr"), function () {
+                $.each($("#tableDetails tbody tr"), function () {
                     orderArray.push({
-                        Identifier: $(this).getAttribute("itemId"),
+                        Identifier: $(this).find('td:eq(0)').data("val"),
                         Name: $(this).find('td:eq(0)').html(),
                         Price: parseFloat($(this).find('td:eq(1)').html()),
                         Quantity: parseInt($(this).find('.quantity').val()),
@@ -270,11 +254,9 @@
                 var data = JSON.stringify({
                     CustomerId: personId,
                     CustomerName: $("#Customer").val(),
-                    PaymentMethod: $("#Payment").val(),
-                    Status: $("#Status").val(),
-                    Notes: $("#Notes").val(),
+                    Distance: $("#Distance").val(),
                     Discount: $("#Discount").val(),
-                    Items: orderArray
+                    OrderArray: orderArray
                 });
                 //
                 console.log(data);
@@ -293,6 +275,7 @@
 
         function saveOrder(data) {
             return $.ajax({
+                contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 type: 'POST',
                 url: "/api/Quotation",

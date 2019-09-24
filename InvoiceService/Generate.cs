@@ -203,7 +203,7 @@ namespace InvoiceService
 
 
             _fontStyle = FontFactory.GetFont("Tahoma", 9f, 0);
-            _pdfPCell = new PdfPCell(new Phrase("Invoice Number: " + _invoice.InvoiceNumber, _fontStyle));
+            _pdfPCell = new PdfPCell(new Phrase(_invoice.Title + " Number: " + _invoice.InvoiceNumber, _fontStyle));
             _pdfPCell.Colspan = 1;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.Border = 0;

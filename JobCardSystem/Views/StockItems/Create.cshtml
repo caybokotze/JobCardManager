@@ -19,7 +19,7 @@
         @Html.LabelFor(m => m.SupplierId, new { @class = "control-label col-md-2" })
         <div class="col-md-4">
             @Html.DropDownListFor(m => m.SupplierId,
-                new SelectList(Model.Suppliers, "Id", "Name"), "Select Service Contract",
+                new SelectList(Model.Suppliers, "Id", "Name"), "Select Supplier",
                 new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.SupplierId, "", new { @class = "text-danger" })
         </div>
@@ -62,6 +62,14 @@
         <div class="col-md-4">
             @Html.EditorFor(model => model.SellingPrice, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.SellingPrice, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LimitWarning, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.LimitWarning, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LimitWarning, "", new { @class = "text-danger" })
         </div>
     </div>
 

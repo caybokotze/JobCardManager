@@ -91,7 +91,7 @@ namespace JobCardSystem.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    Mailer.SendSimpleMessage();
+                    Mailer.SendSimpleMessage(1, "Something isn't right.");
                     return RedirectToAction("Index", "JobCards");
                 case SignInStatus.LockedOut:
                     return View("Lockout");

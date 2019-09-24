@@ -48,6 +48,9 @@
     <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="FluentScheduler, Version=5.3.0.0, Culture=neutral, PublicKeyToken=b76503528a14ebd1, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentScheduler.5.3.0\lib\net40\FluentScheduler.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
@@ -60,6 +63,27 @@
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="PushSharp.Amazon, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Amazon.dll</HintPath>
+    </Reference>
+    <Reference Include="PushSharp.Apple, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Apple.dll</HintPath>
+    </Reference>
+    <Reference Include="PushSharp.Blackberry, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Blackberry.dll</HintPath>
+    </Reference>
+    <Reference Include="PushSharp.Core, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PushSharp.Firefox, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Firefox.dll</HintPath>
+    </Reference>
+    <Reference Include="PushSharp.Google, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="PushSharp.Windows, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushSharp.4.0.10\lib\net45\PushSharp.Windows.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=106.6.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.6.10\lib\net452\RestSharp.dll</HintPath>
@@ -232,10 +256,12 @@
     <Compile Include="BusinessLogic\Mailer.cs" />
     <Compile Include="BusinessLogic\PushBullet.cs" />
     <Compile Include="BusinessLogic\ReferenceReadStream.cs" />
+    <Compile Include="BusinessLogic\Scheduler.cs" />
     <Compile Include="BusinessLogic\StringValues.cs" />
     <Compile Include="Constants\MaxConstants.cs" />
     <Compile Include="Constants\UserRoles.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\ApproveController.cs" />
     <Compile Include="Controllers\Api\CustomerController.cs" />
     <Compile Include="Controllers\Api\InvoiceController.cs" />
     <Compile Include="Controllers\Api\JobCardController.cs" />
@@ -244,6 +270,7 @@
     <Compile Include="Controllers\ApplicationBaseController.cs" />
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\JobCardsController.cs" />
@@ -294,6 +321,7 @@
     <Compile Include="Core\IRepositories\IQuotationRepository.cs" />
     <Compile Include="Core\IRepositories\IRepository.cs" />
     <Compile Include="Core\IRepositories\IServiceContract.cs" />
+    <Compile Include="Core\IRepositories\IStockItemQuantityRepository.cs" />
     <Compile Include="Core\IRepositories\IStockRepository.cs" />
     <Compile Include="Core\IRepositories\ISupplierRepository.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
@@ -373,6 +401,22 @@
     <Compile Include="Migrations\201908161431262_AddImagesManyToManyWithJobcards.Designer.cs">
       <DependentUpon>201908161431262_AddImagesManyToManyWithJobcards.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909082229122_Add Flagcheck to StockItem.cs" />
+    <Compile Include="Migrations\201909082229122_Add Flagcheck to StockItem.Designer.cs">
+      <DependentUpon>201909082229122_Add Flagcheck to StockItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909111726049_AddStockItemQuantity.cs" />
+    <Compile Include="Migrations\201909111726049_AddStockItemQuantity.Designer.cs">
+      <DependentUpon>201909111726049_AddStockItemQuantity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909180449505_AddApprovalRequestAndIsValid.cs" />
+    <Compile Include="Migrations\201909180449505_AddApprovalRequestAndIsValid.Designer.cs">
+      <DependentUpon>201909180449505_AddApprovalRequestAndIsValid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909211010129_RemoveManyToManyBetweenCustomerAndQuote.cs" />
+    <Compile Include="Migrations\201909211010129_RemoveManyToManyBetweenCustomerAndQuote.Designer.cs">
+      <DependentUpon>201909211010129_RemoveManyToManyBetweenCustomerAndQuote.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\AddPhoneNumberViewModel.cs" />
@@ -431,6 +475,7 @@
     <Compile Include="Persistence\Repositories\QuotationRepository.cs" />
     <Compile Include="Persistence\Repositories\Repository.cs" />
     <Compile Include="Persistence\Repositories\ServiceContractRepository.cs" />
+    <Compile Include="Persistence\Repositories\StockItemQuantityRepository.cs" />
     <Compile Include="Persistence\Repositories\StockRepository.cs" />
     <Compile Include="Persistence\Repositories\SupplierRepository.cs" />
     <Compile Include="Persistence\EntityConfigurations\ServiceContractConfiguration.cs" />
@@ -454,6 +499,7 @@
     <Content Include="Content\Assets\css\signature-pad.css" />
     <Content Include="Content\Assets\css\typeahead.css" />
     <Content Include="Content\Assets\Images\2019Jul28-24-07.png" />
+    <Content Include="Content\Assets\Images\Abstergo.gif" />
     <Content Include="Content\Assets\Images\AUDCADDaily.png" />
     <Content Include="Content\Assets\Images\icon.png" />
     <Content Include="Content\Assets\Images\merge.png" />
@@ -2846,6 +2892,7 @@
     <Content Include="Content\Global\scss\_bootstrap\_variables.scss" />
     <Content Include="Content\Global\scss\_config.scss" />
     <None Include="Properties\PublishProfiles\JobCardPro - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\JobCardSystem - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1-vsdoc.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -2944,6 +2991,14 @@
     <Content Include="Views\PurchaseOrder\EditItem.cshtml" />
     <Content Include="Views\JobCards\Technician.cshtml" />
     <Content Include="Views\Quotation\Create.cshtml" />
+    <Content Include="Views\StockItems\Edit.cshtml" />
+    <Content Include="Views\Home\Quote.cshtml" />
+    <Content Include="Views\Quotation\ApproveRequest.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Shared\_ChartsLayout.cshtml" />
+    <Content Include="Views\Quotation\Thanks.cshtml" />
+    <Content Include="Views\Quotation\Sorry.cshtml" />
+    <Content Include="Views\JobCards\Pending.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3014,6 +3069,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908161431262_AddImagesManyToManyWithJobcards.resx">
       <DependentUpon>201908161431262_AddImagesManyToManyWithJobcards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909082229122_Add Flagcheck to StockItem.resx">
+      <DependentUpon>201909082229122_Add Flagcheck to StockItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909111726049_AddStockItemQuantity.resx">
+      <DependentUpon>201909111726049_AddStockItemQuantity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909180449505_AddApprovalRequestAndIsValid.resx">
+      <DependentUpon>201909180449505_AddApprovalRequestAndIsValid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909211010129_RemoveManyToManyBetweenCustomerAndQuote.resx">
+      <DependentUpon>201909211010129_RemoveManyToManyBetweenCustomerAndQuote.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

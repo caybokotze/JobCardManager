@@ -51,6 +51,8 @@ namespace JobCardSystem.Core.Domain
 
         public int? SignatureId { get; set; }
 
+        public int QuotationId { get; set; }
+
         #region Navigational Properties
 
         public virtual JobStatus JobStatus { get; set; }
@@ -60,7 +62,7 @@ namespace JobCardSystem.Core.Domain
         public virtual ICollection<Image> Images { get; set; }
         //
         public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
-        public virtual ICollection<StockItem> StockItems { get; set; }
+        //public virtual ICollection<StockItem> StockItems { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
 
         //public virtual ICollection<JobStatusHistory> JobStatusHistories { get; set; }

@@ -70,8 +70,8 @@ var EchartsPiesDonuts = function() {
 
                 // Add title
                 title: {
-                    text: 'Browser popularity',
-                    subtext: 'Open source information',
+                    text: 'Attendance',
+                    subtext: 'Staff hourly attendance for the week.',
                     left: 'center',
                     textStyle: {
                         fontSize: 17,
@@ -99,7 +99,7 @@ var EchartsPiesDonuts = function() {
                     orient: 'vertical',
                     top: 'center',
                     left: 0,
-                    data: ['IE', 'Opera', 'Safari', 'Firefox', 'Chrome'],
+                    data: ['Mark', 'Matthew', 'Luke', 'Neil', 'Maluk'],
                     itemHeight: 8,
                     itemWidth: 8
                 },
@@ -117,11 +117,11 @@ var EchartsPiesDonuts = function() {
                         }
                     },
                     data: [
-                        {value: 335, name: 'IE'},
-                        {value: 310, name: 'Opera'},
-                        {value: 234, name: 'Safari'},
-                        {value: 135, name: 'Firefox'},
-                        {value: 1548, name: 'Chrome'}
+                        { value: 20, name: 'Matthew' },
+                        { value: 35, name: 'Mark' },
+                        { value: 60, name: 'Luke' },
+                        { value: 25, name: 'Neil' },
+                        { value: 30, name: 'Maluk' }
                     ]
                 }]
             });
@@ -157,8 +157,8 @@ var EchartsPiesDonuts = function() {
 
                 // Add title
                 title: {
-                    text: 'Browser popularity',
-                    subtext: 'Open source information',
+                    text: 'Top Sales',
+                    subtext: 'Top sales for the week',
                     left: 'center',
                     textStyle: {
                         fontSize: 17,
@@ -186,7 +186,7 @@ var EchartsPiesDonuts = function() {
                     orient: 'vertical',
                     top: 'center',
                     left: 0,
-                    data: ['IE', 'Opera', 'Safari', 'Firefox', 'Chrome'],
+                    data: ['CCTV Kit', '100 M Coaxal Cable', '10MM Screws', '6 Core Wire', 'LTX Camera'],
                     itemHeight: 8,
                     itemWidth: 8
                 },
@@ -203,12 +203,14 @@ var EchartsPiesDonuts = function() {
                             borderColor: '#fff'
                         }
                     },
+
+                    //Data;
                     data: [
-                        {value: 335, name: 'IE'},
-                        {value: 310, name: 'Opera'},
-                        {value: 234, name: 'Safari'},
-                        {value: 135, name: 'Firefox'},
-                        {value: 1548, name: 'Chrome'}
+                        { value: 335, name: 'CCTV Kit'},
+                        { value: 310, name: '100 M Coaxal Cable'},
+                        { value: 234, name: '10MM Screws'},
+                        { value: 135, name: '6 Core Wire'},
+                        { value: 1548, name: 'LTX Camera'}
                     ]
                 }]
             });
@@ -1113,8 +1115,8 @@ var EchartsPiesDonuts = function() {
 
                 // Add title
                 title: {
-                    text: 'The Application World',
-                    subtext: 'from global web index',
+                    text: 'Stock Item Stock Take',
+                    subtext: 'A short summary of available stock in comparison to recommended stock count.',
                     left: 'center',
                     textStyle: {
                         fontSize: 17,
@@ -1129,7 +1131,7 @@ var EchartsPiesDonuts = function() {
                 legend: {
                     bottom: 0,
                     left: 'center',
-                    data: ['GMaps', 'Facebook', 'Youtube', 'Google+', 'Weixin', 'Twitter', 'Skype', 'Messenger', 'Whatsapp', 'Instagram'],
+                    data: ['CCTV Kits', 'LTX Camera', '100 M Cable', '12 V Charger', 'Shrink Pipe', 'Screwdriver', 'Drill', 'LTX Connectors', '6 Core 2mm', '8 Core 2mm'],
                     itemHeight: 8,
                     itemWidth: 8,
                     selectedMode: false
@@ -1143,8 +1145,8 @@ var EchartsPiesDonuts = function() {
                         radius: radius,
                         hoverAnimation: false,
                         data: [
-                            {name: 'other', value: 46, label: labelBottom, itemStyle: backStyle},
-                            {name: 'GMaps', value: 54, label: labelTop}
+                            {name: 'other', value: 20, label: labelBottom, itemStyle: backStyle},
+                            {name: 'CCTV Kits', value: 54, label: labelTop}
                         ]
                     },
                     {
@@ -1154,7 +1156,7 @@ var EchartsPiesDonuts = function() {
                         hoverAnimation: false,
                         data: [
                             {name: 'other', value: 56, label: labelBottom, itemStyle: backStyle},
-                            {name: 'Facebook', value: 44, label: labelTop}
+                            { name: 'LTX Camera', value: 44, label: labelTop}
                         ]
                     },
                     {
@@ -1164,7 +1166,7 @@ var EchartsPiesDonuts = function() {
                         hoverAnimation: false,
                         data: [
                             {name: 'other', value: 65, label: labelBottom, itemStyle: backStyle},
-                            {name: 'Youtube', value: 35, label: labelTop}
+                            {name: '100 M Cable', value: 35, label: labelTop}
                         ]
                     },
                     {
@@ -1174,7 +1176,7 @@ var EchartsPiesDonuts = function() {
                         hoverAnimation: false,
                         data: [
                             {name: 'other', value: 70, label: labelBottom, itemStyle: backStyle},
-                            {name: 'Google+', value: 30, label: labelTop}
+                            { name: '12 V Charger', value: 30, label: labelTop}
                         ]
                     },
                     {
@@ -1184,7 +1186,7 @@ var EchartsPiesDonuts = function() {
                         hoverAnimation: false,
                         data: [
                             {name: 'other', value: 73, label: labelBottom, itemStyle: backStyle},
-                            {name: 'Weixin', value: 27, label: labelTop}
+                            { name: 'Shrink Pipe', value: 27, label: labelTop}
                         ]
                     },
                     {
@@ -1194,7 +1196,7 @@ var EchartsPiesDonuts = function() {
                         hoverAnimation: false,
                         data: [
                             {name: 'other', value: 78, label: labelBottom, itemStyle: backStyle},
-                            {name: 'Twitter', value: 22, label: labelTop}
+                            { name: 'Screwdriver', value: 22, label: labelTop}
                         ]
                     },
                     {
@@ -1204,7 +1206,7 @@ var EchartsPiesDonuts = function() {
                         hoverAnimation: false,
                         data: [
                             {name: 'other', value: 78, label: labelBottom, itemStyle: backStyle},
-                            {name: 'Skype', value: 22, label: labelTop}
+                            { name: 'Drill', value: 22, label: labelTop}
                         ]
                     },
                     {
@@ -1214,7 +1216,7 @@ var EchartsPiesDonuts = function() {
                         hoverAnimation: false,
                         data: [
                             {name: 'other', value: 78, label: labelBottom, itemStyle: backStyle},
-                            {name: 'Messenger', value: 22, label: labelTop}
+                            { name: 'LTX Connectors', value: 22, label: labelTop}
                         ]
                     },
                     {
@@ -1224,7 +1226,7 @@ var EchartsPiesDonuts = function() {
                         hoverAnimation: false,
                         data: [
                             {name: 'other', value: 83, label: labelBottom, itemStyle: backStyle},
-                            {name: 'Whatsapp', value: 17, label: labelTop}
+                            { name: '6 Core 2mm', value: 17, label: labelTop}
                         ]
                     },
                     {
@@ -1234,7 +1236,7 @@ var EchartsPiesDonuts = function() {
                         hoverAnimation: false,
                         data: [
                             {name: 'other', value: 89, label: labelBottom, itemStyle: backStyle},
-                            {name: 'Instagram', value: 11, label: labelTop}
+                            { name: '8 Core 2mm', value: 11, label: labelTop}
                         ]
                     }
                 ]
