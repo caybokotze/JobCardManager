@@ -5,11 +5,8 @@
     Layout = "~/Views/Shared/_TableLayout.cshtml";
 }
 
-<h2>Pending</h2>
+<h2>Pending Assignment</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -30,9 +27,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.Customer.Name)
         </td>
-            @Html.ActionLink("View Quote", "Download", "Quotation", new { id=item.Id })
         <td>
-            @Html.ActionLink("Assign", "Assign", new { id=item.Id })
+            @Html.ActionLink("View Quote", "Download", new { id=item.Id })
+        </td>
+        <td>
+            @Html.ActionLink("Assign Technician/s", "Assign", new { id=item.Id })
         </td>
     </tr>
 }

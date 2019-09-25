@@ -89,7 +89,7 @@
                 {
                     <li class="nav-item">
                         <a href="~/dashboard/index" class="nav-link">
-                            <i class="icon-person"></i>
+                            <i class="icon-anchor"></i>
                             <span>
                                 Dashboard
                             </span>
@@ -161,7 +161,7 @@
                 {
                     <li class="nav-item">
                         <a href="~/jobcards/pending" class="nav-link">
-                            <i class="icon-truck"></i>
+                            <i class="icon-stop"></i>
                             <span>
                                 Pending
                             </span>
@@ -237,6 +237,18 @@
                             <i class="icon-box"></i>
                             <span>
                                 Create Quotation
+                            </span>
+                        </a>
+                    </li>
+                }
+
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/contracts/index" class="nav-link">
+                            <i class="icon-box"></i>
+                            <span>
+                                Contracts
                             </span>
                         </a>
                     </li>

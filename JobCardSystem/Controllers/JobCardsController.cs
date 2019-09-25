@@ -80,6 +80,47 @@ namespace JobCardSystem.Controllers
             return View(jvm);
         }
 
+        public ActionResult Assign(int? id)
+        {
+            if (id.HasValue)
+            {
+                //
+                JobCardViewModel jvm = new JobCardViewModel();
+                jvm.Staff = _context.Users.ToList();
+                jvm.JobTypes = _unitOfWork.JobTypes.GetAll().ToList();
+                jvm.Id = (int)id;
+                //
+                return View(jvm);
+            }
+            else return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Assign(JobCardViewModel jobCardViewModel)
+        {
+            
+            IUnitOfWork testUnit = new UnitOfWork(_context);
+
+            var job = Mapper.Map<JobCardViewModel, JobCard>(jobCardViewModel);
+            job.ScheduledFor = jobCardViewModel.ScheduledFor;
+
+            var userList = new List<ApplicationUser>();
+
+            foreach (var userId in jobCardViewModel.ApplicationUserIdArray)
+            {
+                var user = _context.Users.SingleOrDefault(s => s.Id == userId);
+                userList.Add(user);
+            }
+
+            job.ApplicationUsers = userList;
+
+            testUnit.JobCards.Add(job);
+            testUnit.Complete();
+            PushBullet.Push();
+
+            return RedirectToAction("Index");
+        }
+
         // POST: JobCards/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -146,8 +187,9 @@ namespace JobCardSystem.Controllers
 
         public ActionResult Pending()
         {
+            var jobCards = _unitOfWork.JobCards.GetAllJobCardWithQuotation();
             //_unitOfWork.JobCards.
-            return View("Pending");
+            return View("Pending", jobCards);
         }
 
         [Authorize(Roles = UserRoles.AdminOrTech)]

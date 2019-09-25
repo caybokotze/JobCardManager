@@ -15,5 +15,10 @@ namespace JobCardSystem.Persistence.Repositories
         }
 
         ApplicationDbContext ApplicationDbContext => Context;
+
+        public IEnumerable<Quotation> GetAllApproved()
+        {
+            return ApplicationDbContext.Quotations.Where(w => w.Approve == true);
+        }
     }
 }

@@ -55,7 +55,14 @@ namespace JobCardSystem.Persistence.Repositories
                 .ToList();
         }
 
-        
+        public IEnumerable<JobCard> GetAllJobCardWithQuotation()
+        {
+            return ApplicationDbContext.JobCards
+                .Include(c => c.Quotation)
+                .Include(c => c.Customer)
+                .Where(w => w.Quotation.Approve == true)
+                .ToList();
+        }
 
         public IEnumerable<JobCard> GetJobCardForUser(string id)
         {

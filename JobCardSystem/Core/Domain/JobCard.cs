@@ -51,13 +51,14 @@ namespace JobCardSystem.Core.Domain
 
         public int? SignatureId { get; set; }
 
-        public int QuotationId { get; set; }
-
+        public int? QuotationId { get; set; }
+        //
         #region Navigational Properties
-
+        //
         public virtual JobStatus JobStatus { get; set; }
         public virtual JobType JobType { get; set; }
         public virtual Customer Customer { get; set; }
+        public virtual Quotation Quotation { get; set; }
         //
         public virtual ICollection<Image> Images { get; set; }
         //

@@ -417,6 +417,10 @@
     <Compile Include="Migrations\201909211010129_RemoveManyToManyBetweenCustomerAndQuote.Designer.cs">
       <DependentUpon>201909211010129_RemoveManyToManyBetweenCustomerAndQuote.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909241831031_RemoveManyToManyAndAddQuotation.cs" />
+    <Compile Include="Migrations\201909241831031_RemoveManyToManyAndAddQuotation.Designer.cs">
+      <DependentUpon>201909241831031_RemoveManyToManyAndAddQuotation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\AddPhoneNumberViewModel.cs" />
@@ -2950,7 +2954,7 @@
     <Content Include="Views\Invoices\Details.cshtml" />
     <Content Include="Views\Invoices\Edit.cshtml" />
     <Content Include="Views\Invoices\Index.cshtml" />
-    <Content Include="Views\JobCards\Create.cshtml" />
+    <Content Include="Views\JobCards\Assign.cshtml" />
     <Content Include="Views\JobCards\Delete.cshtml" />
     <Content Include="Views\JobCards\Details.cshtml" />
     <Content Include="Views\JobCards\Admin.cshtml" />
@@ -3081,6 +3085,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909211010129_RemoveManyToManyBetweenCustomerAndQuote.resx">
       <DependentUpon>201909211010129_RemoveManyToManyBetweenCustomerAndQuote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909241831031_RemoveManyToManyAndAddQuotation.resx">
+      <DependentUpon>201909241831031_RemoveManyToManyAndAddQuotation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

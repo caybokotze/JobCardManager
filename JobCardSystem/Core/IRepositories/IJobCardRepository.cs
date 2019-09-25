@@ -19,6 +19,8 @@ namespace JobCardSystem.Core.IRepositories
 
         IEnumerable<ApplicationUser> GetAllUsersForJobCard(int jobCardId);
 
+        IEnumerable<JobCard> GetAllJobCardWithQuotation();
+
         JobCard GetJobCardWithCustomer(int jobCardId);
 
     }
