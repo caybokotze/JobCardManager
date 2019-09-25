@@ -80,6 +80,11 @@ namespace JobCardSystem.Controllers
             return View(jvm);
         }
 
+        public ActionResult Download(int id)
+        {
+            return RedirectToAction("Download", "Quotation", new {id = id});
+        }
+
         public ActionResult Assign(int? id)
         {
             if (id.HasValue)
@@ -98,7 +103,6 @@ namespace JobCardSystem.Controllers
         [HttpPost]
         public ActionResult Assign(JobCardViewModel jobCardViewModel)
         {
-            
             IUnitOfWork testUnit = new UnitOfWork(_context);
 
             var job = Mapper.Map<JobCardViewModel, JobCard>(jobCardViewModel);
@@ -116,6 +120,7 @@ namespace JobCardSystem.Controllers
 
             testUnit.JobCards.Add(job);
             testUnit.Complete();
+
             PushBullet.Push();
 
             return RedirectToAction("Index");

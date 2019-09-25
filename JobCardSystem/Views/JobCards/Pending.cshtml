@@ -28,7 +28,7 @@
             @Html.DisplayFor(modelItem => item.Customer.Name)
         </td>
         <td>
-            @Html.ActionLink("View Quote", "Download", new { id=item.Id })
+            @Html.ActionLink("View Quote", "Download", new { id=item.QuotationId })
         </td>
         <td>
             @Html.ActionLink("Assign Technician/s", "Assign", new { id=item.Id })

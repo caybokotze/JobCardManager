@@ -269,6 +269,7 @@
     <Compile Include="Controllers\Api\StockItemController.cs" />
     <Compile Include="Controllers\ApplicationBaseController.cs" />
     <Compile Include="Controllers\AreaController.cs" />
+    <Compile Include="Controllers\ContractsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -3003,6 +3004,7 @@
     <Content Include="Views\Quotation\Thanks.cshtml" />
     <Content Include="Views\Quotation\Sorry.cshtml" />
     <Content Include="Views\JobCards\Pending.cshtml" />
+    <Content Include="Views\Contracts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

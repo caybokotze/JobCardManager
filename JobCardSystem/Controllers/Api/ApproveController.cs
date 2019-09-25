@@ -36,14 +36,19 @@ namespace JobCardSystem.Controllers.Api
             if (approve.Val)
             {
                 var quote = _context.Quotations.SingleOrDefault(s => s.Id == approve.ValId);
+
+                if (quote.Approve == false)
+                {
+                    JobCard jobCard = new JobCard();
+                    jobCard.CreatedAt = DateTime.Now;
+                    jobCard.QuotationId = approve.ValId;
+                    _context.JobCards.Add(jobCard);
+                    _context.SaveChanges();
+                }
+
                 quote.Approve = true;
                 //
                 _context.Entry(quote).State = EntityState.Modified;
-                _context.SaveChanges();
-
-                JobCard jobCard = new JobCard();
-                jobCard.CreatedAt = DateTime.Now;
-                _context.JobCards.Add(jobCard);
                 _context.SaveChanges();
 
                 return Ok();
