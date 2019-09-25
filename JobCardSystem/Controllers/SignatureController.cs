@@ -12,7 +12,8 @@ namespace JobCardSystem.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-        public ActionResult Create()
+
+        public ActionResult Create(int? id)
         {
             return View("~/Views/Signature/View.cshtml");
         }

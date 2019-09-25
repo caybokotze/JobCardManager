@@ -78,7 +78,7 @@ namespace JobCardSystem.Controllers.Api
 
     public class JsonBase64Object
     {
-        public string DisplayName { get; set; }
+        public string JobCardId { get; set; }
         public string Image { get; set; }
     }
 

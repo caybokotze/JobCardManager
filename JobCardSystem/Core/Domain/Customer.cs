@@ -39,6 +39,8 @@ namespace JobCardSystem.Core.Domain
         [Required]
         public string CellNumber { get; set; }
 
+        public DateTime ServiceContractEnd { get; set; }
+
         [Required(ErrorMessage = "Please select a contract from the drop down list.")]
         [Display(Name = "Maintenance Contract")]
         public int MaintenanceContractId { get; set; }

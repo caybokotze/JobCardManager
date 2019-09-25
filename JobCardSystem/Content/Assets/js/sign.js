@@ -45,12 +45,13 @@ function download(dataURL, filename) {
     }
     else
     {
+        var loc = location.href;
+        var routeId = loc.substr(loc.lastIndexOf('/') + 1);
 
         var object = {
-            "DisplayName": "TEMP",
+            "JobCardId": routeId,
             "Image" : dataURL
         }
-
 
         $.ajax({
             dataType: "Json",
@@ -63,7 +64,7 @@ function download(dataURL, filename) {
         console.log(object);
         //var alert = setTimeout(function() { alert("hello"); }, 3000)};
         setTimeout(function () {
-            window.location.replace("/jobcards/signaturebinder");
+            window.location.replace("/signature/index");
         }, 500);
 
         

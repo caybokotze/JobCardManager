@@ -300,6 +300,12 @@ namespace JobCardSystem.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult Close(int? id)
+        {
+            return RedirectToAction("Create", "Signature", new {id = id});
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

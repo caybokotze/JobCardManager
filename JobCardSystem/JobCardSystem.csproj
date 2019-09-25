@@ -422,6 +422,10 @@
     <Compile Include="Migrations\201909241831031_RemoveManyToManyAndAddQuotation.Designer.cs">
       <DependentUpon>201909241831031_RemoveManyToManyAndAddQuotation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909252156244_AddDateTimeContractToCustomer.cs" />
+    <Compile Include="Migrations\201909252156244_AddDateTimeContractToCustomer.Designer.cs">
+      <DependentUpon>201909252156244_AddDateTimeContractToCustomer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\AddPhoneNumberViewModel.cs" />
@@ -3090,6 +3094,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909241831031_RemoveManyToManyAndAddQuotation.resx">
       <DependentUpon>201909241831031_RemoveManyToManyAndAddQuotation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909252156244_AddDateTimeContractToCustomer.resx">
+      <DependentUpon>201909252156244_AddDateTimeContractToCustomer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
