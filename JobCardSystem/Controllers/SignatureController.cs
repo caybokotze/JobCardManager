@@ -5,7 +5,7 @@ using JobCardSystem.Core;
 namespace JobCardSystem.Controllers
 {
     [Authorize]
-    public class SignatureController : Controller
+    public class SignatureController : ApplicationBaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         public SignatureController(IUnitOfWork unitOfWork)

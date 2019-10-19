@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.Diagnostics.Eventing.Reader;
 using JobCardSystem.BusinessLogic;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Models;
@@ -10,6 +12,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using JobCardSystem.Constants;
 
 namespace JobCardSystem.Controllers
 {
@@ -64,6 +67,7 @@ namespace JobCardSystem.Controllers
             var role = _context.Roles.SingleOrDefault(s => s.Id == user.RoleId);
             List<ApplicationUser> users = _context.Users.Include(i => i.Roles).ToList();
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
+            UserManager.RemoveFromRoles(user.Id);
             UserManager.AddToRole(user.Id, role.Name);
             return RedirectToAction("Index");
 
@@ -72,7 +76,36 @@ namespace JobCardSystem.Controllers
         public ActionResult StaffList()
         {
             var list = _context.Users.ToList();
-            return View(list);
+            var rsvl = new List<RolesStaffViewModel>();
+
+            foreach (var item in list)
+            {
+                var rsvm = new RolesStaffViewModel();
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
+                var roles = UserManager.GetRoles(item.Id);
+                string role;
+                try
+                {
+                    role = roles[0];
+                }
+                catch
+                {
+                    role = "Not assigned.";
+
+                }
+
+                rsvm.Id = item.Id;
+                rsvm.Role = role;
+                rsvm.Name = item.Name;
+                rsvm.Surname = item.Surname;
+                rsvm.AreaId = rsvm.AreaId;
+                rsvm.Email = rsvm.Email;
+                rsvm.IdNumber = rsvm.IdNumber;
+                rsvm.PhoneNumber = rsvm.PhoneNumber;
+                rsvl.Add(rsvm);
+            }
+
+            return View(rsvl);
         }
 
         public ActionResult Index()
@@ -148,6 +181,47 @@ namespace JobCardSystem.Controllers
         }
 
 
+        public ActionResult Delete(int? id)
+        {
+            var role = _context.Roles.SingleOrDefault(s => s.Id.Equals(id));
+            _context.Roles.Remove(role);
+            return RedirectToAction("Index");
+        }
+
+
+    }
+
+    public class RolesStaffViewModel
+    {
+        public string Id { get; set; }
+        //
+        [Required(ErrorMessage = "Please enter a name for the user.")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Please enter a surname for the user.")]
+        public string Surname { get; set; }
+
+        [Required]
+        [Display(Name = "Email Address")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Phone Number")]
+        [StringLength(11, ErrorMessage = "Phone number can not be longer than 11 digits.")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Full ID Number")]
+        [StringLength(MaxConstants.IdNumber, ErrorMessage = "Id Number can not be longer than digits.")]
+        public string IdNumber { get; set; }
+
+        [Display(Name = "Select Area")]
+        public int AreaId { get; set; }
+        public virtual Area Area { get; set; }
+
+        [Display(Name = "Role")]
+        public string Role { get; set; }
 
     }
 

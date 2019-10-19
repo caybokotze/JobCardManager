@@ -17,8 +17,7 @@ namespace JobCardSystem.Core.Domain.Configurations
         public int PurchaseOrderId { get; set; }
         public int StockItemId { get; set; }
         public int AmountOfItems { get; set; }
-
-
+        //
         public virtual StockItem StockItem { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
     }

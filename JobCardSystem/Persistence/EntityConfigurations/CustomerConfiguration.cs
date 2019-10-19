@@ -13,7 +13,7 @@ namespace JobCardSystem.Persistence.EntityConfigurations
         {
             HasKey<int>(h => h.Id);
 
-            
+            Property(p => p.CreatedAt).HasColumnType("DateTime2");
             //
             HasMany(h => h.PaymentRecords)
                 .WithMany(m => m.Customers)

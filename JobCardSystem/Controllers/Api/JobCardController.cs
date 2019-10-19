@@ -37,36 +37,26 @@ namespace JobCardSystem.Controllers.Api
         {
             var quoteFromView = _context.Quotations.SingleOrDefault(s => s.Id == quotationMap.QuotationId);
             var stockItemQuanitites = _context.StockItemQuantities.Where(s => s.QuotationId == quoteFromView.Id);
-
+            //
             var stockItemList = new List<StockItem>();
-
+            //
+            foreach (var stockItem in stockItemQuanitites)
+            {
+                _context.StockItemQuantities.Remove(stockItem);
+                _context.SaveChanges();
+            }
+            //
             foreach (var stockItem in quotationMap.Items)
             {
-                foreach (var item in stockItemQuanitites)
-                {
-                    if (item.StockItemId.Equals(stockItem.Id))
-                    {
-                        StockItemQuantity quan = new StockItemQuantity();
-                        quan.StockItemId = stockItem.Id;
-                        quan.Quantity = stockItem.Quantity;
-                        quan.QuotationId = quoteFromView.Id;
-                        //
-                        _context.Entry(quan).State = EntityState.Modified;
-                        _context.SaveChanges();
-                    }
-                    else
-                    {
-                        StockItemQuantity quan = new StockItemQuantity();
-                        quan.StockItemId = stockItem.Id;
-                        quan.Quantity = stockItem.Quantity;
-                        quan.QuotationId = quoteFromView.Id;
-                        //
-                        _context.StockItemQuantities.Add(quan);
-                        _context.SaveChanges();
-                    }
-                }
+                StockItemQuantity quantityItem = new StockItemQuantity();
+                quantityItem.StockItemId = stockItem.Id;
+                quantityItem.Quantity = stockItem.Quantity;
+                quantityItem.QuotationId = quoteFromView.Id;
+                //
+                _context.Entry(quantityItem).State = EntityState.Modified;
+                _context.SaveChanges();
+                //
             }
-
             return Ok();
         }
 

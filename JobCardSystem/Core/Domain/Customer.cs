@@ -35,18 +35,13 @@ namespace JobCardSystem.Core.Domain
         public string Industry { get; set; }
 
         [Display(Name = "Cellphone Number")]
-        [StringLength(11)]
+        [DataType(DataType.PhoneNumber)]
         [Required]
         public string CellNumber { get; set; }
 
         public DateTime ServiceContractEnd { get; set; }
 
         [Required(ErrorMessage = "Please select a contract from the drop down list.")]
-        [Display(Name = "Maintenance Contract")]
-        public int MaintenanceContractId { get; set; }
-
-        public virtual MaintenanceContract MaintenanceContract { get; set; }
-
         [Display(Name = "Services Per Month")]
         public int ServiceContractId { get; set; }
 

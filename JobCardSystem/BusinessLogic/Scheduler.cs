@@ -19,7 +19,7 @@ namespace JobCardSystem.BusinessLogic
             {
                 if (contextStockItem.LimitWarning >= contextStockItem.QuantityAvailable && contextStockItem.FlagCheck == false)
                 {
-                    PushBullet.Push();
+                    PushBullet.StockAlert();
                     Mailer.SendSimpleMessage(1, "There is a snake in my boot.");
                     //var currentItem = context.StockItems.SingleOrDefault(s => s.Id == contextStockItem.Id);
                     contextStockItem.FlagCheck = true;
@@ -39,7 +39,7 @@ namespace JobCardSystem.BusinessLogic
                 var serviceContractEndMonth = item.ServiceContract.Months - DateTime.Now.Month;
                 if (serviceContractEndMonth == 0)
                 {
-                    PushBullet.Push();
+                    PushBullet.StockAlert();
                     Mailer.SendSimpleMessage(1, "Your contract is about to expire.");
                 }
             }
@@ -49,9 +49,9 @@ namespace JobCardSystem.BusinessLogic
     {
         public void Execute()
         {
-            DoTask.CheckStockLimits();
+            //DoTask.CheckStockLimits();
             //
-            DoTask.CheckContractDeadlines();
+            //DoTask.CheckContractDeadlines();
 
         }
     }

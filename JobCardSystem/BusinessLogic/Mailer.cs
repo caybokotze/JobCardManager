@@ -35,11 +35,11 @@ namespace JobCardSystem.BusinessLogic
 
         }
 
-        public static void SendApprovalRequest(int id, string message)
+        public static void SendApprovalRequest(int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            var quote = db.Quotations.Include(i => i.Customer).SingleOrDefault(s => s.Id == id);
-            var email = quote.Customer.Email;
+            //var quote = db.Quotations.Include(i => i.Customer).SingleOrDefault(s => s.Id == id);
+            //var email = quote.Customer.Email;
 
             RestClient client = new RestClient();
             client.BaseUrl = new Uri("https://api.mailgun.net/v3");
@@ -50,14 +50,68 @@ namespace JobCardSystem.BusinessLogic
             request.Resource = "{domain}/messages";
             request.AddParameter("from", "Abstergo <info@abstergo.org>");
             //
-            request.AddParameter("to", email);
+            request.AddParameter("to", "kotzecabo@gmail.com");
             //
             request.AddParameter("subject", "Please check and approve this quote.");
-            //
-            request.AddParameter("text", message);
+
             //
             request.AddParameter("html", "<a href='https://jobcardsystem.azurewebsites.net/quotation/approve/" + id + "'>Click here to view your quotation.</a>");
             request.Method = Method.POST;
+            client.Execute(request);
+        }
+
+        public static void SendInvoiceEmail(int id, string message)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var quote = db.Quotations.Include(i => i.Customer).SingleOrDefault(s => s.Id == id);
+            var email = quote.Customer.Email;
+            //
+            RestClient client = new RestClient();
+            client.BaseUrl = new Uri("https://api.mailgun.net/v3");
+            client.Authenticator = new HttpBasicAuthenticator("api", "d8be0b7dae46df16dada2fc7e201c863-de7062c6-e85b8d33");
+            //
+            RestRequest request = new RestRequest();
+            request.AddParameter("domain", "mail.mergegroup.net", ParameterType.UrlSegment);
+            request.Resource = "{domain}/messages";
+            request.AddParameter("from", "Abstergo <info@abstergo.org>");
+            //
+            request.AddParameter("to", "specialisedscannedsolutions@gmail.com");
+            //
+            request.AddParameter("subject", "Account Activity: Login Notification.");
+            //
+            request.AddParameter("text", message);
+            //
+            request.AddParameter("html", "<a href='https://jobcardsystem.azurewebsites.net/quotation/invoice/" + id + "'>Click here to view and download your invoice.</a>");
+            //
+            request.Method = Method.POST;
+            client.Execute(request);
+        }
+
+        public static void SendPurchaseOrderToSupplier(int id, string message)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var purchaseOrder = db.PurchaseOrders.Include(s => s.Supplier).SingleOrDefault(s => s.Id == id);
+            var email = purchaseOrder.Supplier.Email;
+            //
+            RestClient client = new RestClient();
+            client.BaseUrl = new Uri("https://api.mailgun.net/v3");
+            client.Authenticator = new HttpBasicAuthenticator("api", "d8be0b7dae46df16dada2fc7e201c863-de7062c6-e85b8d33");
+            //
+            RestRequest request = new RestRequest();
+            request.AddParameter("domain", "mail.mergegroup.net", ParameterType.UrlSegment);
+            request.Resource = "{domain}/messages";
+            request.AddParameter("from", "Abstergo <info@abstergo.org>");
+            //
+            request.AddParameter("to", "kotzecabo@gmail.com");
+            //
+            request.AddParameter("subject", "Account Activity: Purchase Order Link");
+            //
+            request.AddParameter("text", message);
+            //
+            request.AddParameter("html", "<a href='https://jobcardsystem.azurewebsites.net/purchaseorder/download/" + id + "'>Click here to download your purchase order request.</a>");
+            //
+            request.Method = Method.POST;
+            //
             client.Execute(request);
         }
 

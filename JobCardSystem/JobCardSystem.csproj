@@ -255,6 +255,7 @@
     <Compile Include="BusinessLogic\Log.cs" />
     <Compile Include="BusinessLogic\Mailer.cs" />
     <Compile Include="BusinessLogic\PushBullet.cs" />
+    <Compile Include="BusinessLogic\RandomString.cs" />
     <Compile Include="BusinessLogic\ReferenceReadStream.cs" />
     <Compile Include="BusinessLogic\Scheduler.cs" />
     <Compile Include="BusinessLogic\StringValues.cs" />
@@ -265,10 +266,15 @@
     <Compile Include="Controllers\Api\CustomerController.cs" />
     <Compile Include="Controllers\Api\InvoiceController.cs" />
     <Compile Include="Controllers\Api\JobCardController.cs" />
+    <Compile Include="Controllers\Api\PurchaseOrderController.cs" />
     <Compile Include="Controllers\Api\QuotationController.cs" />
+    <Compile Include="Controllers\Api\QuoteTotalController.cs" />
     <Compile Include="Controllers\Api\StockItemController.cs" />
+    <Compile Include="Controllers\Api\SupplierController.cs" />
+    <Compile Include="Controllers\Api\UpdatePurchaseOrderController.cs" />
     <Compile Include="Controllers\ApplicationBaseController.cs" />
     <Compile Include="Controllers\AreaController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -285,6 +291,7 @@
     <Compile Include="Controllers\StockItemsController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Core\Domain\ApplicationUser.cs" />
     <Compile Include="Core\Domain\ApplicationUserSignature.cs" />
     <Compile Include="Core\Domain\Area.cs" />
@@ -425,6 +432,26 @@
     <Compile Include="Migrations\201909252156244_AddDateTimeContractToCustomer.cs" />
     <Compile Include="Migrations\201909252156244_AddDateTimeContractToCustomer.Designer.cs">
       <DependentUpon>201909252156244_AddDateTimeContractToCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909272214140_DeleteBooleanInStockItem.cs" />
+    <Compile Include="Migrations\201909272214140_DeleteBooleanInStockItem.Designer.cs">
+      <DependentUpon>201909272214140_DeleteBooleanInStockItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909290937519_AddDataAnnotaionRequiredForContact.cs" />
+    <Compile Include="Migrations\201909290937519_AddDataAnnotaionRequiredForContact.Designer.cs">
+      <DependentUpon>201909290937519_AddDataAnnotaionRequiredForContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909291411096_RemoveMaintenanceContract.cs" />
+    <Compile Include="Migrations\201909291411096_RemoveMaintenanceContract.Designer.cs">
+      <DependentUpon>201909291411096_RemoveMaintenanceContract.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909301151282_AddDeleteToSupplier.cs" />
+    <Compile Include="Migrations\201909301151282_AddDeleteToSupplier.Designer.cs">
+      <DependentUpon>201909301151282_AddDeleteToSupplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909301215246_ChangeType.cs" />
+    <Compile Include="Migrations\201909301215246_ChangeType.Designer.cs">
+      <DependentUpon>201909301215246_ChangeType.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
@@ -2902,6 +2929,7 @@
     <Content Include="Content\Global\scss\_config.scss" />
     <None Include="Properties\PublishProfiles\JobCardPro - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\JobCardSystem - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\JobCardSystem - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.3.1-vsdoc.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -3009,14 +3037,27 @@
     <Content Include="Views\Quotation\Sorry.cshtml" />
     <Content Include="Views\JobCards\Pending.cshtml" />
     <Content Include="Views\Contracts\Index.cshtml" />
+    <Content Include="Views\Quotation\Payment.cshtml" />
+    <Content Include="Views\Quotation\Invoice.cshtml" />
+    <Content Include="Views\StockItems\Reason.cshtml" />
+    <Content Include="Views\Quotation\Index.cshtml" />
+    <Content Include="Views\Suppliers\Edit.cshtml" />
+    <Content Include="Views\Quotation\Distance.cshtml" />
+    <Content Include="Views\PurchaseOrder\Update.cshtml" />
+    <Content Include="Views\Quotation\invoices.cshtml" />
+    <Content Include="Views\Contact\Contact.cshtml" />
+    <Content Include="Views\Suppliers\Details.cshtml" />
+    <Content Include="Views\Quotation\Cancel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Assets\Images\Signatures\" />
     <Folder Include="Filters\" />
     <Folder Include="Views\ApplicationBase\" />
+    <Folder Include="Views\Supplier\" />
     <Folder Include="Views\System\" />
     <Folder Include="Views\Technicians\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -3097,6 +3138,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909252156244_AddDateTimeContractToCustomer.resx">
       <DependentUpon>201909252156244_AddDateTimeContractToCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909272214140_DeleteBooleanInStockItem.resx">
+      <DependentUpon>201909272214140_DeleteBooleanInStockItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909290937519_AddDataAnnotaionRequiredForContact.resx">
+      <DependentUpon>201909290937519_AddDataAnnotaionRequiredForContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909291411096_RemoveMaintenanceContract.resx">
+      <DependentUpon>201909291411096_RemoveMaintenanceContract.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909301151282_AddDeleteToSupplier.resx">
+      <DependentUpon>201909301151282_AddDeleteToSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909301215246_ChangeType.resx">
+      <DependentUpon>201909301215246_ChangeType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -48,6 +49,12 @@ namespace JobCardSystem.Controllers.Api
         {
             if (ModelState.IsValid)
             {
+                var jobCard = _context.JobCards.SingleOrDefault(s => s.Id == obj.JobCardId);
+                jobCard.JobStatusId = 1;
+                //
+                _context.Entry(jobCard).State = EntityState.Modified;
+                _context.SaveChanges();
+                //
                 string isolate = obj.Image.Remove(0, 22);
                 byte[] imgBytes = Convert.FromBase64String(isolate);
                 var dir = @"~\Content\Assets\Images\Signatures\";
@@ -78,7 +85,7 @@ namespace JobCardSystem.Controllers.Api
 
     public class JsonBase64Object
     {
-        public string JobCardId { get; set; }
+        public int JobCardId { get; set; }
         public string Image { get; set; }
     }
 

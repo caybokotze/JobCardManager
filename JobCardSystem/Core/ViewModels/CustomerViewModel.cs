@@ -13,6 +13,8 @@ namespace JobCardSystem.Core.ViewModels
         [Key]
         public int Id { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+
         [Display(Name = "Customer Name")]
         [Required]
         public string Name { get; set; }
@@ -33,12 +35,11 @@ namespace JobCardSystem.Core.ViewModels
         public string Industry { get; set; }
 
         [Display(Name = "Cellphone Number")]
-        [StringLength(11)]
+        [DataType(DataType.PhoneNumber)]
+        [Required]
         public string CellNumber { get; set; }
 
-        [Required(ErrorMessage = "Please select a contract from the drop down list.")]
-        [Display(Name = "Maintenance Contract")]
-        public int MaintenanceContractId { get; set; }
+        
 
         [Display(Name = "Services Contract")]
         [Required(ErrorMessage = "Please select a value from the drop down list.")]
@@ -51,7 +52,6 @@ namespace JobCardSystem.Core.ViewModels
 
         #region Drop Down Lists
 
-        public ICollection<MaintenanceContract> MaintenanceContracts { get; set; }
         public ICollection<ServiceContract> ServiceContracts { get; set; }
 
         #endregion
@@ -59,7 +59,7 @@ namespace JobCardSystem.Core.ViewModels
         #region Index Display
 
         public ServiceContract ServiceContract { get; set; }
-        public MaintenanceContract MaintenanceContract { get; set; }
+        //
         public Area Area { get; set; }
 
 

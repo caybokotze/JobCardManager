@@ -30,6 +30,7 @@ namespace JobCardSystem.Persistence.Repositories
                 .OrderBy(c => c.Id)
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
+                .Where(w => w.Deleted == false)
                 .ToList();
         }
 

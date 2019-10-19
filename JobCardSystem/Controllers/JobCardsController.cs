@@ -33,15 +33,15 @@ namespace JobCardSystem.Controllers
         public ActionResult Index()
         {
 
-            var list3 = _unitOfWork.JobCards.GetAllJobCardsWithApplicationUser();
+            IEnumerable<JobCard> jobCards = new List<JobCard>();
 
-            var list2 = _unitOfWork.JobCards.GetJobCardWithAllTypes(1, 10);
-
-            var list4 = _unitOfWork.JobCards.GetAllUsersForJobCard(1);
-
-            
-
-
+            if (User.IsInRole(UserRoles.Admin))
+            {
+                jobCards = _unitOfWork.JobCards.GetJobCardWithAllTypes(1, 100);
+            }else if (User.IsInRole(UserRoles.Technician))
+            {
+                jobCards = _unitOfWork.JobCards.GetJobCardForUser(User.Identity.GetUserId());
+            }
             //foreach (var item in list2)
             //{
             //    var signature = _unitOfWork.CustomerSignatures.Get((int)item.SignatureId);
@@ -49,7 +49,7 @@ namespace JobCardSystem.Controllers
             //    list.Add(item);
             //}
 
-            return View(list2);
+            return View(jobCards);
         }
 
         // GET: JobCards/Details/5
@@ -71,13 +71,12 @@ namespace JobCardSystem.Controllers
         // GET: JobCards/Create
         public ActionResult Create()
         {
-            JobCardViewModel jvm = new JobCardViewModel();
-            jvm.JobStatuses = _unitOfWork.JobStatuses.GetAll().ToList();
-            jvm.JobTypes = _unitOfWork.JobTypes.GetAll().ToList();
-            jvm.Customers = _unitOfWork.Customers.GetAll().ToList();
-            jvm.Staff = _context.Users.ToList();
-
-            return View(jvm);
+            //JobCardViewModel jvm = new JobCardViewModel();
+            //jvm.JobStatuses = _unitOfWork.JobStatuses.GetAll().ToList();
+            //jvm.JobTypes = _unitOfWork.JobTypes.GetAll().ToList();
+            ////jvm.Customers = _unitOfWork.Customers.GetAll().ToList();
+            //jvm.Staff = _context.Users.ToList();
+            return View("Index");
         }
 
         public ActionResult Download(int id)
@@ -104,9 +103,12 @@ namespace JobCardSystem.Controllers
         public ActionResult Assign(JobCardViewModel jobCardViewModel)
         {
             IUnitOfWork testUnit = new UnitOfWork(_context);
-
+            testUnit.JobCards.SingleOrDefault(s => s.Id == jobCardViewModel.Id);
+            //
             var job = Mapper.Map<JobCardViewModel, JobCard>(jobCardViewModel);
             job.ScheduledFor = jobCardViewModel.ScheduledFor;
+            job.JobStatusId = 2;
+            job.CustomerId = jobCardViewModel.CustomerId;
 
             var userList = new List<ApplicationUser>();
 
@@ -114,14 +116,15 @@ namespace JobCardSystem.Controllers
             {
                 var user = _context.Users.SingleOrDefault(s => s.Id == userId);
                 userList.Add(user);
+                PushBullet.Assigned(user.Id);
             }
 
             job.ApplicationUsers = userList;
 
-            testUnit.JobCards.Add(job);
+            testUnit.JobCards.Update(job);
             testUnit.Complete();
 
-            PushBullet.Push();
+            
 
             return RedirectToAction("Index");
         }
@@ -150,13 +153,14 @@ namespace JobCardSystem.Controllers
                 {
                     var user = _context.Users.SingleOrDefault(s => s.Id == userId);
                     userList.Add(user);
+                    PushBullet.Assigned(userId);
                 }
 
                 job.ApplicationUsers = userList;
 
                 testUnit.JobCards.Add(job);
                 testUnit.Complete();
-                PushBullet.Push();
+                
 
                 return RedirectToAction("Index");
 

@@ -41,31 +41,41 @@ namespace JobCardSystem.Controllers.Api
         {
             try
             {
-                var person = _context.Customers.SingleOrDefault(s => s.Id == quotationMap.CustomerId);
+                //var person = _context.Customers.SingleOrDefault(s => s.Id == quotationMap.CustomerId);
                 //
                 var quote = new Quotation();
                 var stockItemQuantities = new List<StockItemQuantity>();
                 //
-                quote.CustomerId = person.Id;
+                quote.CustomerId = quotationMap.CustomerId;
                 quote.CreatedAt = DateTime.Now;
                 //
-                var stockItemList = new List<StockItem>();
+                //var stockItemList = new List<StockItem>();
                 //
                 _context.Quotations.Add(quote);
-                int quoteId = _context.SaveChanges();
+                _context.SaveChanges();
+                int quoteId = quote.Id;
                 //
+                double total = 0;
+
                 foreach (var stockItem in quotationMap.OrderArray)
                 {
                     var stockItemQuantity = new StockItemQuantity();
                     stockItemQuantity.StockItemId = stockItem.Identifier;
                     stockItemQuantity.Quantity = stockItem.Quantity;
                     stockItemQuantity.QuotationId = quoteId;
+                    //
+                    total += stockItem.Amount;
+                    //
                     _context.StockItemQuantities.Add(stockItemQuantity);
                     _context.SaveChanges();
                 }
+
+                quote.Total = total;
+                _context.Entry(quote).State = EntityState.Modified;
+                _context.SaveChanges();
                 //
-                Mailer.SendApprovalRequest(quote.Id, "Hello there.");
-                return Ok("Hi there johnny.");
+                Mailer.SendApprovalRequest(quote.Id);
+                return Ok();
             }
             catch (Exception e)
             {

@@ -14,7 +14,7 @@ using Invoice = JobCardSystem.Core.Domain.Invoice;
 
 namespace JobCardSystem.Controllers
 {
-    public class InvoicesController : Controller
+    public class InvoicesController : ApplicationBaseController
     {
         private readonly IUnitOfWork _unitOfWork;
 

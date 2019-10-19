@@ -18,7 +18,7 @@ using Microsoft.Owin;
 
 namespace JobCardSystem.Controllers
 {
-    public class StockItemsController : Controller
+    public class StockItemsController : ApplicationBaseController
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -117,6 +117,24 @@ namespace JobCardSystem.Controllers
             
             return View(stockItem);
         }
+        //
+        public ActionResult Reason(int? id)
+        {
+            MessageObj message = new MessageObj();
+            if (id.HasValue)
+            {
+                message.StockItemId = (int) id;
+            }
+            return View(message);
+
+        }
+
+        [HttpPost]
+        public ActionResult Reason(MessageObj message)
+        {
+            return RedirectToAction("Delete", new {id = message.StockItemId});
+        }
+
 
         public ActionResult Delete(int? id)
         {
@@ -124,16 +142,19 @@ namespace JobCardSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //
             StockItem stockItem = _unitOfWork.StockItems.Get((int)id);
-
+            //
             if (stockItem == null)
             {
                 return HttpNotFound();
             }
             else
             {
-                _unitOfWork.StockItems.Remove(stockItem);
+                stockItem.Deleted = true;
+                _unitOfWork.StockItems.Update(stockItem);
                 _unitOfWork.Complete();
+                return RedirectToAction("Index");
             }
 
             return RedirectToAction("Index");
@@ -157,6 +178,12 @@ namespace JobCardSystem.Controllers
             }
             base.Dispose(disposing);
         }
+    }
+
+    public class MessageObj
+    {
+        public string Message { get; set; }
+        public int StockItemId { get; set; }
     }
 
 }

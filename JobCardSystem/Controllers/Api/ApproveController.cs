@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using JobCardSystem.BusinessLogic;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Persistence;
 
@@ -42,11 +43,15 @@ namespace JobCardSystem.Controllers.Api
                     JobCard jobCard = new JobCard();
                     jobCard.CreatedAt = DateTime.Now;
                     jobCard.QuotationId = approve.ValId;
+                    jobCard.CustomerId = quote.CustomerId;
+                    jobCard.JobStatusId = 3;
+                    //
                     _context.JobCards.Add(jobCard);
                     _context.SaveChanges();
                 }
 
                 quote.Approve = true;
+                //Mailer.SendInvoiceEmail(quote.Id, "Please have a look at this invoice.");
                 //
                 _context.Entry(quote).State = EntityState.Modified;
                 _context.SaveChanges();

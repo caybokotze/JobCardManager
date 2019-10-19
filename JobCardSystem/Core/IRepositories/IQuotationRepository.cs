@@ -10,5 +10,6 @@ namespace JobCardSystem.Core.IRepositories
     public interface IQuotationRepository : IRepository<Quotation>
     {
         IEnumerable<Quotation> GetAllApproved();
+        IEnumerable<Quotation> GetAllCustomers();
     }
 }

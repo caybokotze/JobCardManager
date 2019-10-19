@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using JobCardSystem.Constants;
 
 namespace JobCardSystem.Controllers
 {
-    public class DashboardController : Controller
+    [Authorize(Roles = UserRoles.Admin)]
+    public class DashboardController : ApplicationBaseController
     {
         // GET: Dashboard
         public ActionResult Index()

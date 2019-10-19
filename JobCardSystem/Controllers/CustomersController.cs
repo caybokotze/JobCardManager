@@ -58,7 +58,6 @@ namespace JobCardSystem.Controllers
         {
             CustomerViewModel customerVm = new CustomerViewModel();
 
-            customerVm.MaintenanceContracts = _unitOfWork.MaintenanceContracts.GetAll().ToList();
             customerVm.ServiceContracts = _unitOfWork.ServiceContracts.GetAll().ToList();
 
             return View(customerVm);
@@ -74,13 +73,14 @@ namespace JobCardSystem.Controllers
             if (ModelState.IsValid)
             {
                 customer.CreatedAt = DateTime.Now;
+                //
                 _unitOfWork.Customers.Add(customer);
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
             var customerVm = Mapper.Map<Customer, CustomerViewModel>(customer);
-            customerVm.MaintenanceContracts = _unitOfWork.MaintenanceContracts.GetAll().ToList();
+            
             customerVm.ServiceContracts = _unitOfWork.ServiceContracts.GetAll().ToList();
 
             return View(customerVm);

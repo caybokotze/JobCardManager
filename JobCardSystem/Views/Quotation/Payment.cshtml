@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Payment</h2>
+
+<script language="JavaScript" type="text/javascript">
+
+
+
+    function click_5c19c6c16f1678b427327b99552339de( aform_reference ) {
+        var aform = aform_reference;
+        aform['amount'].value = Math.round( aform['amount'].value*Math.pow( 10,2 ) )/Math.pow( 10,2 );
+        aform['custom_amount'].value = aform['custom_amount'].value.replace( /^\s+|\s+$/g,"" );
+        if( !aform['custom_amount'].value || 0 === aform['custom_amount'].value.length || /^\s*$/.test( aform['custom_amount'].value ) ) {
+            alert ( 'An amount is required' );
+            return false;
+        }
+        aform['amount'].value = Math.round( aform['custom_amount'].value*Math.pow( 10,2 ) )/Math.pow( 10,2 );
+        aform['custom_quantity'].value = aform['custom_quantity'].value.replace( /^\s+|\s+$/g,"" );
+        if( !aform['custom_quantity'].value || 0 === aform['custom_quantity'].value.length || /^\s*$/.test( aform['custom_quantity'].value ) ) {
+            alert ( 'A quantity is required' );
+            return false;
+        }aform['amount'].value *=  parseInt( aform['custom_quantity'].value );
+    }
+
+</script>
+
+<form action="https://www.payfast.co.za/eng/process" name="form_5c19c6c16f1678b427327b99552339de" onsubmit="return click_5c19c6c16f1678b427327b99552339de( this );" method="post">
+    <input type="hidden" name="cmd" value="_paynow">
+    <input type="hidden" name="receiver" value="13538129">
+    <input type="hidden" name="item_name" value="Job Card">
+    <input type="hidden" name="amount" value="10.00">
+    <input type="hidden" name="item_description" value="">
+    <input type="hidden" name="return_url" value="https://jobcardsystem.azurewebsites.net/customers/index">
+    <input type="hidden" name="cancel_url" value="https://jobcardsystem.azurewebsites.net/suppliers/index">
+
+    <table>
+        <tr><td><font color="red">*</font>&nbsp;Price</td><td><input type="text" name="custom_amount" class="pricing" value="10.00"></td></tr>
+        <tr><td><font color="red">*</font>&nbsp;Quantity</td><td><input type="text" name="custom_quantity" class="qty" value="1"></td></tr>
+
+        <tr><td colspan=2 align=center><input type="image" src="https://www.payfast.co.za/images/buttons/dark-large-paynow.png" width="174" height="59" alt="Pay Now" title="Pay Now with PayFast"></td></tr>
+    </table>
+</form>
+

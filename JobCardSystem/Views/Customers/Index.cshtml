@@ -19,7 +19,7 @@
             @Html.DisplayNameFor(model => model.Industry)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MaintenanceContractId)
+            @Html.DisplayNameFor(model => model.CellNumber)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ServiceContractId)
@@ -39,7 +39,7 @@
             @Html.DisplayFor(modelItem => item.Industry)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.MaintenanceContract.Name)
+            <a href="tel:@Html.DisplayFor(modelItem => item.CellNumber)">@Html.DisplayFor(modelItem => item.CellNumber)</a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ServiceContract.ServiceName)

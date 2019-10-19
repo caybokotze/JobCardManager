@@ -14,8 +14,6 @@ namespace JobCardSystem.Persistence.EntityConfigurations
             HasKey(k => k.Id);
 
             Property(p => p.CreatedAt).IsRequired();
-
-
         }
     }
 }

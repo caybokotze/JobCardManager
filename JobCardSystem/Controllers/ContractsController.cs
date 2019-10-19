@@ -7,7 +7,7 @@ using JobCardSystem.Persistence;
 
 namespace JobCardSystem.Controllers
 {
-    public class ContractsController : Controller
+    public class ContractsController : ApplicationBaseController
     {
         private ApplicationDbContext _context;
         public ContractsController()

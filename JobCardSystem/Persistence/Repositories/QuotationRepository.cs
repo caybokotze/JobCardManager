@@ -5,6 +5,7 @@ using System.Runtime.Remoting.Contexts;
 using System.Web;
 using JobCardSystem.Core.Domain;
 using JobCardSystem.Core.IRepositories;
+using System.Data.Entity;
 
 namespace JobCardSystem.Persistence.Repositories
 {
@@ -18,7 +19,12 @@ namespace JobCardSystem.Persistence.Repositories
 
         public IEnumerable<Quotation> GetAllApproved()
         {
-            return ApplicationDbContext.Quotations.Where(w => w.Approve == true);
+            return ApplicationDbContext.Quotations.Include(i => i.Customer).Where(w => w.Approve == true);
+        }
+
+        public IEnumerable<Quotation> GetAllCustomers()
+        {
+            return ApplicationDbContext.Quotations.Include(i => i.Customer);
         }
     }
 }

@@ -64,8 +64,8 @@ function download(dataURL, filename) {
         console.log(object);
         //var alert = setTimeout(function() { alert("hello"); }, 3000)};
         setTimeout(function () {
-            window.location.replace("/signature/index");
-        }, 500);
+            window.location.replace("/quotation/invoice/" + 1);
+        }, 10);
 
         
 

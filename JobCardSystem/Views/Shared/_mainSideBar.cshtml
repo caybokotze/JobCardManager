@@ -67,6 +67,7 @@
                             <span>Account settings</span>
                         </a>
                     </li>*@
+
                     <li class="nav-item">
                         <a href="~/account/logoff" class="nav-link">
                             <i class="icon-switch2"></i>
@@ -181,20 +182,21 @@
                         </a>
                     </li>
                 }
-                else
-                {
-                    <li class="nav-item">
-                        <a href="~/jobcards/index" class="nav-link">
-                            <i class="icon-hammer-wrench"></i>
-                            <span>
-                                Job Cards
-                            </span>
-                        </a>
-                    </li>
-                }
+
+            @if (User.IsInRole(UserRoles.Technician))
+            {
+                <li class="nav-item">
+                    <a href="~/jobcards/index" class="nav-link">
+                        <i class="icon-hammer-wrench"></i>
+                        <span>
+                            Job Reports
+                        </span>
+                    </a>
+                </li>
+            }
 
 
-                @if (User.IsInRole(UserRoles.Admin))
+            @if (User.IsInRole(UserRoles.Admin))
                 {
                     <li class="nav-item">
                         <a href="~/stockitems/index" class="nav-link">
@@ -205,26 +207,77 @@
                         </a>
                     </li>
                 }
+            
+            @if (User.IsInRole(UserRoles.Technician))
+            {
+                <li class="nav-item">
+                    <a href="~/stockitems/index" class="nav-link">
+                        <i class="icon-box"></i>
+                        <span>
+                            Stock Items
+                        </span>
+                    </a>
+                </li>
+            }
 
 
-                @if (User.IsInRole(UserRoles.Admin))
+            @if (User.IsInRole(UserRoles.Admin))
                 {
                     <li class="nav-item">
                         <a href="~/purchaseOrder/index" class="nav-link">
-                            <i class="icon-ticket"></i>
+                            <i class="icon-drawer-in"></i>
                             <span>
                                 Purchase Orders
                             </span>
                         </a>
                     </li>
                 }
-                else
+
+                @if (User.IsInRole(UserRoles.Admin))
                 {
                     <li class="nav-item">
                         <a href="~/purchaseOrder/create" class="nav-link">
-                            <i class="icon-ticket"></i>
+                            <i class="icon-clipboard"></i>
                             <span>
                                 New Purchase Order
+                            </span>
+                        </a>
+                    </li>
+                }
+            
+            @if (User.IsInRole(UserRoles.Technician))
+            {
+                <li class="nav-item">
+                    <a href="~/purchaseOrder/create" class="nav-link">
+                        <i class="icon-clipboard"></i>
+                        <span>
+                            New Purchase Order
+                        </span>
+                    </a>
+                </li>
+            }
+                
+
+            @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/quotation/create" class="nav-link">
+                            <i class="icon-box"></i>
+                            <span>
+                                Create Quote
+                            </span>
+                        </a>
+                    </li>
+                }
+                
+
+            @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/quotation/index" class="nav-link">
+                            <i class="icon-box"></i>
+                            <span>
+                                Quotations
                             </span>
                         </a>
                     </li>
@@ -233,10 +286,10 @@
                 @if (User.IsInRole(UserRoles.Admin))
                 {
                     <li class="nav-item">
-                        <a href="~/quotation/create" class="nav-link">
+                        <a href="~/quotation/invoices" class="nav-link">
                             <i class="icon-box"></i>
                             <span>
-                                Create Quotation
+                                Invoices
                             </span>
                         </a>
                     </li>
@@ -253,7 +306,33 @@
                         </a>
                     </li>
                 }
-                <!-- /layout -->
+            
+                @if (User.IsInRole(UserRoles.Admin))
+                {
+                    <li class="nav-item">
+                        <a href="~/area/index" class="nav-link">
+                            <i class="icon-mailbox"></i>
+                            <span>
+                                Areas
+                            </span>
+                        </a>
+                    </li>
+                }
+            
+                @if (User.IsInRole(UserRoles.Technician))
+                    {
+                        <li class="nav-item">
+                            <a href="~/contact/contact" class="nav-link">
+                                <i class="icon-mailbox"></i>
+                                <span>
+                                    Contact
+                                </span>
+                            </a>
+                        </li>
+                    }
+                
+            
+            <!-- /layout -->
             </ul>
 
         </div>

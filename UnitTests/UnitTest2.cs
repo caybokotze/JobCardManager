@@ -24,7 +24,6 @@ namespace UnitTests
                 {
                     Name = "John",
                     CellNumber = "0832902300",
-                    MaintenanceContractId = 1,
                     ServiceContractId = 1
                 }
             };
@@ -36,7 +35,6 @@ namespace UnitTests
                 {
                     Name = "John",
                     CellNumber = "0832902300",
-                    MaintenanceContractId = 1,
                     ServiceContractId = 1
                 }
             };

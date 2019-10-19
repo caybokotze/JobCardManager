@@ -67,6 +67,7 @@ namespace JobCardSystem.Core.Domain
         [Required]
         [Display(Name = "Full ID Number")]
         [StringLength(MaxConstants.IdNumber, ErrorMessage = "Id Number can not be longer than digits.")]
+        
         public string IdNumber { get; set; }
 
         [Display(Name = "Select Area")]

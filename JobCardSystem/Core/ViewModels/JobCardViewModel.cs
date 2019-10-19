@@ -69,7 +69,7 @@ namespace JobCardSystem.Core.ViewModels
 
         public Customer Customer { get; set; }
 
-        public ICollection<Customer> Customers { get; set; }
+        //public ICollection<Customer> Customers { get; set; }
 
         [Display(Name = "Add Staff To Job Card")]
         [Required]
@@ -85,21 +85,21 @@ namespace JobCardSystem.Core.ViewModels
 
         //
 
-        public ICollection<GetDisplayName> GetCustomerDisplayNames()
-        {
-            var customerDisplays = new List<GetDisplayName>();
-            foreach (var item in Customers)
-            {
-                customerDisplays.Add(
-                    new GetDisplayName()
-                    {
-                        Id = item.Id,
-                        DisplayName = item.Name + " - " + item.CellNumber
-                    });
-            }
+        //public ICollection<GetDisplayName> GetCustomerDisplayNames()
+        //{
+        //    var customerDisplays = new List<GetDisplayName>();
+        //    foreach (var item in Customers)
+        //    {
+        //        customerDisplays.Add(
+        //            new GetDisplayName()
+        //            {
+        //                Id = item.Id,
+        //                DisplayName = item.Name + " - " + item.CellNumber
+        //            });
+        //    }
 
-            return customerDisplays;
-        }
+        //    return customerDisplays;
+        //}
 
         public ICollection<GetIdentityDisplayName> GetStaffDisplayNames()
         {

@@ -18,7 +18,6 @@ namespace JobCardSystem.Core.Domain
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         #region Navigational Properties
-
         public virtual ICollection<PurchaseOrderItem> PurchaseOrderItems { get; set; }
 
         public virtual Supplier Supplier { get; set; }

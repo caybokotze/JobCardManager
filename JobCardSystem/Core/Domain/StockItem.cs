@@ -21,14 +21,17 @@ namespace JobCardSystem.Core.Domain
 
         [Required]
         [Display(Name = "Available Units")]
+        [Range(0, 10000)]
         public int QuantityAvailable { get; set; }
 
         [Required]
         [Display(Name = "Purchasing Cost")]
+        [Range(0,10000)]
         public double Cost { get; set; }
 
         [Required]
         [Display(Name = "Selling Cost")]
+        [Range(0, 10000)]
         public double SellingPrice { get; set; }
 
         public string FileDir { get; set; }
@@ -41,6 +44,8 @@ namespace JobCardSystem.Core.Domain
         //
 
         public bool FlagCheck { get; set; } = false;
+
+        public bool Deleted { get; set; } = false;
         
         public virtual Supplier Supplier { get; set; }
 

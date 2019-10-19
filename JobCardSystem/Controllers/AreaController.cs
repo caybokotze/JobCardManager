@@ -8,7 +8,7 @@ using JobCardSystem.Core.Domain;
 
 namespace JobCardSystem.Controllers
 {
-    public class AreaController : Controller
+    public class AreaController : ApplicationBaseController
     {
         private IUnitOfWork _unitOfWork;
         public AreaController(IUnitOfWork unitOfWork)

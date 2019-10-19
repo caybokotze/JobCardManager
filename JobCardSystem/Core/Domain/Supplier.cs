@@ -22,18 +22,17 @@ namespace JobCardSystem.Core.Domain
         [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-
+        //
         [Display(Name = "Contact Number")]
         [Required]
         [DataType(DataType.PhoneNumber)]
         public string ContactNumber { get; set; }
 
+        public bool Delete { get; set; } = false;
 
         #region Navigational Properties
-
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual ICollection<StockItem> StockItems { get; set; }
-
         #endregion
     }
 }

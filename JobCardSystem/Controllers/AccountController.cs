@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using JobCardSystem.BusinessLogic;
+using JobCardSystem.Constants;
 using JobCardSystem.Core;
 using JobCardSystem.Core.Domain;
 using Microsoft.AspNet.Identity;
@@ -87,7 +88,7 @@ namespace JobCardSystem.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -174,9 +175,15 @@ namespace JobCardSystem.Controllers
             return View(accountUsersList);
         }
 
+        public ActionResult Create()
+        {
+            RegisterViewModel accountRegisterViewModel = new RegisterViewModel();
+            return View("Register", accountRegisterViewModel);
+        }
+
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = UserRoles.Admin)]
         public ActionResult Register()
         {
             RegisterViewModel accountRegisterViewModel = new RegisterViewModel();
@@ -215,7 +222,7 @@ namespace JobCardSystem.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -223,7 +230,7 @@ namespace JobCardSystem.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "JobCards");
+                    return RedirectToAction("Index", "Account");
                 }
 
                 AddErrors(result);
@@ -580,6 +587,12 @@ namespace JobCardSystem.Controllers
             return View(model);
         }
 
+        public ActionResult Delete(string id)
+        {
+            var user = context.Users.SingleOrDefault(s => s.Id == id);
+            context.Users.Remove(user);
+            return RedirectToAction("Index");
+        }
         //
         // POST: /Account/LogOff
         [HttpGet]

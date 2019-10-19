@@ -35,7 +35,7 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ContactNumber)
+            <a href="tel:@Html.DisplayFor(modelItem => item.ContactNumber)">@Html.DisplayFor(modelItem => item.ContactNumber)</a>
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

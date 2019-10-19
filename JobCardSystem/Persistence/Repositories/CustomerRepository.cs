@@ -17,7 +17,6 @@ namespace JobCardSystem.Persistence.Repositories
         public IEnumerable<Customer> GetCustomersWithContracts(int pageIndex, int pageSize)
         {
             return ApplicationDbContext.Customers
-                .Include(c => c.MaintenanceContract)
                 .Include(c => c.ServiceContract)
                 .OrderBy(c => c.CreatedAt)
                 .Skip((pageIndex - 1) * pageSize)
